@@ -2,7 +2,8 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
-const { connectDB } = require("./src/config/db");
+const { connectDB, isDBConnected } = require("./src/config/db");
+const jobsRoutes = require("./src/routes/jobs");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -15,13 +16,12 @@ app.use(
 );
 app.use(express.json());
 
-let dbStatus = { connected: false };
-
 app.get("/api/health", (req, res) => {
   res.json({
     status: "ok",
     service: "intelligent-job-aggregation",
-    dbConnected: dbStatus.connected,
+    phase: 1,
+    dbConnected: isDBConnected(),
     timestamp: new Date().toISOString(),
   });
 });
@@ -30,24 +30,19 @@ app.get("/api/message", (req, res) => {
   res.json({
     message: "Hello from Intelligent Job Aggregation API",
     status: "connected",
-    dbConnected: dbStatus.connected,
+    dbConnected: isDBConnected(),
   });
 });
 
-app.get("/api/users", (req, res) => {
-  res.json([
-    { id: 1, name: "Alice", role: "Developer" },
-    { id: 2, name: "Bob", role: "Designer" },
-    { id: 3, name: "Charlie", role: "Manager" },
-  ]);
-});
+app.use("/api/jobs", jobsRoutes);
 
 async function start() {
-  dbStatus = await connectDB();
+  await connectDB();
 
   app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
     console.log(`CORS allowed origin: ${CLIENT_URL}`);
+    console.log(`MongoDB: ${isDBConnected() ? "connected" : "not connected"}`);
   });
 }
 

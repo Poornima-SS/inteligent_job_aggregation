@@ -2,36 +2,36 @@
 
 React + Node.js project for aggregating job listings, cleaning/deduplicating data, filtering, and recommendations.
 
-## Phase 0 status
+## Current status
 
-Scaffold is ready:
-
-- `backend/` — Express API on port **5000**
-- `frontend/` — React + Vite on port **5173**
-- Env template: `backend/.env.example`
-- MongoDB connection is attempted at startup (optional for Phase 0)
+| Phase | Status |
+|---|---|
+| 0 Environment (React + Node + Mongo connect) | Done |
+| 1 Models + seed data + basic jobs API | Done |
+| 2 Auth | Next |
 
 ## Prerequisites
 
 - Node.js LTS (v18+)
 - npm
-- MongoDB local **or** MongoDB Atlas URI (needed from Phase 1 onward)
+- MongoDB running locally (or Atlas URI in `.env`)
 
 ## Setup
 
 ### 1. Backend
 
-```bash
-cd backend
+```powershell
+cd "D:\final year project\inteligent_job_aggregation\backend"
 copy .env.example .env
 npm install
+npm run seed
 npm run dev
 ```
 
 ### 2. Frontend (new terminal)
 
-```bash
-cd frontend
+```powershell
+cd "D:\final year project\inteligent_job_aggregation\frontend"
 npm install
 npm run dev
 ```
@@ -40,15 +40,23 @@ npm run dev
 
 Visit: http://localhost:5173
 
-## Verify Phase 0
+## Phase 1 verify
 
-| Check | URL / action |
+| Check | URL |
 |---|---|
-| Backend message | http://localhost:5000/api/message |
 | Health | http://localhost:5000/api/health |
-| Frontend UI | http://localhost:5173 (green backend status) |
+| Jobs list | http://localhost:5000/api/jobs |
+| Job stats | http://localhost:5000/api/jobs/stats |
+| Search | http://localhost:5000/api/jobs?q=react&location=Bengaluru |
 
-## Environment variables (`backend/.env`)
+## Models
+
+- `User` — profile, skills, saved jobs
+- `Job` — listings with `contentHash` for dedupe
+- `ScrapeLog` — scrape run history
+- `Alert` — user job alerts
+
+## Environment (`backend/.env`)
 
 | Variable | Example |
 |---|---|
@@ -57,6 +65,6 @@ Visit: http://localhost:5173
 | `JWT_SECRET` | long random string |
 | `CLIENT_URL` | `http://localhost:5173` |
 
-## Next: Phase 1
+## Next: Phase 2
 
-Database models (`User`, `Job`, `ScrapeLog`, `Alert`) and seed data.
+Auth API (register, login, JWT) and profile endpoints.

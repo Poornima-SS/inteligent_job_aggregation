@@ -10,13 +10,18 @@ async function connectDB() {
 
   try {
     await mongoose.connect(uri);
-    console.log("MongoDB connected");
-    return { connected: true };
+    console.log(`MongoDB connected → ${mongoose.connection.name}`);
+    return { connected: true, name: mongoose.connection.name };
   } catch (err) {
     console.warn("MongoDB not connected:", err.message);
-    console.warn("API will still run; start MongoDB or set Atlas URI in .env for later phases");
+    console.warn("API will still run; start MongoDB or set Atlas URI in .env");
     return { connected: false, error: err.message };
   }
 }
 
-module.exports = { connectDB };
+function isDBConnected() {
+  // 1 = connected
+  return mongoose.connection.readyState === 1;
+}
+
+module.exports = { connectDB, isDBConnected };
