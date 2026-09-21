@@ -4,10 +4,16 @@ const express = require("express");
 const cors = require("cors");
 const { connectDB, isDBConnected } = require("./src/config/db");
 const jobsRoutes = require("./src/routes/jobs");
+const authRoutes = require("./src/routes/auth");
+const usersRoutes = require("./src/routes/users");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:5173";
+
+if (!process.env.JWT_SECRET) {
+  console.warn("JWT_SECRET is missing in .env — auth tokens will fail");
+}
 
 app.use(
   cors({
@@ -20,7 +26,7 @@ app.get("/api/health", (req, res) => {
   res.json({
     status: "ok",
     service: "intelligent-job-aggregation",
-    phase: 1,
+    phase: 3,
     dbConnected: isDBConnected(),
     timestamp: new Date().toISOString(),
   });
@@ -34,6 +40,8 @@ app.get("/api/message", (req, res) => {
   });
 });
 
+app.use("/api/auth", authRoutes);
+app.use("/api/users", usersRoutes);
 app.use("/api/jobs", jobsRoutes);
 
 async function start() {

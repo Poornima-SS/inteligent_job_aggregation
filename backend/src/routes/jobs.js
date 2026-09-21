@@ -1,10 +1,21 @@
 const express = require("express");
-const { listJobs, getJobById, getJobStats } = require("../controllers/jobsController");
+const {
+  listJobs,
+  getJobById,
+  getJobStats,
+  saveJob,
+  unsaveJob,
+  getSavedJobs,
+} = require("../controllers/jobsController");
+const { authRequired, optionalAuth } = require("../middleware/auth");
 
 const router = express.Router();
 
-router.get("/", listJobs);
+router.get("/", optionalAuth, listJobs);
 router.get("/stats", getJobStats);
-router.get("/:id", getJobById);
+router.get("/saved", authRequired, getSavedJobs);
+router.post("/:id/save", authRequired, saveJob);
+router.delete("/:id/save", authRequired, unsaveJob);
+router.get("/:id", optionalAuth, getJobById);
 
 module.exports = router;
