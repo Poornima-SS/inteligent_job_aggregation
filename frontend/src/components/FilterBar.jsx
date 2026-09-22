@@ -90,7 +90,15 @@ export default function FilterBar({ value, onChange, onSubmit, onReset }) {
           >
             <option value="">Any</option>
             <option value="seed">seed</option>
-            <option value="seed-alt">seed-alt</option>
+            <option value="naukri">naukri</option>
+            <option value="indeed">indeed</option>
+            <option value="linkedin">linkedin</option>
+            <option value="apna">apna</option>
+            <option value="private-company">private-company</option>
+            <option value="remotive">remotive</option>
+            <option value="remoteok">remoteok</option>
+            <option value="company-cheerio">company-cheerio</option>
+            <option value="company-puppeteer">company-puppeteer</option>
           </select>
         </div>
         <div className="field">

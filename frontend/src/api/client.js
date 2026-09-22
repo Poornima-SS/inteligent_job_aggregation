@@ -69,3 +69,9 @@ export const jobsApi = {
   save: (id) => api(`/jobs/${id}/save`, { method: "POST" }),
   unsave: (id) => api(`/jobs/${id}/save`, { method: "DELETE" }),
 };
+
+export const scrapeApi = {
+  sources: () => api("/scrape/sources"),
+  logs: (params = {}) => api(`/scrape/logs${toQuery(params)}`),
+  run: (body) => api("/scrape/run", { method: "POST", body: JSON.stringify(body) }),
+};

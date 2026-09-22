@@ -6,6 +6,7 @@ const { connectDB, isDBConnected } = require("./src/config/db");
 const jobsRoutes = require("./src/routes/jobs");
 const authRoutes = require("./src/routes/auth");
 const usersRoutes = require("./src/routes/users");
+const scrapeRoutes = require("./src/routes/scrape");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -26,7 +27,7 @@ app.get("/api/health", (req, res) => {
   res.json({
     status: "ok",
     service: "intelligent-job-aggregation",
-    phase: 3,
+    phase: 4,
     dbConnected: isDBConnected(),
     timestamp: new Date().toISOString(),
   });
@@ -43,6 +44,7 @@ app.get("/api/message", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/jobs", jobsRoutes);
+app.use("/api/scrape", scrapeRoutes);
 
 async function start() {
   await connectDB();

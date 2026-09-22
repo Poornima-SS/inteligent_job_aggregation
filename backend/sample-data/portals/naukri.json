@@ -1,0 +1,484 @@
+[
+  {
+    "id": "naukri-1",
+    "title": "Software Engineer",
+    "company": "Infosys",
+    "location": "Bengaluru",
+    "skills": [
+      "React",
+      "JavaScript",
+      "HTML",
+      "CSS"
+    ],
+    "experienceMin": 0,
+    "experienceMax": 2,
+    "salaryMin": 300000,
+    "salaryMax": 700000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "Software Engineer at Infosys in Bengaluru. Work with React, JavaScript, HTML, CSS. Experience 0-2 years preferred.",
+    "applyUrl": "https://www.naukri.com/job-listings/naukri-1"
+  },
+  {
+    "id": "naukri-2",
+    "title": "Frontend Developer",
+    "company": "TCS",
+    "location": "Hyderabad",
+    "skills": [
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "REST"
+    ],
+    "experienceMin": 2,
+    "experienceMax": 4,
+    "salaryMin": 400000,
+    "salaryMax": 800000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "Frontend Developer at TCS in Hyderabad. Work with Node.js, Express, MongoDB, REST. Experience 2-4 years preferred.",
+    "applyUrl": "https://www.naukri.com/job-listings/naukri-2"
+  },
+  {
+    "id": "naukri-3",
+    "title": "Backend Developer",
+    "company": "Wipro",
+    "location": "Chennai",
+    "skills": [
+      "Java",
+      "Spring",
+      "SQL"
+    ],
+    "experienceMin": 3,
+    "experienceMax": 5,
+    "salaryMin": 500000,
+    "salaryMax": 900000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "Backend Developer at Wipro in Chennai. Work with Java, Spring, SQL. Experience 3-5 years preferred.",
+    "applyUrl": "https://www.naukri.com/job-listings/naukri-3"
+  },
+  {
+    "id": "naukri-4",
+    "title": "Full Stack Developer",
+    "company": "Accenture",
+    "location": "Pune",
+    "skills": [
+      "Python",
+      "Django",
+      "PostgreSQL"
+    ],
+    "experienceMin": 4,
+    "experienceMax": 6,
+    "salaryMin": 600000,
+    "salaryMax": 1000000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "Full Stack Developer at Accenture in Pune. Work with Python, Django, PostgreSQL. Experience 4-6 years preferred.",
+    "applyUrl": "https://www.naukri.com/job-listings/naukri-4"
+  },
+  {
+    "id": "naukri-5",
+    "title": "QA Engineer",
+    "company": "Cognizant",
+    "location": "Mumbai",
+    "skills": [
+      "Selenium",
+      "Testing",
+      "API Testing"
+    ],
+    "experienceMin": 1,
+    "experienceMax": 3,
+    "salaryMin": 700000,
+    "salaryMax": 1100000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "QA Engineer at Cognizant in Mumbai. Work with Selenium, Testing, API Testing. Experience 1-3 years preferred.",
+    "applyUrl": "https://www.naukri.com/job-listings/naukri-5"
+  },
+  {
+    "id": "naukri-6",
+    "title": "Data Analyst",
+    "company": "HCL",
+    "location": "Mysuru",
+    "skills": [
+      "AWS",
+      "Docker",
+      "Linux"
+    ],
+    "experienceMin": 0,
+    "experienceMax": 2,
+    "salaryMin": 800000,
+    "salaryMax": 1200000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "Data Analyst at HCL in Mysuru. Work with AWS, Docker, Linux. Experience 0-2 years preferred.",
+    "applyUrl": "https://www.naukri.com/job-listings/naukri-6"
+  },
+  {
+    "id": "naukri-7",
+    "title": "DevOps Engineer",
+    "company": "Tech Mahindra",
+    "location": "Delhi",
+    "skills": [
+      "Figma",
+      "UI Design",
+      "Prototyping"
+    ],
+    "experienceMin": 3,
+    "experienceMax": 5,
+    "salaryMin": 900000,
+    "salaryMax": 1300000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "DevOps Engineer at Tech Mahindra in Delhi. Work with Figma, UI Design, Prototyping. Experience 3-5 years preferred.",
+    "applyUrl": "https://www.naukri.com/job-listings/naukri-7"
+  },
+  {
+    "id": "naukri-8",
+    "title": "Java Developer",
+    "company": "LTIMindtree",
+    "location": "Remote",
+    "skills": [
+      "SQL",
+      "Excel",
+      "Power BI"
+    ],
+    "experienceMin": 4,
+    "experienceMax": 6,
+    "salaryMin": 1000000,
+    "salaryMax": 1400000,
+    "salaryCurrency": "INR",
+    "employmentType": "remote",
+    "description": "Java Developer at LTIMindtree in Remote. Work with SQL, Excel, Power BI. Experience 4-6 years preferred.",
+    "applyUrl": "https://www.naukri.com/job-listings/naukri-8"
+  },
+  {
+    "id": "naukri-9",
+    "title": "React Developer",
+    "company": "Infosys",
+    "location": "Bengaluru",
+    "skills": [
+      "React",
+      "JavaScript",
+      "HTML",
+      "CSS"
+    ],
+    "experienceMin": 1,
+    "experienceMax": 3,
+    "salaryMin": 1100000,
+    "salaryMax": 1500000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "React Developer at Infosys in Bengaluru. Work with React, JavaScript, HTML, CSS. Experience 1-3 years preferred.",
+    "applyUrl": "https://www.naukri.com/job-listings/naukri-9"
+  },
+  {
+    "id": "naukri-10",
+    "title": "Node.js Developer",
+    "company": "TCS",
+    "location": "Hyderabad",
+    "skills": [
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "REST"
+    ],
+    "experienceMin": 2,
+    "experienceMax": 4,
+    "salaryMin": 1200000,
+    "salaryMax": 1600000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "Node.js Developer at TCS in Hyderabad. Work with Node.js, Express, MongoDB, REST. Experience 2-4 years preferred.",
+    "applyUrl": "https://www.naukri.com/job-listings/naukri-10"
+  },
+  {
+    "id": "naukri-11",
+    "title": "Python Developer",
+    "company": "Wipro",
+    "location": "Chennai",
+    "skills": [
+      "Java",
+      "Spring",
+      "SQL"
+    ],
+    "experienceMin": 0,
+    "experienceMax": 2,
+    "salaryMin": 300000,
+    "salaryMax": 700000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "Python Developer at Wipro in Chennai. Work with Java, Spring, SQL. Experience 0-2 years preferred.",
+    "applyUrl": "https://www.naukri.com/job-listings/naukri-11"
+  },
+  {
+    "id": "naukri-12",
+    "title": "Mobile App Developer",
+    "company": "Accenture",
+    "location": "Pune",
+    "skills": [
+      "Python",
+      "Django",
+      "PostgreSQL"
+    ],
+    "experienceMin": 4,
+    "experienceMax": 6,
+    "salaryMin": 400000,
+    "salaryMax": 800000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "Mobile App Developer at Accenture in Pune. Work with Python, Django, PostgreSQL. Experience 4-6 years preferred.",
+    "applyUrl": "https://www.naukri.com/job-listings/naukri-12"
+  },
+  {
+    "id": "naukri-13",
+    "title": "UI/UX Designer",
+    "company": "Cognizant",
+    "location": "Mumbai",
+    "skills": [
+      "Selenium",
+      "Testing",
+      "API Testing"
+    ],
+    "experienceMin": 1,
+    "experienceMax": 3,
+    "salaryMin": 500000,
+    "salaryMax": 900000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "UI/UX Designer at Cognizant in Mumbai. Work with Selenium, Testing, API Testing. Experience 1-3 years preferred.",
+    "applyUrl": "https://www.naukri.com/job-listings/naukri-13"
+  },
+  {
+    "id": "naukri-14",
+    "title": "Business Analyst",
+    "company": "HCL",
+    "location": "Mysuru",
+    "skills": [
+      "AWS",
+      "Docker",
+      "Linux"
+    ],
+    "experienceMin": 2,
+    "experienceMax": 4,
+    "salaryMin": 600000,
+    "salaryMax": 1000000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "Business Analyst at HCL in Mysuru. Work with AWS, Docker, Linux. Experience 2-4 years preferred.",
+    "applyUrl": "https://www.naukri.com/job-listings/naukri-14"
+  },
+  {
+    "id": "naukri-15",
+    "title": "Cloud Engineer",
+    "company": "Tech Mahindra",
+    "location": "Delhi",
+    "skills": [
+      "Figma",
+      "UI Design",
+      "Prototyping"
+    ],
+    "experienceMin": 3,
+    "experienceMax": 5,
+    "salaryMin": 700000,
+    "salaryMax": 1100000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "Cloud Engineer at Tech Mahindra in Delhi. Work with Figma, UI Design, Prototyping. Experience 3-5 years preferred.",
+    "applyUrl": "https://www.naukri.com/job-listings/naukri-15"
+  },
+  {
+    "id": "naukri-16",
+    "title": "Support Engineer",
+    "company": "LTIMindtree",
+    "location": "Remote",
+    "skills": [
+      "SQL",
+      "Excel",
+      "Power BI"
+    ],
+    "experienceMin": 0,
+    "experienceMax": 2,
+    "salaryMin": 800000,
+    "salaryMax": 1200000,
+    "salaryCurrency": "INR",
+    "employmentType": "remote",
+    "description": "Support Engineer at LTIMindtree in Remote. Work with SQL, Excel, Power BI. Experience 0-2 years preferred.",
+    "applyUrl": "https://www.naukri.com/job-listings/naukri-16"
+  },
+  {
+    "id": "naukri-17",
+    "title": "Internship - Web Development",
+    "company": "Infosys",
+    "location": "Bengaluru",
+    "skills": [
+      "React",
+      "JavaScript",
+      "HTML",
+      "CSS"
+    ],
+    "experienceMin": 1,
+    "experienceMax": 3,
+    "salaryMin": 12000,
+    "salaryMax": 27000,
+    "salaryCurrency": "INR",
+    "employmentType": "internship",
+    "description": "Internship - Web Development at Infosys in Bengaluru. Work with React, JavaScript, HTML, CSS. Experience 1-3 years preferred.",
+    "applyUrl": "https://www.naukri.com/job-listings/naukri-17"
+  },
+  {
+    "id": "naukri-18",
+    "title": "ML Engineer",
+    "company": "TCS",
+    "location": "Hyderabad",
+    "skills": [
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "REST"
+    ],
+    "experienceMin": 2,
+    "experienceMax": 4,
+    "salaryMin": 1000000,
+    "salaryMax": 1400000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "ML Engineer at TCS in Hyderabad. Work with Node.js, Express, MongoDB, REST. Experience 2-4 years preferred.",
+    "applyUrl": "https://www.naukri.com/job-listings/naukri-18"
+  },
+  {
+    "id": "naukri-19",
+    "title": "Security Analyst",
+    "company": "Wipro",
+    "location": "Chennai",
+    "skills": [
+      "Java",
+      "Spring",
+      "SQL"
+    ],
+    "experienceMin": 3,
+    "experienceMax": 5,
+    "salaryMin": 1100000,
+    "salaryMax": 1500000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "Security Analyst at Wipro in Chennai. Work with Java, Spring, SQL. Experience 3-5 years preferred.",
+    "applyUrl": "https://www.naukri.com/job-listings/naukri-19"
+  },
+  {
+    "id": "naukri-20",
+    "title": "Product Analyst",
+    "company": "Accenture",
+    "location": "Pune",
+    "skills": [
+      "Python",
+      "Django",
+      "PostgreSQL"
+    ],
+    "experienceMin": 4,
+    "experienceMax": 6,
+    "salaryMin": 1200000,
+    "salaryMax": 1600000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "Product Analyst at Accenture in Pune. Work with Python, Django, PostgreSQL. Experience 4-6 years preferred.",
+    "applyUrl": "https://www.naukri.com/job-listings/naukri-20"
+  },
+  {
+    "id": "naukri-21",
+    "title": "SDE Intern",
+    "company": "Cognizant",
+    "location": "Mumbai",
+    "skills": [
+      "Selenium",
+      "Testing",
+      "API Testing"
+    ],
+    "experienceMin": 0,
+    "experienceMax": 2,
+    "salaryMin": 10000,
+    "salaryMax": 25000,
+    "salaryCurrency": "INR",
+    "employmentType": "internship",
+    "description": "SDE Intern at Cognizant in Mumbai. Work with Selenium, Testing, API Testing. Experience 0-2 years preferred.",
+    "applyUrl": "https://www.naukri.com/job-listings/naukri-21"
+  },
+  {
+    "id": "naukri-22",
+    "title": "Automation Tester",
+    "company": "HCL",
+    "location": "Mysuru",
+    "skills": [
+      "AWS",
+      "Docker",
+      "Linux"
+    ],
+    "experienceMin": 2,
+    "experienceMax": 4,
+    "salaryMin": 400000,
+    "salaryMax": 800000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "Automation Tester at HCL in Mysuru. Work with AWS, Docker, Linux. Experience 2-4 years preferred.",
+    "applyUrl": "https://www.naukri.com/job-listings/naukri-22"
+  },
+  {
+    "id": "naukri-23",
+    "title": "Database Developer",
+    "company": "Tech Mahindra",
+    "location": "Delhi",
+    "skills": [
+      "Figma",
+      "UI Design",
+      "Prototyping"
+    ],
+    "experienceMin": 3,
+    "experienceMax": 5,
+    "salaryMin": 500000,
+    "salaryMax": 900000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "Database Developer at Tech Mahindra in Delhi. Work with Figma, UI Design, Prototyping. Experience 3-5 years preferred.",
+    "applyUrl": "https://www.naukri.com/job-listings/naukri-23"
+  },
+  {
+    "id": "naukri-24",
+    "title": "API Developer",
+    "company": "LTIMindtree",
+    "location": "Remote",
+    "skills": [
+      "SQL",
+      "Excel",
+      "Power BI"
+    ],
+    "experienceMin": 4,
+    "experienceMax": 6,
+    "salaryMin": 600000,
+    "salaryMax": 1000000,
+    "salaryCurrency": "INR",
+    "employmentType": "remote",
+    "description": "API Developer at LTIMindtree in Remote. Work with SQL, Excel, Power BI. Experience 4-6 years preferred.",
+    "applyUrl": "https://www.naukri.com/job-listings/naukri-24"
+  },
+  {
+    "id": "naukri-25",
+    "title": "Graduate Trainee",
+    "company": "Infosys",
+    "location": "Bengaluru",
+    "skills": [
+      "React",
+      "JavaScript",
+      "HTML",
+      "CSS"
+    ],
+    "experienceMin": 1,
+    "experienceMax": 3,
+    "salaryMin": 18000,
+    "salaryMax": 33000,
+    "salaryCurrency": "INR",
+    "employmentType": "internship",
+    "description": "Graduate Trainee at Infosys in Bengaluru. Work with React, JavaScript, HTML, CSS. Experience 1-3 years preferred.",
+    "applyUrl": "https://www.naukri.com/job-listings/naukri-25"
+  }
+]

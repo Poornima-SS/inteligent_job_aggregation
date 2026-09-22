@@ -1,0 +1,426 @@
+[
+  {
+    "id": "linkedin-1",
+    "title": "Software Engineer",
+    "company": "Microsoft",
+    "location": "Bengaluru",
+    "skills": [
+      "React",
+      "JavaScript",
+      "HTML",
+      "CSS"
+    ],
+    "experienceMin": 0,
+    "experienceMax": 2,
+    "salaryMin": 300000,
+    "salaryMax": 700000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "Software Engineer at Microsoft in Bengaluru. Work with React, JavaScript, HTML, CSS. Experience 0-2 years preferred.",
+    "applyUrl": "https://www.linkedin.com/jobs/view/linkedin-1"
+  },
+  {
+    "id": "linkedin-2",
+    "title": "Frontend Developer",
+    "company": "Google",
+    "location": "Hyderabad",
+    "skills": [
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "REST"
+    ],
+    "experienceMin": 2,
+    "experienceMax": 4,
+    "salaryMin": 400000,
+    "salaryMax": 800000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "Frontend Developer at Google in Hyderabad. Work with Node.js, Express, MongoDB, REST. Experience 2-4 years preferred.",
+    "applyUrl": "https://www.linkedin.com/jobs/view/linkedin-2"
+  },
+  {
+    "id": "linkedin-3",
+    "title": "Backend Developer",
+    "company": "Flipkart",
+    "location": "Chennai",
+    "skills": [
+      "Java",
+      "Spring",
+      "SQL"
+    ],
+    "experienceMin": 3,
+    "experienceMax": 5,
+    "salaryMin": 500000,
+    "salaryMax": 900000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "Backend Developer at Flipkart in Chennai. Work with Java, Spring, SQL. Experience 3-5 years preferred.",
+    "applyUrl": "https://www.linkedin.com/jobs/view/linkedin-3"
+  },
+  {
+    "id": "linkedin-4",
+    "title": "Full Stack Developer",
+    "company": "Swiggy",
+    "location": "Pune",
+    "skills": [
+      "Python",
+      "Django",
+      "PostgreSQL"
+    ],
+    "experienceMin": 4,
+    "experienceMax": 6,
+    "salaryMin": 600000,
+    "salaryMax": 1000000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "Full Stack Developer at Swiggy in Pune. Work with Python, Django, PostgreSQL. Experience 4-6 years preferred.",
+    "applyUrl": "https://www.linkedin.com/jobs/view/linkedin-4"
+  },
+  {
+    "id": "linkedin-5",
+    "title": "QA Engineer",
+    "company": "PhonePe",
+    "location": "Mumbai",
+    "skills": [
+      "Selenium",
+      "Testing",
+      "API Testing"
+    ],
+    "experienceMin": 1,
+    "experienceMax": 3,
+    "salaryMin": 700000,
+    "salaryMax": 1100000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "QA Engineer at PhonePe in Mumbai. Work with Selenium, Testing, API Testing. Experience 1-3 years preferred.",
+    "applyUrl": "https://www.linkedin.com/jobs/view/linkedin-5"
+  },
+  {
+    "id": "linkedin-6",
+    "title": "Data Analyst",
+    "company": "Adobe",
+    "location": "Mysuru",
+    "skills": [
+      "AWS",
+      "Docker",
+      "Linux"
+    ],
+    "experienceMin": 0,
+    "experienceMax": 2,
+    "salaryMin": 800000,
+    "salaryMax": 1200000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "Data Analyst at Adobe in Mysuru. Work with AWS, Docker, Linux. Experience 0-2 years preferred.",
+    "applyUrl": "https://www.linkedin.com/jobs/view/linkedin-6"
+  },
+  {
+    "id": "linkedin-7",
+    "title": "DevOps Engineer",
+    "company": "Uber",
+    "location": "Delhi",
+    "skills": [
+      "Figma",
+      "UI Design",
+      "Prototyping"
+    ],
+    "experienceMin": 3,
+    "experienceMax": 5,
+    "salaryMin": 900000,
+    "salaryMax": 1300000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "DevOps Engineer at Uber in Delhi. Work with Figma, UI Design, Prototyping. Experience 3-5 years preferred.",
+    "applyUrl": "https://www.linkedin.com/jobs/view/linkedin-7"
+  },
+  {
+    "id": "linkedin-8",
+    "title": "Java Developer",
+    "company": "Netflix",
+    "location": "Remote",
+    "skills": [
+      "SQL",
+      "Excel",
+      "Power BI"
+    ],
+    "experienceMin": 4,
+    "experienceMax": 6,
+    "salaryMin": 1000000,
+    "salaryMax": 1400000,
+    "salaryCurrency": "INR",
+    "employmentType": "remote",
+    "description": "Java Developer at Netflix in Remote. Work with SQL, Excel, Power BI. Experience 4-6 years preferred.",
+    "applyUrl": "https://www.linkedin.com/jobs/view/linkedin-8"
+  },
+  {
+    "id": "linkedin-9",
+    "title": "React Developer",
+    "company": "Microsoft",
+    "location": "Bengaluru",
+    "skills": [
+      "React",
+      "JavaScript",
+      "HTML",
+      "CSS"
+    ],
+    "experienceMin": 1,
+    "experienceMax": 3,
+    "salaryMin": 1100000,
+    "salaryMax": 1500000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "React Developer at Microsoft in Bengaluru. Work with React, JavaScript, HTML, CSS. Experience 1-3 years preferred.",
+    "applyUrl": "https://www.linkedin.com/jobs/view/linkedin-9"
+  },
+  {
+    "id": "linkedin-10",
+    "title": "Node.js Developer",
+    "company": "Google",
+    "location": "Hyderabad",
+    "skills": [
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "REST"
+    ],
+    "experienceMin": 2,
+    "experienceMax": 4,
+    "salaryMin": 1200000,
+    "salaryMax": 1600000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "Node.js Developer at Google in Hyderabad. Work with Node.js, Express, MongoDB, REST. Experience 2-4 years preferred.",
+    "applyUrl": "https://www.linkedin.com/jobs/view/linkedin-10"
+  },
+  {
+    "id": "linkedin-11",
+    "title": "Python Developer",
+    "company": "Flipkart",
+    "location": "Chennai",
+    "skills": [
+      "Java",
+      "Spring",
+      "SQL"
+    ],
+    "experienceMin": 0,
+    "experienceMax": 2,
+    "salaryMin": 300000,
+    "salaryMax": 700000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "Python Developer at Flipkart in Chennai. Work with Java, Spring, SQL. Experience 0-2 years preferred.",
+    "applyUrl": "https://www.linkedin.com/jobs/view/linkedin-11"
+  },
+  {
+    "id": "linkedin-12",
+    "title": "Mobile App Developer",
+    "company": "Swiggy",
+    "location": "Pune",
+    "skills": [
+      "Python",
+      "Django",
+      "PostgreSQL"
+    ],
+    "experienceMin": 4,
+    "experienceMax": 6,
+    "salaryMin": 400000,
+    "salaryMax": 800000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "Mobile App Developer at Swiggy in Pune. Work with Python, Django, PostgreSQL. Experience 4-6 years preferred.",
+    "applyUrl": "https://www.linkedin.com/jobs/view/linkedin-12"
+  },
+  {
+    "id": "linkedin-13",
+    "title": "UI/UX Designer",
+    "company": "PhonePe",
+    "location": "Mumbai",
+    "skills": [
+      "Selenium",
+      "Testing",
+      "API Testing"
+    ],
+    "experienceMin": 1,
+    "experienceMax": 3,
+    "salaryMin": 500000,
+    "salaryMax": 900000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "UI/UX Designer at PhonePe in Mumbai. Work with Selenium, Testing, API Testing. Experience 1-3 years preferred.",
+    "applyUrl": "https://www.linkedin.com/jobs/view/linkedin-13"
+  },
+  {
+    "id": "linkedin-14",
+    "title": "Business Analyst",
+    "company": "Adobe",
+    "location": "Mysuru",
+    "skills": [
+      "AWS",
+      "Docker",
+      "Linux"
+    ],
+    "experienceMin": 2,
+    "experienceMax": 4,
+    "salaryMin": 600000,
+    "salaryMax": 1000000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "Business Analyst at Adobe in Mysuru. Work with AWS, Docker, Linux. Experience 2-4 years preferred.",
+    "applyUrl": "https://www.linkedin.com/jobs/view/linkedin-14"
+  },
+  {
+    "id": "linkedin-15",
+    "title": "Cloud Engineer",
+    "company": "Uber",
+    "location": "Delhi",
+    "skills": [
+      "Figma",
+      "UI Design",
+      "Prototyping"
+    ],
+    "experienceMin": 3,
+    "experienceMax": 5,
+    "salaryMin": 700000,
+    "salaryMax": 1100000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "Cloud Engineer at Uber in Delhi. Work with Figma, UI Design, Prototyping. Experience 3-5 years preferred.",
+    "applyUrl": "https://www.linkedin.com/jobs/view/linkedin-15"
+  },
+  {
+    "id": "linkedin-16",
+    "title": "Support Engineer",
+    "company": "Netflix",
+    "location": "Remote",
+    "skills": [
+      "SQL",
+      "Excel",
+      "Power BI"
+    ],
+    "experienceMin": 0,
+    "experienceMax": 2,
+    "salaryMin": 800000,
+    "salaryMax": 1200000,
+    "salaryCurrency": "INR",
+    "employmentType": "remote",
+    "description": "Support Engineer at Netflix in Remote. Work with SQL, Excel, Power BI. Experience 0-2 years preferred.",
+    "applyUrl": "https://www.linkedin.com/jobs/view/linkedin-16"
+  },
+  {
+    "id": "linkedin-17",
+    "title": "Internship - Web Development",
+    "company": "Microsoft",
+    "location": "Bengaluru",
+    "skills": [
+      "React",
+      "JavaScript",
+      "HTML",
+      "CSS"
+    ],
+    "experienceMin": 1,
+    "experienceMax": 3,
+    "salaryMin": 12000,
+    "salaryMax": 27000,
+    "salaryCurrency": "INR",
+    "employmentType": "internship",
+    "description": "Internship - Web Development at Microsoft in Bengaluru. Work with React, JavaScript, HTML, CSS. Experience 1-3 years preferred.",
+    "applyUrl": "https://www.linkedin.com/jobs/view/linkedin-17"
+  },
+  {
+    "id": "linkedin-18",
+    "title": "ML Engineer",
+    "company": "Google",
+    "location": "Hyderabad",
+    "skills": [
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "REST"
+    ],
+    "experienceMin": 2,
+    "experienceMax": 4,
+    "salaryMin": 1000000,
+    "salaryMax": 1400000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "ML Engineer at Google in Hyderabad. Work with Node.js, Express, MongoDB, REST. Experience 2-4 years preferred.",
+    "applyUrl": "https://www.linkedin.com/jobs/view/linkedin-18"
+  },
+  {
+    "id": "linkedin-19",
+    "title": "Security Analyst",
+    "company": "Flipkart",
+    "location": "Chennai",
+    "skills": [
+      "Java",
+      "Spring",
+      "SQL"
+    ],
+    "experienceMin": 3,
+    "experienceMax": 5,
+    "salaryMin": 1100000,
+    "salaryMax": 1500000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "Security Analyst at Flipkart in Chennai. Work with Java, Spring, SQL. Experience 3-5 years preferred.",
+    "applyUrl": "https://www.linkedin.com/jobs/view/linkedin-19"
+  },
+  {
+    "id": "linkedin-20",
+    "title": "Product Analyst",
+    "company": "Swiggy",
+    "location": "Pune",
+    "skills": [
+      "Python",
+      "Django",
+      "PostgreSQL"
+    ],
+    "experienceMin": 4,
+    "experienceMax": 6,
+    "salaryMin": 1200000,
+    "salaryMax": 1600000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "Product Analyst at Swiggy in Pune. Work with Python, Django, PostgreSQL. Experience 4-6 years preferred.",
+    "applyUrl": "https://www.linkedin.com/jobs/view/linkedin-20"
+  },
+  {
+    "id": "linkedin-21",
+    "title": "SDE Intern",
+    "company": "PhonePe",
+    "location": "Mumbai",
+    "skills": [
+      "Selenium",
+      "Testing",
+      "API Testing"
+    ],
+    "experienceMin": 0,
+    "experienceMax": 2,
+    "salaryMin": 10000,
+    "salaryMax": 25000,
+    "salaryCurrency": "INR",
+    "employmentType": "internship",
+    "description": "SDE Intern at PhonePe in Mumbai. Work with Selenium, Testing, API Testing. Experience 0-2 years preferred.",
+    "applyUrl": "https://www.linkedin.com/jobs/view/linkedin-21"
+  },
+  {
+    "id": "linkedin-22",
+    "title": "Automation Tester",
+    "company": "Adobe",
+    "location": "Mysuru",
+    "skills": [
+      "AWS",
+      "Docker",
+      "Linux"
+    ],
+    "experienceMin": 2,
+    "experienceMax": 4,
+    "salaryMin": 400000,
+    "salaryMax": 800000,
+    "salaryCurrency": "INR",
+    "employmentType": "full-time",
+    "description": "Automation Tester at Adobe in Mysuru. Work with AWS, Docker, Linux. Experience 2-4 years preferred.",
+    "applyUrl": "https://www.linkedin.com/jobs/view/linkedin-22"
+  }
+]

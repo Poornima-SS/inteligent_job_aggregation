@@ -8,9 +8,10 @@ React + Node.js project for aggregating job listings, cleaning/deduplicating dat
 |---|---|
 | 0 Environment | Done |
 | 1 Models + seed + jobs API | Done |
-| 2 Auth (register / login / JWT / profile) | Done |
-| 3 Filters + pagination + save jobs | Done |
-| 4 Scraping pipeline | Next |
+| 2 Auth | Done |
+| 3 Filters + save jobs | Done |
+| 4 Scraping pipeline | Done |
+| 5 Scheduler + recommendations | Next |
 
 ## Setup
 
@@ -33,23 +34,31 @@ npm run dev
 
 Open: http://localhost:5173
 
-## Phase 3 API
+## Phase 4 — Scraping
 
 | Method | Endpoint | Auth |
 |---|---|---|
-| GET | `/api/jobs?q=&location=&skills=&employmentType=&experienceMax=&salaryMin=&source=&sort=&page=&limit=` | Optional |
-| GET | `/api/jobs/saved` | Bearer |
-| POST | `/api/jobs/:id/save` | Bearer |
-| DELETE | `/api/jobs/:id/save` | Bearer |
+| GET | `/api/scrape/sources` | Bearer |
+| POST | `/api/scrape/run` | Bearer |
+| GET | `/api/scrape/logs` | Bearer |
 
-Sort options: `newest`, `oldest`, `salary_high`, `salary_low`, `title`
+### Sources
 
-## Frontend routes
+- `naukri`, `indeed`, `linkedin`, `apna` — portal-style extractors (demo HTML fixtures → clean → MongoDB)
+- `private-company` — Zoho / Freshworks / Razorpay career-page style boards
+- `remotive`, `remoteok` — public APIs
+- `company-cheerio`, `company-puppeteer` — local HTML demos
 
-- `/jobs` — filters, pagination, save
-- `/jobs/:id` — detail + save/unsave
-- `/saved` — saved jobs list (login required)
+**Note for viva:** Naukri/Indeed/LinkedIn/Apna block unauthorized live scraping (ToS + anti-bot). This project implements real extract→clean→dedupe→MongoDB pipelines using structure-matched fixtures so demos always work. Production would use official partner APIs.
 
-## Next: Phase 4
+Pipeline: scrape → clean/normalize → de-duplicate (`contentHash` + near-match) → upsert MongoDB → `ScrapeLog`
 
-Scraping pipeline (Cheerio/Puppeteer), cleaner, dedupe, scrape logs.
+UI: `/scrape` (login required)
+
+## Ethical note
+
+Only public/demo sources are used. Rate limiting and polite User-Agent are applied. Do not scrape authenticated or CAPTCHA-protected sites.
+
+## Next: Phase 5
+
+Scheduled scrapes (`node-cron`) + skill-based recommendations.

@@ -26,6 +26,12 @@ export default function Navbar() {
                 Saved
               </NavLink>
               <NavLink
+                to="/scrape"
+                className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}
+              >
+                Scrape
+              </NavLink>
+              <NavLink
                 to="/profile"
                 className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}
               >
