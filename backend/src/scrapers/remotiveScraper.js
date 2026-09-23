@@ -1,7 +1,7 @@
 const axios = require("axios");
 const { DEFAULT_HEADERS, withRetry, makeRawJob, delay } = require("./baseScraper");
 
-async function scrapeRemotive({ limit = 15 } = {}) {
+async function scrapeRemotive({ limit = 40 } = {}) {
   const data = await withRetry(async () => {
     const res = await axios.get("https://remotive.com/api/remote-jobs", {
       headers: DEFAULT_HEADERS,

@@ -117,6 +117,22 @@ a {
   color: var(--muted);
 }
 
+.nav-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.15rem;
+  height: 1.15rem;
+  margin-left: 0.35rem;
+  padding: 0 0.3rem;
+  border-radius: 999px;
+  background: var(--accent-deep, #0f766e);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
 /* Buttons */
 .btn {
   display: inline-flex;
@@ -521,6 +537,106 @@ a {
 
 .scrape-actions .filter-actions {
   flex-wrap: wrap;
+}
+
+.recommend-wrap {
+  position: relative;
+}
+
+.match-badge {
+  display: inline-flex;
+  margin-bottom: 0.45rem;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+}
+
+.recommend-breakdown {
+  margin: -0.35rem 0 0.85rem;
+  padding: 0 0.2rem;
+}
+
+.source-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin: 0.75rem 0 0;
+}
+
+.source-pill {
+  display: inline-flex;
+  align-items: center;
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+}
+
+.job-source-row {
+  margin-bottom: 0.35rem;
+}
+
+.source-inline {
+  color: var(--accent-deep);
+  font-weight: 600;
+}
+
+.card-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.35rem;
+}
+
+.check-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.92rem;
+}
+
+.section-title {
+  font-size: 1.15rem;
+  margin: 0 0 0.75rem;
+}
+
+.alert-cards {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.alert-card h3 {
+  font-size: 1.05rem;
+}
+
+.muted-pill {
+  opacity: 0.55;
+}
+
+.alert-preview-list {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.alert-preview-list li {
+  margin-bottom: 0.35rem;
+}
+
+.notify-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.notify-item.notify-unread {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent);
 }
 
 .btn:disabled {

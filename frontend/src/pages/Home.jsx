@@ -25,9 +25,14 @@ export default function Home() {
             Browse jobs
           </Link>
           {isAuthenticated ? (
-            <Link to="/profile" className="btn btn-ghost">
-              Hi {user?.name?.split(" ")[0] || "there"} — profile
-            </Link>
+            <>
+              <Link to="/alerts" className="btn btn-ghost">
+                Job alerts
+              </Link>
+              <Link to="/profile" className="btn btn-ghost">
+                Hi {user?.name?.split(" ")[0] || "there"} — profile
+              </Link>
+            </>
           ) : (
             <Link to="/register" className="btn btn-ghost">
               Create account

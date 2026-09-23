@@ -3,4 +3,5 @@ module.exports = {
   Job: require("./Job"),
   ScrapeLog: require("./ScrapeLog"),
   Alert: require("./Alert"),
+  Notification: require("./Notification"),
 };

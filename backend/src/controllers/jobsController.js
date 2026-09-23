@@ -1,5 +1,7 @@
 const { Job } = require("../models");
 const { isDBConnected } = require("../config/db");
+const { scoreJob } = require("../services/ranker");
+const { getLatestScrapeLog } = require("../jobs/cron");
 
 function escapeRegex(value) {
   return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -157,7 +159,7 @@ async function getJobStats(req, res) {
       return res.status(503).json({ message: "Database not connected" });
     }
 
-    const [total, active, bySource, byType] = await Promise.all([
+    const [total, active, bySource, byType, latestScrape] = await Promise.all([
       Job.countDocuments(),
       Job.countDocuments({ isActive: true }),
       Job.aggregate([{ $group: { _id: "$source", count: { $sum: 1 } } }, { $sort: { count: -1 } }]),
@@ -166,11 +168,83 @@ async function getJobStats(req, res) {
         { $group: { _id: "$employmentType", count: { $sum: 1 } } },
         { $sort: { count: -1 } },
       ]),
+      getLatestScrapeLog(),
     ]);
 
-    res.json({ total, active, bySource, byType });
+    res.json({
+      total,
+      active,
+      bySource,
+      byType,
+      lastUpdated: latestScrape?.finishedAt || latestScrape?.startedAt || null,
+      latestScrape: latestScrape
+        ? {
+            source: latestScrape.source,
+            status: latestScrape.status,
+            jobsFound: latestScrape.jobsFound,
+            jobsSaved: latestScrape.jobsSaved,
+            startedAt: latestScrape.startedAt,
+            finishedAt: latestScrape.finishedAt,
+          }
+        : null,
+    });
   } catch (err) {
     res.status(500).json({ message: "Failed to fetch stats", error: err.message });
+  }
+}
+
+async function getRecommendations(req, res) {
+  try {
+    if (!isDBConnected()) {
+      return res.status(503).json({ message: "Database not connected" });
+    }
+
+    const user = req.user;
+    const limit = Math.min(Math.max(parseInt(req.query.limit, 10) || 20, 1), 50);
+    const minScore = Math.max(parseInt(req.query.minScore, 10) || 25, 0);
+
+    if (!user.skills?.length && !user.preferredRoles?.length && !user.preferredLocations?.length) {
+      return res.json({
+        message: "Add skills or preferences in your profile to improve recommendations",
+        profile: {
+          skills: user.skills || [],
+          preferredLocations: user.preferredLocations || [],
+          preferredRoles: user.preferredRoles || [],
+          experienceYears: user.experienceYears || 0,
+        },
+        total: 0,
+        jobs: [],
+      });
+    }
+
+    const jobs = await Job.find({ isActive: true }).limit(400);
+    const savedSet = new Set((user.savedJobs || []).map((id) => String(id)));
+
+    const ranked = jobs
+      .map((job) => {
+        const { score, breakdown } = scoreJob(user, job);
+        return {
+          ...withSavedFlag(job, savedSet),
+          matchScore: score,
+          matchBreakdown: breakdown,
+        };
+      })
+      .filter((j) => j.matchScore >= minScore)
+      .sort((a, b) => b.matchScore - a.matchScore || new Date(b.postedAt) - new Date(a.postedAt))
+      .slice(0, limit);
+
+    res.json({
+      profile: {
+        skills: user.skills || [],
+        preferredLocations: user.preferredLocations || [],
+        preferredRoles: user.preferredRoles || [],
+        experienceYears: user.experienceYears || 0,
+      },
+      total: ranked.length,
+      jobs: ranked,
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to build recommendations", error: err.message });
   }
 }
 
@@ -250,6 +324,7 @@ module.exports = {
   listJobs,
   getJobById,
   getJobStats,
+  getRecommendations,
   saveJob,
   unsaveJob,
   getSavedJobs,

@@ -15,16 +15,19 @@ export default function AdminScrape() {
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [statusText, setStatusText] = useState("");
+  const [schedule, setSchedule] = useState(null);
 
   const refresh = async () => {
-    const [sourceData, logData, statsData] = await Promise.all([
+    const [sourceData, logData, statsData, scheduleData] = await Promise.all([
       scrapeApi.sources(),
       scrapeApi.logs({ limit: 20 }),
       jobsApi.stats(),
+      scrapeApi.schedule(),
     ]);
     setSources(sourceData.sources || []);
     setLogs(logData.logs || []);
     setStats(statsData);
+    setSchedule(scheduleData);
     setSelected((prev) => {
       if (prev.length) return prev;
       return (sourceData.sources || []).map((s) => s.id);
@@ -76,6 +79,32 @@ export default function AdminScrape() {
     }
   };
 
+  const runScheduleNow = async () => {
+    setBusy(true);
+    setError("");
+    setStatusText("Running scheduled sources now...");
+    try {
+      const outcome = await scrapeApi.runScheduleNow();
+      setResult({
+        status: outcome.status,
+        summary: outcome.summary,
+        results: outcome.results,
+      });
+      setSchedule({ schedule: outcome.schedule, latestScrape: null });
+      setStatusText(
+        `Scheduler run finished — found ${outcome.summary?.jobsFound || 0}, saved ${
+          outcome.summary?.jobsSaved || 0
+        }`
+      );
+      await refresh();
+    } catch (err) {
+      setError(err.message || "Scheduler run failed");
+      setStatusText("");
+    } finally {
+      setBusy(false);
+    }
+  };
+
   if (authLoading) {
     return (
       <div className="page">
@@ -106,6 +135,37 @@ export default function AdminScrape() {
             Database: <strong>{stats.active}</strong> active jobs · sources:{" "}
             {(stats.bySource || []).map((s) => `${s._id}(${s.count})`).join(", ") || "none"}
           </p>
+        </div>
+      )}
+
+      {schedule?.schedule && (
+        <div className="panel" style={{ marginBottom: "1rem" }}>
+          <p style={{ margin: "0 0 0.5rem", fontWeight: 600 }}>Automatic scheduler (Phase 5)</p>
+          <p className="muted" style={{ margin: 0 }}>
+            Status: <strong>{schedule.schedule.enabled ? "enabled" : "disabled"}</strong>
+            {" · "}
+            cron: <code>{schedule.schedule.expression}</code>
+            {" · "}
+            sources: {(schedule.schedule.sources || []).join(", ")}
+          </p>
+          {schedule.latestScrape && (
+            <p className="muted" style={{ margin: "0.4rem 0 0" }}>
+              Latest log: {schedule.latestScrape.source} ({schedule.latestScrape.status}) at{" "}
+              {new Date(
+                schedule.latestScrape.finishedAt || schedule.latestScrape.startedAt
+              ).toLocaleString()}
+            </p>
+          )}
+          <div className="filter-actions">
+            <button
+              className="btn btn-ghost btn-sm"
+              type="button"
+              disabled={busy}
+              onClick={runScheduleNow}
+            >
+              Run scheduled sources now
+            </button>
+          </div>
         </div>
       )}
 
@@ -184,8 +244,10 @@ export default function AdminScrape() {
           </button>
         </div>
         <p className="muted" style={{ margin: 0 }}>
-          Tip: use <strong>Run portals + companies</strong> for Naukri/Indeed/LinkedIn/Apna/private
-          boards (~100 jobs). Public API buttons need internet.
+          <strong>Portals:</strong> use <em>Run portals + companies</em> for Naukri, Indeed,
+          LinkedIn, Apna (each job shows the portal name). <strong>Live APIs:</strong> Remotive +
+          RemoteOK have direct apply links. Portal boards open a live search on that portal for the
+          same role/location.
         </p>
         <div className="source-grid">
           {sources.map((source) => (

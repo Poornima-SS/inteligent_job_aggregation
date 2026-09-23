@@ -3,10 +3,12 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const { connectDB, isDBConnected } = require("./src/config/db");
+const { startScheduler, getStatus } = require("./src/jobs/cron");
 const jobsRoutes = require("./src/routes/jobs");
 const authRoutes = require("./src/routes/auth");
 const usersRoutes = require("./src/routes/users");
 const scrapeRoutes = require("./src/routes/scrape");
+const alertsRoutes = require("./src/routes/alerts");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -24,11 +26,14 @@ app.use(
 app.use(express.json());
 
 app.get("/api/health", (req, res) => {
+  const schedule = getStatus();
   res.json({
     status: "ok",
     service: "intelligent-job-aggregation",
-    phase: 4,
+    phase: 6,
     dbConnected: isDBConnected(),
+    schedulerEnabled: schedule.enabled,
+    cronExpression: schedule.expression,
     timestamp: new Date().toISOString(),
   });
 });
@@ -45,9 +50,11 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/jobs", jobsRoutes);
 app.use("/api/scrape", scrapeRoutes);
+app.use("/api/alerts", alertsRoutes);
 
 async function start() {
   await connectDB();
+  startScheduler();
 
   app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);

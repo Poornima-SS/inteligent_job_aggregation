@@ -74,9 +74,9 @@ function parseSalary(text = "", fallbackCurrency = "USD") {
   else if (/\$|usd/i.test(raw)) currency = "USD";
   else if (/€|eur/i.test(raw)) currency = "EUR";
 
-  // Handle Indian "X-Y Lacs/LPA" patterns first
+  // Handle Indian "X-Y Lacs/LPA/L" patterns first (including 8L - 15L)
   const lacRange = raw.match(
-    /(\d+(?:\.\d+)?)\s*[-–to]+\s*(\d+(?:\.\d+)?)\s*(?:lacs?|lpa|lakhs?)/i
+    /(\d+(?:\.\d+)?)\s*L?\s*[-–to]+\s*(\d+(?:\.\d+)?)\s*(?:lacs?|lpa|lakhs?|l)\b/i
   );
   if (lacRange) {
     return {
@@ -85,7 +85,15 @@ function parseSalary(text = "", fallbackCurrency = "USD") {
       salaryCurrency: "INR",
     };
   }
-  const lacSingle = raw.match(/(\d+(?:\.\d+)?)\s*(?:lacs?|lpa|lakhs?)/i);
+  const lacCompact = raw.match(/(\d+(?:\.\d+)?)\s*L\s*[-–]\s*(\d+(?:\.\d+)?)\s*L/i);
+  if (lacCompact) {
+    return {
+      salaryMin: Math.round(parseFloat(lacCompact[1]) * 100000),
+      salaryMax: Math.round(parseFloat(lacCompact[2]) * 100000),
+      salaryCurrency: "INR",
+    };
+  }
+  const lacSingle = raw.match(/(\d+(?:\.\d+)?)\s*(?:lacs?|lpa|lakhs?|\bl\b)/i);
   if (lacSingle) {
     const n = Math.round(parseFloat(lacSingle[1]) * 100000);
     return { salaryMin: n, salaryMax: n, salaryCurrency: "INR" };

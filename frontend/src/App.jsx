@@ -9,6 +9,8 @@ import Jobs from "./pages/Jobs";
 import JobDetail from "./pages/JobDetail";
 import SavedJobs from "./pages/SavedJobs";
 import AdminScrape from "./pages/AdminScrape";
+import Recommendations from "./pages/Recommendations";
+import Alerts from "./pages/Alerts";
 
 export default function App() {
   return (
@@ -25,6 +27,8 @@ export default function App() {
               <Route path="/jobs" element={<Jobs />} />
               <Route path="/jobs/:id" element={<JobDetail />} />
               <Route path="/saved" element={<SavedJobs />} />
+              <Route path="/recommendations" element={<Recommendations />} />
+              <Route path="/alerts" element={<Alerts />} />
               <Route path="/scrape" element={<AdminScrape />} />
             </Routes>
           </main>

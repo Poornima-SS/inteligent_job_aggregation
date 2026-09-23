@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { jobsApi } from "../api/client";
 import { useAuth } from "../context/AuthContext";
+import { getSourceLabel, resolveApplyUrl } from "../utils/jobLinks";
 
 export default function JobDetail() {
   const { id } = useParams();
@@ -66,6 +67,9 @@ export default function JobDetail() {
     );
   }
 
+  const sourceLabel = getSourceLabel(job.source);
+  const outbound = resolveApplyUrl(job);
+
   return (
     <div className="page" style={{ maxWidth: 720 }}>
       <Link className="detail-back" to="/jobs">
@@ -77,6 +81,12 @@ export default function JobDetail() {
       <p className="job-meta">
         {job.company} · {job.location} · {job.employmentType}
       </p>
+
+      <div className="source-banner">
+        <span className="source-pill">{sourceLabel}</span>
+        <span className="muted">Source platform / channel for this listing</span>
+      </div>
+
       <div className="panel section-block">
         <p className="job-skills" style={{ marginBottom: "1rem" }}>
           <strong>Skills:</strong> {(job.skills || []).join(", ") || "Not listed"}
@@ -93,6 +103,7 @@ export default function JobDetail() {
         <p style={{ margin: "0 0 1.25rem", lineHeight: 1.65, color: "var(--ink-soft)" }}>
           {job.description || "No description provided."}
         </p>
+
         <div className="hero-actions">
           <button
             type="button"
@@ -102,14 +113,28 @@ export default function JobDetail() {
           >
             {busy ? "Please wait..." : job.isSaved ? "Unsave job" : "Save job"}
           </button>
-          {job.applyUrl && (
-            <a className="btn btn-primary" href={job.applyUrl} target="_blank" rel="noreferrer">
-              Open apply link
-            </a>
-          )}
+          <a
+            className="btn btn-primary"
+            href={outbound.url}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {outbound.label}
+          </a>
         </div>
+
+        <p className="muted" style={{ marginTop: "0.85rem", wordBreak: "break-all" }}>
+          Opens: {outbound.url}
+        </p>
+        {outbound.note && <p className="alert alert-ok" style={{ marginTop: "0.75rem" }}>{outbound.note}</p>}
+
         {message && (
-          <p className={`alert ${message.includes("Login") || message.includes("Could") ? "alert-error" : "alert-ok"}`} style={{ marginTop: "1rem" }}>
+          <p
+            className={`alert ${
+              message.includes("Login") || message.includes("Could") ? "alert-error" : "alert-ok"
+            }`}
+            style={{ marginTop: "1rem" }}
+          >
             {message}
             {message.includes("Login") && (
               <>

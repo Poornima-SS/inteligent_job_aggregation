@@ -22,6 +22,7 @@ export default function Jobs() {
   const [filters, setFilters] = useState(defaultFilters);
   const [page, setPage] = useState(1);
   const [data, setData] = useState(null);
+  const [stats, setStats] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
 
@@ -29,12 +30,16 @@ export default function Jobs() {
     setLoading(true);
     setError("");
     try {
-      const result = await jobsApi.list({
-        ...nextFilters,
-        page: nextPage,
-        limit: 8,
-      });
+      const [result, statsData] = await Promise.all([
+        jobsApi.list({
+          ...nextFilters,
+          page: nextPage,
+          limit: 8,
+        }),
+        jobsApi.stats().catch(() => null),
+      ]);
       setData(result);
+      if (statsData) setStats(statsData);
     } catch (err) {
       setError(err.message || "Failed to load jobs");
     } finally {
@@ -66,6 +71,12 @@ export default function Jobs() {
           <h1 className="page-title">Jobs</h1>
           <p className="page-sub">
             Filter by skills, location, experience, salary, and type.
+            {stats?.lastUpdated && (
+              <>
+                {" "}
+                Last scrape update: <strong>{new Date(stats.lastUpdated).toLocaleString()}</strong>.
+              </>
+            )}
             {!isAuthenticated && (
               <>
                 {" "}
@@ -75,9 +86,14 @@ export default function Jobs() {
           </p>
         </div>
         {isAuthenticated && (
-          <Link to="/saved" className="btn btn-ghost btn-sm">
-            Saved jobs
-          </Link>
+          <div className="filter-actions" style={{ marginTop: 0 }}>
+            <Link to="/recommendations" className="btn btn-accent btn-sm">
+              Recommendations
+            </Link>
+            <Link to="/saved" className="btn btn-ghost btn-sm">
+              Saved jobs
+            </Link>
+          </div>
         )}
       </div>
 

@@ -1,6 +1,7 @@
 const { ScrapeLog } = require("../models");
 const { cleanJob } = require("./cleaner");
 const { upsertJobs } = require("./dedupe");
+const { processAlerts } = require("./notifier");
 const { scrapeRemotive } = require("../scrapers/remotiveScraper");
 const { scrapeRemoteOK } = require("../scrapers/remoteokScraper");
 const { scrapeCompanyCheerio } = require("../scrapers/companyCheerioScraper");
@@ -142,6 +143,8 @@ async function runSource(source, options = {}) {
 async function runScrapers(sources = [], options = {}) {
   const selected = (sources.length ? sources : listSources()).filter((s) => SOURCE_RUNNERS[s]);
   const results = [];
+  const startedAt = new Date();
+
   for (const source of selected) {
     // eslint-disable-next-line no-await-in-loop
     results.push(await runSource(source, options));
@@ -158,7 +161,20 @@ async function runScrapers(sources = [], options = {}) {
     { jobsFound: 0, jobsSaved: 0, succeeded: 0, failed: 0 }
   );
 
-  return { results, summary, sources: selected };
+  let alerts = null;
+  if (summary.jobsSaved > 0) {
+    try {
+      alerts = await processAlerts({ since: startedAt });
+      console.log(
+        `[alerts] checked=${alerts.alertsChecked} matches=${alerts.matches} created=${alerts.notificationsCreated}`
+      );
+    } catch (err) {
+      console.warn("[alerts] post-scrape processing failed:", err.message);
+      alerts = { error: err.message || String(err) };
+    }
+  }
+
+  return { results, summary, sources: selected, alerts };
 }
 
 module.exports = {

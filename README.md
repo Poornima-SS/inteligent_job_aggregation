@@ -1,6 +1,6 @@
 # Intelligent Job Aggregation System Using Web Scraping
 
-React + Node.js project for aggregating job listings, cleaning/deduplicating data, filtering, and recommendations.
+React + Node.js project for aggregating job listings, cleaning/deduplicating data, filtering, recommendations, and job alerts.
 
 ## Current status
 
@@ -11,7 +11,8 @@ React + Node.js project for aggregating job listings, cleaning/deduplicating dat
 | 2 Auth | Done |
 | 3 Filters + save jobs | Done |
 | 4 Scraping pipeline | Done |
-| 5 Scheduler + recommendations | Next |
+| 5 Scheduler + recommendations | Done |
+| 6 Alerts | Done |
 
 ## Setup
 
@@ -34,31 +35,63 @@ npm run dev
 
 Open: http://localhost:5173
 
-## Phase 4 — Scraping
+## Phase 5
 
-| Method | Endpoint | Auth |
+### Scheduler (`node-cron`)
+
+Env vars in `backend/.env`:
+
+| Variable | Default | Meaning |
 |---|---|---|
-| GET | `/api/scrape/sources` | Bearer |
-| POST | `/api/scrape/run` | Bearer |
-| GET | `/api/scrape/logs` | Bearer |
+| `CRON_ENABLED` | `true` | Turn scheduler on/off |
+| `CRON_EXPRESSION` | `0 */6 * * *` | Every 6 hours |
+| `CRON_SOURCES` | naukri,indeed,linkedin,apna,private-company | Sources to auto-scrape |
 
-### Sources
+APIs:
 
-- `naukri`, `indeed`, `linkedin`, `apna` — portal-style extractors (demo HTML fixtures → clean → MongoDB)
-- `private-company` — Zoho / Freshworks / Razorpay career-page style boards
-- `remotive`, `remoteok` — public APIs
-- `company-cheerio`, `company-puppeteer` — local HTML demos
+- `GET /api/scrape/schedule`
+- `POST /api/scrape/schedule/run-now`
 
-**Note for viva:** Naukri/Indeed/LinkedIn/Apna block unauthorized live scraping (ToS + anti-bot). This project implements real extract→clean→dedupe→MongoDB pipelines using structure-matched fixtures so demos always work. Production would use official partner APIs.
+### Recommendations
 
-Pipeline: scrape → clean/normalize → de-duplicate (`contentHash` + near-match) → upsert MongoDB → `ScrapeLog`
+- `GET /api/jobs/recommendations` (auth)
+- Scores skills (45%), location (20%), role (15%), experience (10%), recency (10%)
+- UI: `/recommendations` (“For you” in nav)
 
-UI: `/scrape` (login required)
+Jobs page also shows **Last scrape update** from the latest `ScrapeLog`.
 
-## Ethical note
+## Phase 6 — Alerts
 
-Only public/demo sources are used. Rate limiting and polite User-Agent are applied. Do not scrape authenticated or CAPTCHA-protected sites.
+Create keyword/location/skill alerts. After each scrape (and via **Check matches now**), matching jobs become in-app notifications. Optional email if SMTP env vars are set.
 
-## Next: Phase 5
+### APIs (auth required)
 
-Scheduled scrapes (`node-cron`) + skill-based recommendations.
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `/api/alerts` | List your alerts |
+| POST | `/api/alerts` | Create alert |
+| PUT | `/api/alerts/:id` | Update alert |
+| DELETE | `/api/alerts/:id` | Delete alert |
+| POST | `/api/alerts/preview` | Preview matching jobs |
+| POST | `/api/alerts/run-now` | Evaluate alerts now |
+| GET | `/api/alerts/notifications` | List notifications |
+| GET | `/api/alerts/notifications/unread-count` | Badge count |
+| POST | `/api/alerts/notifications/:id/read` | Mark one read |
+| POST | `/api/alerts/notifications/read-all` | Mark all read |
+
+### UI
+
+- Nav → **Alerts** (badge shows unread count)
+- Page: `/alerts`
+
+### Optional email (`backend/.env`)
+
+```
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=...
+SMTP_PASS=...
+SMTP_FROM=...
+```
+
+Without SMTP, alerts still work as in-app notifications.

@@ -23,9 +23,56 @@ function readHtml(name) {
   return fs.readFileSync(file, "utf8");
 }
 
+function livePortalUrl(source, title, company, location) {
+  const q = encodeURIComponent(`${title || ""} ${company || ""}`.trim() || "software developer");
+  const titleOnly = encodeURIComponent(title || "software developer");
+  const loc = encodeURIComponent(!location || location === "Remote" ? "India" : location);
+  const roleSlug = String(title || "software-engineer")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+  const citySlug = String(!location || location === "Remote" ? "india" : location)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+
+  switch (source) {
+    case "naukri":
+      return `https://www.naukri.com/${roleSlug}-jobs-in-${citySlug}`;
+    case "indeed":
+      return `https://in.indeed.com/jobs?q=${titleOnly}&l=${loc}`;
+    case "linkedin":
+      return `https://www.linkedin.com/jobs/search/?keywords=${q}&location=${loc}`;
+    case "apna":
+      return `https://apna.co/jobs?q=${titleOnly}`;
+    default:
+      return rowApplyFallback(company);
+  }
+}
+
+function rowApplyFallback(company) {
+  return `https://www.google.com/search?q=${encodeURIComponent(`${company || ""} careers jobs`)}`;
+}
+
+function isBrokenPortalUrl(url = "") {
+  const value = String(url || "").toLowerCase();
+  if (!value || value.startsWith("local://")) return true;
+  if (value.includes("example.com") || value.includes("/demo")) return true;
+  if (/job-listings\/(naukri|indeed|linkedin|apna|private)/.test(value)) return true;
+  if (/\/viewjob\/(indeed|naukri)-/.test(value)) return true;
+  if (/jobs\/view\/(linkedin|naukri|indeed)-/.test(value)) return true;
+  if (/apna\.co\/job\/(apna|demo)/.test(value)) return true;
+  if (/careers\.example\.com/.test(value)) return true;
+  return false;
+}
+
 function fromJsonList(rows, source) {
-  return rows.map((row) =>
-    makeRawJob({
+  return rows.map((row) => {
+    const applyUrl = isBrokenPortalUrl(row.applyUrl)
+      ? livePortalUrl(source, row.title, row.company, row.location)
+      : row.applyUrl;
+
+    return makeRawJob({
       title: row.title,
       company: row.company,
       location: row.location,
@@ -38,11 +85,11 @@ function fromJsonList(rows, source) {
       salaryCurrency: row.salaryCurrency || "INR",
       employmentType: row.employmentType,
       source,
-      sourceUrl: row.applyUrl || `local://${source}/${row.id || row.title}`,
-      applyUrl: row.applyUrl || "",
+      sourceUrl: applyUrl,
+      applyUrl,
       salaryText: "",
-    })
-  );
+    });
+  });
 }
 
 function parseNaukri(html) {

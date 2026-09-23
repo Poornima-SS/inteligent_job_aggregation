@@ -3,6 +3,7 @@ const {
   listJobs,
   getJobById,
   getJobStats,
+  getRecommendations,
   saveJob,
   unsaveJob,
   getSavedJobs,
@@ -13,6 +14,7 @@ const router = express.Router();
 
 router.get("/", optionalAuth, listJobs);
 router.get("/stats", getJobStats);
+router.get("/recommendations", authRequired, getRecommendations);
 router.get("/saved", authRequired, getSavedJobs);
 router.post("/:id/save", authRequired, saveJob);
 router.delete("/:id/save", authRequired, unsaveJob);

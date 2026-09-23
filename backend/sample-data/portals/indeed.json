@@ -16,8 +16,9 @@
     "salaryMax": 700000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "Software Engineer at Amazon in Bengaluru. Work with React, JavaScript, HTML, CSS. Experience 0-2 years preferred.",
-    "applyUrl": "https://in.indeed.com/viewjob/indeed-1"
+    "description": "Software Engineer at Amazon in Bengaluru. Work with React, JavaScript, HTML, CSS. Experience 0-2 years preferred. Source portal: indeed.",
+    "portal": "indeed",
+    "applyUrl": "https://in.indeed.com/jobs?q=Software%20Engineer&l=Bengaluru"
   },
   {
     "id": "indeed-2",
@@ -36,8 +37,9 @@
     "salaryMax": 800000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "Frontend Developer at IBM in Hyderabad. Work with Node.js, Express, MongoDB, REST. Experience 2-4 years preferred.",
-    "applyUrl": "https://in.indeed.com/viewjob/indeed-2"
+    "description": "Frontend Developer at IBM in Hyderabad. Work with Node.js, Express, MongoDB, REST. Experience 2-4 years preferred. Source portal: indeed.",
+    "portal": "indeed",
+    "applyUrl": "https://in.indeed.com/jobs?q=Frontend%20Developer&l=Hyderabad"
   },
   {
     "id": "indeed-3",
@@ -55,8 +57,9 @@
     "salaryMax": 900000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "Backend Developer at Capgemini in Chennai. Work with Java, Spring, SQL. Experience 3-5 years preferred.",
-    "applyUrl": "https://in.indeed.com/viewjob/indeed-3"
+    "description": "Backend Developer at Capgemini in Chennai. Work with Java, Spring, SQL. Experience 3-5 years preferred. Source portal: indeed.",
+    "portal": "indeed",
+    "applyUrl": "https://in.indeed.com/jobs?q=Backend%20Developer&l=Chennai"
   },
   {
     "id": "indeed-4",
@@ -74,8 +77,9 @@
     "salaryMax": 1000000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "Full Stack Developer at Oracle in Pune. Work with Python, Django, PostgreSQL. Experience 4-6 years preferred.",
-    "applyUrl": "https://in.indeed.com/viewjob/indeed-4"
+    "description": "Full Stack Developer at Oracle in Pune. Work with Python, Django, PostgreSQL. Experience 4-6 years preferred. Source portal: indeed.",
+    "portal": "indeed",
+    "applyUrl": "https://in.indeed.com/jobs?q=Full%20Stack%20Developer&l=Pune"
   },
   {
     "id": "indeed-5",
@@ -93,8 +97,9 @@
     "salaryMax": 1100000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "QA Engineer at Dell in Mumbai. Work with Selenium, Testing, API Testing. Experience 1-3 years preferred.",
-    "applyUrl": "https://in.indeed.com/viewjob/indeed-5"
+    "description": "QA Engineer at Dell in Mumbai. Work with Selenium, Testing, API Testing. Experience 1-3 years preferred. Source portal: indeed.",
+    "portal": "indeed",
+    "applyUrl": "https://in.indeed.com/jobs?q=QA%20Engineer&l=Mumbai"
   },
   {
     "id": "indeed-6",
@@ -112,8 +117,9 @@
     "salaryMax": 1200000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "Data Analyst at HP in Mysuru. Work with AWS, Docker, Linux. Experience 0-2 years preferred.",
-    "applyUrl": "https://in.indeed.com/viewjob/indeed-6"
+    "description": "Data Analyst at HP in Mysuru. Work with AWS, Docker, Linux. Experience 0-2 years preferred. Source portal: indeed.",
+    "portal": "indeed",
+    "applyUrl": "https://in.indeed.com/jobs?q=Data%20Analyst&l=Mysuru"
   },
   {
     "id": "indeed-7",
@@ -131,8 +137,9 @@
     "salaryMax": 1300000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "DevOps Engineer at Cisco in Delhi. Work with Figma, UI Design, Prototyping. Experience 3-5 years preferred.",
-    "applyUrl": "https://in.indeed.com/viewjob/indeed-7"
+    "description": "DevOps Engineer at Cisco in Delhi. Work with Figma, UI Design, Prototyping. Experience 3-5 years preferred. Source portal: indeed.",
+    "portal": "indeed",
+    "applyUrl": "https://in.indeed.com/jobs?q=DevOps%20Engineer&l=Delhi"
   },
   {
     "id": "indeed-8",
@@ -150,8 +157,9 @@
     "salaryMax": 1400000,
     "salaryCurrency": "INR",
     "employmentType": "remote",
-    "description": "Java Developer at SAP in Remote. Work with SQL, Excel, Power BI. Experience 4-6 years preferred.",
-    "applyUrl": "https://in.indeed.com/viewjob/indeed-8"
+    "description": "Java Developer at SAP in Remote. Work with SQL, Excel, Power BI. Experience 4-6 years preferred. Source portal: indeed.",
+    "portal": "indeed",
+    "applyUrl": "https://in.indeed.com/jobs?q=Java%20Developer&l=India"
   },
   {
     "id": "indeed-9",
@@ -170,8 +178,9 @@
     "salaryMax": 1500000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "React Developer at Amazon in Bengaluru. Work with React, JavaScript, HTML, CSS. Experience 1-3 years preferred.",
-    "applyUrl": "https://in.indeed.com/viewjob/indeed-9"
+    "description": "React Developer at Amazon in Bengaluru. Work with React, JavaScript, HTML, CSS. Experience 1-3 years preferred. Source portal: indeed.",
+    "portal": "indeed",
+    "applyUrl": "https://in.indeed.com/jobs?q=React%20Developer&l=Bengaluru"
   },
   {
     "id": "indeed-10",
@@ -190,8 +199,9 @@
     "salaryMax": 1600000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "Node.js Developer at IBM in Hyderabad. Work with Node.js, Express, MongoDB, REST. Experience 2-4 years preferred.",
-    "applyUrl": "https://in.indeed.com/viewjob/indeed-10"
+    "description": "Node.js Developer at IBM in Hyderabad. Work with Node.js, Express, MongoDB, REST. Experience 2-4 years preferred. Source portal: indeed.",
+    "portal": "indeed",
+    "applyUrl": "https://in.indeed.com/jobs?q=Node.js%20Developer&l=Hyderabad"
   },
   {
     "id": "indeed-11",
@@ -209,8 +219,9 @@
     "salaryMax": 700000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "Python Developer at Capgemini in Chennai. Work with Java, Spring, SQL. Experience 0-2 years preferred.",
-    "applyUrl": "https://in.indeed.com/viewjob/indeed-11"
+    "description": "Python Developer at Capgemini in Chennai. Work with Java, Spring, SQL. Experience 0-2 years preferred. Source portal: indeed.",
+    "portal": "indeed",
+    "applyUrl": "https://in.indeed.com/jobs?q=Python%20Developer&l=Chennai"
   },
   {
     "id": "indeed-12",
@@ -228,8 +239,9 @@
     "salaryMax": 800000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "Mobile App Developer at Oracle in Pune. Work with Python, Django, PostgreSQL. Experience 4-6 years preferred.",
-    "applyUrl": "https://in.indeed.com/viewjob/indeed-12"
+    "description": "Mobile App Developer at Oracle in Pune. Work with Python, Django, PostgreSQL. Experience 4-6 years preferred. Source portal: indeed.",
+    "portal": "indeed",
+    "applyUrl": "https://in.indeed.com/jobs?q=Mobile%20App%20Developer&l=Pune"
   },
   {
     "id": "indeed-13",
@@ -247,8 +259,9 @@
     "salaryMax": 900000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "UI/UX Designer at Dell in Mumbai. Work with Selenium, Testing, API Testing. Experience 1-3 years preferred.",
-    "applyUrl": "https://in.indeed.com/viewjob/indeed-13"
+    "description": "UI/UX Designer at Dell in Mumbai. Work with Selenium, Testing, API Testing. Experience 1-3 years preferred. Source portal: indeed.",
+    "portal": "indeed",
+    "applyUrl": "https://in.indeed.com/jobs?q=UI%2FUX%20Designer&l=Mumbai"
   },
   {
     "id": "indeed-14",
@@ -266,8 +279,9 @@
     "salaryMax": 1000000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "Business Analyst at HP in Mysuru. Work with AWS, Docker, Linux. Experience 2-4 years preferred.",
-    "applyUrl": "https://in.indeed.com/viewjob/indeed-14"
+    "description": "Business Analyst at HP in Mysuru. Work with AWS, Docker, Linux. Experience 2-4 years preferred. Source portal: indeed.",
+    "portal": "indeed",
+    "applyUrl": "https://in.indeed.com/jobs?q=Business%20Analyst&l=Mysuru"
   },
   {
     "id": "indeed-15",
@@ -285,8 +299,9 @@
     "salaryMax": 1100000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "Cloud Engineer at Cisco in Delhi. Work with Figma, UI Design, Prototyping. Experience 3-5 years preferred.",
-    "applyUrl": "https://in.indeed.com/viewjob/indeed-15"
+    "description": "Cloud Engineer at Cisco in Delhi. Work with Figma, UI Design, Prototyping. Experience 3-5 years preferred. Source portal: indeed.",
+    "portal": "indeed",
+    "applyUrl": "https://in.indeed.com/jobs?q=Cloud%20Engineer&l=Delhi"
   },
   {
     "id": "indeed-16",
@@ -304,8 +319,9 @@
     "salaryMax": 1200000,
     "salaryCurrency": "INR",
     "employmentType": "remote",
-    "description": "Support Engineer at SAP in Remote. Work with SQL, Excel, Power BI. Experience 0-2 years preferred.",
-    "applyUrl": "https://in.indeed.com/viewjob/indeed-16"
+    "description": "Support Engineer at SAP in Remote. Work with SQL, Excel, Power BI. Experience 0-2 years preferred. Source portal: indeed.",
+    "portal": "indeed",
+    "applyUrl": "https://in.indeed.com/jobs?q=Support%20Engineer&l=India"
   },
   {
     "id": "indeed-17",
@@ -324,8 +340,9 @@
     "salaryMax": 27000,
     "salaryCurrency": "INR",
     "employmentType": "internship",
-    "description": "Internship - Web Development at Amazon in Bengaluru. Work with React, JavaScript, HTML, CSS. Experience 1-3 years preferred.",
-    "applyUrl": "https://in.indeed.com/viewjob/indeed-17"
+    "description": "Internship - Web Development at Amazon in Bengaluru. Work with React, JavaScript, HTML, CSS. Experience 1-3 years preferred. Source portal: indeed.",
+    "portal": "indeed",
+    "applyUrl": "https://in.indeed.com/jobs?q=Internship%20-%20Web%20Development&l=Bengaluru"
   },
   {
     "id": "indeed-18",
@@ -344,8 +361,9 @@
     "salaryMax": 1400000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "ML Engineer at IBM in Hyderabad. Work with Node.js, Express, MongoDB, REST. Experience 2-4 years preferred.",
-    "applyUrl": "https://in.indeed.com/viewjob/indeed-18"
+    "description": "ML Engineer at IBM in Hyderabad. Work with Node.js, Express, MongoDB, REST. Experience 2-4 years preferred. Source portal: indeed.",
+    "portal": "indeed",
+    "applyUrl": "https://in.indeed.com/jobs?q=ML%20Engineer&l=Hyderabad"
   },
   {
     "id": "indeed-19",
@@ -363,8 +381,9 @@
     "salaryMax": 1500000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "Security Analyst at Capgemini in Chennai. Work with Java, Spring, SQL. Experience 3-5 years preferred.",
-    "applyUrl": "https://in.indeed.com/viewjob/indeed-19"
+    "description": "Security Analyst at Capgemini in Chennai. Work with Java, Spring, SQL. Experience 3-5 years preferred. Source portal: indeed.",
+    "portal": "indeed",
+    "applyUrl": "https://in.indeed.com/jobs?q=Security%20Analyst&l=Chennai"
   },
   {
     "id": "indeed-20",
@@ -382,8 +401,9 @@
     "salaryMax": 1600000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "Product Analyst at Oracle in Pune. Work with Python, Django, PostgreSQL. Experience 4-6 years preferred.",
-    "applyUrl": "https://in.indeed.com/viewjob/indeed-20"
+    "description": "Product Analyst at Oracle in Pune. Work with Python, Django, PostgreSQL. Experience 4-6 years preferred. Source portal: indeed.",
+    "portal": "indeed",
+    "applyUrl": "https://in.indeed.com/jobs?q=Product%20Analyst&l=Pune"
   },
   {
     "id": "indeed-21",
@@ -401,8 +421,9 @@
     "salaryMax": 25000,
     "salaryCurrency": "INR",
     "employmentType": "internship",
-    "description": "SDE Intern at Dell in Mumbai. Work with Selenium, Testing, API Testing. Experience 0-2 years preferred.",
-    "applyUrl": "https://in.indeed.com/viewjob/indeed-21"
+    "description": "SDE Intern at Dell in Mumbai. Work with Selenium, Testing, API Testing. Experience 0-2 years preferred. Source portal: indeed.",
+    "portal": "indeed",
+    "applyUrl": "https://in.indeed.com/jobs?q=SDE%20Intern&l=Mumbai"
   },
   {
     "id": "indeed-22",
@@ -420,7 +441,8 @@
     "salaryMax": 800000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "Automation Tester at HP in Mysuru. Work with AWS, Docker, Linux. Experience 2-4 years preferred.",
-    "applyUrl": "https://in.indeed.com/viewjob/indeed-22"
+    "description": "Automation Tester at HP in Mysuru. Work with AWS, Docker, Linux. Experience 2-4 years preferred. Source portal: indeed.",
+    "portal": "indeed",
+    "applyUrl": "https://in.indeed.com/jobs?q=Automation%20Tester&l=Mysuru"
   }
 ]

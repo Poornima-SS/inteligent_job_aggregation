@@ -4,7 +4,12 @@
     "company": "TechVista Solutions",
     "location": "Bengaluru",
     "description": "Build and maintain web apps using React and Node.js. Work with MongoDB and REST APIs.",
-    "skills": ["React", "Node.js", "MongoDB", "JavaScript"],
+    "skills": [
+      "React",
+      "Node.js",
+      "MongoDB",
+      "JavaScript"
+    ],
     "experienceMin": 0,
     "experienceMax": 2,
     "salaryMin": 400000,
@@ -12,8 +17,8 @@
     "salaryCurrency": "INR",
     "employmentType": "full-time",
     "source": "seed",
-    "sourceUrl": "https://example.com/jobs/1",
-    "applyUrl": "https://example.com/apply/1",
+    "sourceUrl": "https://www.naukri.com/junior-full-stack-developer-jobs",
+    "applyUrl": "https://in.indeed.com/jobs?q=Junior%20Full%20Stack%20Developer%20TechVista%20Solutions&l=Bengaluru",
     "postedAt": "2026-09-10T00:00:00.000Z"
   },
   {
@@ -21,7 +26,12 @@
     "company": "PixelCraft Studio",
     "location": "Mysuru",
     "description": "Create responsive UI components with React and modern CSS. Collaborate with designers.",
-    "skills": ["React", "JavaScript", "HTML", "CSS"],
+    "skills": [
+      "React",
+      "JavaScript",
+      "HTML",
+      "CSS"
+    ],
     "experienceMin": 1,
     "experienceMax": 3,
     "salaryMin": 450000,
@@ -29,8 +39,8 @@
     "salaryCurrency": "INR",
     "employmentType": "full-time",
     "source": "seed",
-    "sourceUrl": "https://example.com/jobs/2",
-    "applyUrl": "https://example.com/apply/2",
+    "sourceUrl": "https://www.naukri.com/react-frontend-developer-jobs",
+    "applyUrl": "https://in.indeed.com/jobs?q=React%20Frontend%20Developer%20PixelCraft%20Studio&l=Mysuru",
     "postedAt": "2026-09-12T00:00:00.000Z"
   },
   {
@@ -38,7 +48,12 @@
     "company": "CloudNest Pvt Ltd",
     "location": "Remote",
     "description": "Design REST APIs, integrate databases, and improve backend performance.",
-    "skills": ["Node.js", "Express", "MongoDB", "REST"],
+    "skills": [
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "REST"
+    ],
     "experienceMin": 2,
     "experienceMax": 5,
     "salaryMin": 600000,
@@ -46,8 +61,8 @@
     "salaryCurrency": "INR",
     "employmentType": "remote",
     "source": "seed",
-    "sourceUrl": "https://example.com/jobs/3",
-    "applyUrl": "https://example.com/apply/3",
+    "sourceUrl": "https://www.naukri.com/node-js-backend-engineer-jobs",
+    "applyUrl": "https://in.indeed.com/jobs?q=Node.js%20Backend%20Engineer%20CloudNest%20Pvt%20Ltd&l=Remote",
     "postedAt": "2026-09-08T00:00:00.000Z"
   },
   {
@@ -55,7 +70,12 @@
     "company": "DataHarvest Labs",
     "location": "Bengaluru",
     "description": "Help build scrapers using BeautifulSoup and Selenium. Clean and store structured data.",
-    "skills": ["Python", "BeautifulSoup", "Selenium", "Web Scraping"],
+    "skills": [
+      "Python",
+      "BeautifulSoup",
+      "Selenium",
+      "Web Scraping"
+    ],
     "experienceMin": 0,
     "experienceMax": 1,
     "salaryMin": 15000,
@@ -63,8 +83,8 @@
     "salaryCurrency": "INR",
     "employmentType": "internship",
     "source": "seed",
-    "sourceUrl": "https://example.com/jobs/4",
-    "applyUrl": "https://example.com/apply/4",
+    "sourceUrl": "https://www.naukri.com/python-web-scraper-intern-jobs",
+    "applyUrl": "https://in.indeed.com/jobs?q=Python%20Web%20Scraper%20Intern%20DataHarvest%20Labs&l=Bengaluru",
     "postedAt": "2026-09-14T00:00:00.000Z"
   },
   {
@@ -72,7 +92,12 @@
     "company": "AppForge Technologies",
     "location": "Hyderabad",
     "description": "Develop full-stack features with MongoDB, Express, React, and Node.js.",
-    "skills": ["MongoDB", "Express", "React", "Node.js"],
+    "skills": [
+      "MongoDB",
+      "Express",
+      "React",
+      "Node.js"
+    ],
     "experienceMin": 1,
     "experienceMax": 4,
     "salaryMin": 500000,
@@ -80,8 +105,8 @@
     "salaryCurrency": "INR",
     "employmentType": "full-time",
     "source": "seed",
-    "sourceUrl": "https://example.com/jobs/5",
-    "applyUrl": "https://example.com/apply/5",
+    "sourceUrl": "https://www.naukri.com/mern-stack-developer-jobs",
+    "applyUrl": "https://in.indeed.com/jobs?q=MERN%20Stack%20Developer%20AppForge%20Technologies&l=Hyderabad",
     "postedAt": "2026-09-11T00:00:00.000Z"
   },
   {
@@ -89,7 +114,12 @@
     "company": "AssureSoft",
     "location": "Chennai",
     "description": "Write automated tests for web applications and report defects.",
-    "skills": ["Selenium", "JavaScript", "Testing", "API Testing"],
+    "skills": [
+      "Selenium",
+      "JavaScript",
+      "Testing",
+      "API Testing"
+    ],
     "experienceMin": 1,
     "experienceMax": 3,
     "salaryMin": 400000,
@@ -97,8 +127,8 @@
     "salaryCurrency": "INR",
     "employmentType": "full-time",
     "source": "seed",
-    "sourceUrl": "https://example.com/jobs/6",
-    "applyUrl": "https://example.com/apply/6",
+    "sourceUrl": "https://www.naukri.com/qa-automation-tester-jobs",
+    "applyUrl": "https://in.indeed.com/jobs?q=QA%20Automation%20Tester%20AssureSoft&l=Chennai",
     "postedAt": "2026-09-05T00:00:00.000Z"
   },
   {
@@ -106,7 +136,12 @@
     "company": "InfraPulse",
     "location": "Pune",
     "description": "Learn CI/CD pipelines, Docker basics, and cloud deployments.",
-    "skills": ["Docker", "Linux", "Git", "CI/CD"],
+    "skills": [
+      "Docker",
+      "Linux",
+      "Git",
+      "CI/CD"
+    ],
     "experienceMin": 0,
     "experienceMax": 1,
     "salaryMin": 300000,
@@ -114,8 +149,8 @@
     "salaryCurrency": "INR",
     "employmentType": "full-time",
     "source": "seed",
-    "sourceUrl": "https://example.com/jobs/7",
-    "applyUrl": "https://example.com/apply/7",
+    "sourceUrl": "https://www.naukri.com/devops-trainee-jobs",
+    "applyUrl": "https://in.indeed.com/jobs?q=DevOps%20Trainee%20InfraPulse&l=Pune",
     "postedAt": "2026-09-13T00:00:00.000Z"
   },
   {
@@ -123,7 +158,11 @@
     "company": "CodeRiver",
     "location": "Bengaluru",
     "description": "Work on frontend and light backend tasks using modern JavaScript.",
-    "skills": ["JavaScript", "React", "Node.js"],
+    "skills": [
+      "JavaScript",
+      "React",
+      "Node.js"
+    ],
     "experienceMin": 0,
     "experienceMax": 2,
     "salaryMin": 350000,
@@ -131,8 +170,8 @@
     "salaryCurrency": "INR",
     "employmentType": "full-time",
     "source": "seed",
-    "sourceUrl": "https://example.com/jobs/8",
-    "applyUrl": "https://example.com/apply/8",
+    "sourceUrl": "https://www.naukri.com/javascript-developer-jobs",
+    "applyUrl": "https://in.indeed.com/jobs?q=JavaScript%20Developer%20CodeRiver&l=Bengaluru",
     "postedAt": "2026-09-15T00:00:00.000Z"
   },
   {
@@ -140,7 +179,12 @@
     "company": "InsightMetrics",
     "location": "Remote",
     "description": "Clean datasets, create dashboards, and support reporting.",
-    "skills": ["Excel", "SQL", "Python", "Data Analysis"],
+    "skills": [
+      "Excel",
+      "SQL",
+      "Python",
+      "Data Analysis"
+    ],
     "experienceMin": 0,
     "experienceMax": 1,
     "salaryMin": 10000,
@@ -148,8 +192,8 @@
     "salaryCurrency": "INR",
     "employmentType": "internship",
     "source": "seed",
-    "sourceUrl": "https://example.com/jobs/9",
-    "applyUrl": "https://example.com/apply/9",
+    "sourceUrl": "https://www.naukri.com/data-analyst-intern-jobs",
+    "applyUrl": "https://in.indeed.com/jobs?q=Data%20Analyst%20Intern%20InsightMetrics&l=Remote",
     "postedAt": "2026-09-09T00:00:00.000Z"
   },
   {
@@ -157,7 +201,11 @@
     "company": "Forma Design Lab",
     "location": "Mysuru",
     "description": "Design wireframes and prototypes for web and mobile products.",
-    "skills": ["Figma", "UI Design", "Prototyping"],
+    "skills": [
+      "Figma",
+      "UI Design",
+      "Prototyping"
+    ],
     "experienceMin": 1,
     "experienceMax": 3,
     "salaryMin": 400000,
@@ -165,8 +213,8 @@
     "salaryCurrency": "INR",
     "employmentType": "full-time",
     "source": "seed",
-    "sourceUrl": "https://example.com/jobs/10",
-    "applyUrl": "https://example.com/apply/10",
+    "sourceUrl": "https://www.naukri.com/ui-ux-designer-jobs",
+    "applyUrl": "https://in.indeed.com/jobs?q=UI%2FUX%20Designer%20Forma%20Design%20Lab&l=Mysuru",
     "postedAt": "2026-09-07T00:00:00.000Z"
   },
   {
@@ -174,7 +222,12 @@
     "company": "Nexora Systems",
     "location": "Bengaluru",
     "description": "Entry-level role for graduates. Training in web development stack.",
-    "skills": ["Java", "SQL", "HTML", "CSS"],
+    "skills": [
+      "Java",
+      "SQL",
+      "HTML",
+      "CSS"
+    ],
     "experienceMin": 0,
     "experienceMax": 1,
     "salaryMin": 300000,
@@ -182,8 +235,8 @@
     "salaryCurrency": "INR",
     "employmentType": "full-time",
     "source": "seed",
-    "sourceUrl": "https://example.com/jobs/11",
-    "applyUrl": "https://example.com/apply/11",
+    "sourceUrl": "https://www.naukri.com/software-engineer-fresher-jobs",
+    "applyUrl": "https://in.indeed.com/jobs?q=Software%20Engineer%20-%20Fresher%20Nexora%20Systems&l=Bengaluru",
     "postedAt": "2026-09-16T00:00:00.000Z"
   },
   {
@@ -191,7 +244,12 @@
     "company": "LinkBridge Soft",
     "location": "Remote",
     "description": "Integrate third-party APIs and maintain documentation.",
-    "skills": ["Node.js", "REST", "JSON", "Postman"],
+    "skills": [
+      "Node.js",
+      "REST",
+      "JSON",
+      "Postman"
+    ],
     "experienceMin": 1,
     "experienceMax": 3,
     "salaryMin": 500000,
@@ -199,8 +257,8 @@
     "salaryCurrency": "INR",
     "employmentType": "contract",
     "source": "seed",
-    "sourceUrl": "https://example.com/jobs/12",
-    "applyUrl": "https://example.com/apply/12",
+    "sourceUrl": "https://www.naukri.com/api-integration-developer-jobs",
+    "applyUrl": "https://in.indeed.com/jobs?q=API%20Integration%20Developer%20LinkBridge%20Soft&l=Remote",
     "postedAt": "2026-09-06T00:00:00.000Z"
   },
   {
@@ -208,7 +266,12 @@
     "company": "Aether AI",
     "location": "Hyderabad",
     "description": "Assist with model training, data prep, and basic ML experiments.",
-    "skills": ["Python", "Machine Learning", "Pandas", "NumPy"],
+    "skills": [
+      "Python",
+      "Machine Learning",
+      "Pandas",
+      "NumPy"
+    ],
     "experienceMin": 0,
     "experienceMax": 1,
     "salaryMin": 12000,
@@ -216,8 +279,8 @@
     "salaryCurrency": "INR",
     "employmentType": "internship",
     "source": "seed",
-    "sourceUrl": "https://example.com/jobs/13",
-    "applyUrl": "https://example.com/apply/13",
+    "sourceUrl": "https://www.naukri.com/machine-learning-intern-jobs",
+    "applyUrl": "https://in.indeed.com/jobs?q=Machine%20Learning%20Intern%20Aether%20AI&l=Hyderabad",
     "postedAt": "2026-09-17T00:00:00.000Z"
   },
   {
@@ -225,7 +288,11 @@
     "company": "SecureNest",
     "location": "Chennai",
     "description": "Monitor security alerts and support vulnerability assessments.",
-    "skills": ["Networking", "Linux", "Security Basics"],
+    "skills": [
+      "Networking",
+      "Linux",
+      "Security Basics"
+    ],
     "experienceMin": 0,
     "experienceMax": 2,
     "salaryMin": 350000,
@@ -233,8 +300,8 @@
     "salaryCurrency": "INR",
     "employmentType": "full-time",
     "source": "seed",
-    "sourceUrl": "https://example.com/jobs/14",
-    "applyUrl": "https://example.com/apply/14",
+    "sourceUrl": "https://www.naukri.com/cybersecurity-analyst-trainee-jobs",
+    "applyUrl": "https://in.indeed.com/jobs?q=Cybersecurity%20Analyst%20Trainee%20SecureNest&l=Chennai",
     "postedAt": "2026-09-04T00:00:00.000Z"
   },
   {
@@ -242,7 +309,11 @@
     "company": "WriteStack Media",
     "location": "Remote",
     "description": "Write blogs and documentation for developer products.",
-    "skills": ["Writing", "Technical Writing", "SEO"],
+    "skills": [
+      "Writing",
+      "Technical Writing",
+      "SEO"
+    ],
     "experienceMin": 0,
     "experienceMax": 2,
     "salaryMin": 250000,
@@ -250,8 +321,8 @@
     "salaryCurrency": "INR",
     "employmentType": "part-time",
     "source": "seed",
-    "sourceUrl": "https://example.com/jobs/15",
-    "applyUrl": "https://example.com/apply/15",
+    "sourceUrl": "https://www.naukri.com/content-writer-tech-jobs",
+    "applyUrl": "https://in.indeed.com/jobs?q=Content%20Writer%20-%20Tech%20WriteStack%20Media&l=Remote",
     "postedAt": "2026-09-03T00:00:00.000Z"
   },
   {
@@ -259,7 +330,11 @@
     "company": "Frontline Apps",
     "location": "Pune",
     "description": "Develop enterprise UI with Angular and TypeScript.",
-    "skills": ["Angular", "TypeScript", "RxJS"],
+    "skills": [
+      "Angular",
+      "TypeScript",
+      "RxJS"
+    ],
     "experienceMin": 2,
     "experienceMax": 5,
     "salaryMin": 600000,
@@ -267,8 +342,8 @@
     "salaryCurrency": "INR",
     "employmentType": "full-time",
     "source": "seed",
-    "sourceUrl": "https://example.com/jobs/16",
-    "applyUrl": "https://example.com/apply/16",
+    "sourceUrl": "https://www.naukri.com/angular-developer-jobs",
+    "applyUrl": "https://in.indeed.com/jobs?q=Angular%20Developer%20Frontline%20Apps&l=Pune",
     "postedAt": "2026-09-02T00:00:00.000Z"
   },
   {
@@ -276,7 +351,11 @@
     "company": "QueryWorks",
     "location": "Bengaluru",
     "description": "Support MongoDB and MySQL administration and backups.",
-    "skills": ["MongoDB", "MySQL", "SQL"],
+    "skills": [
+      "MongoDB",
+      "MySQL",
+      "SQL"
+    ],
     "experienceMin": 1,
     "experienceMax": 3,
     "salaryMin": 450000,
@@ -284,8 +363,8 @@
     "salaryCurrency": "INR",
     "employmentType": "full-time",
     "source": "seed",
-    "sourceUrl": "https://example.com/jobs/17",
-    "applyUrl": "https://example.com/apply/17",
+    "sourceUrl": "https://www.naukri.com/database-administrator-junior-jobs",
+    "applyUrl": "https://in.indeed.com/jobs?q=Database%20Administrator%20Junior%20QueryWorks&l=Bengaluru",
     "postedAt": "2026-09-01T00:00:00.000Z"
   },
   {
@@ -293,7 +372,11 @@
     "company": "Mobix Labs",
     "location": "Remote",
     "description": "Build cross-platform mobile apps with React Native.",
-    "skills": ["React Native", "JavaScript", "Mobile"],
+    "skills": [
+      "React Native",
+      "JavaScript",
+      "Mobile"
+    ],
     "experienceMin": 1,
     "experienceMax": 4,
     "salaryMin": 550000,
@@ -301,8 +384,8 @@
     "salaryCurrency": "INR",
     "employmentType": "full-time",
     "source": "seed",
-    "sourceUrl": "https://example.com/jobs/18",
-    "applyUrl": "https://example.com/apply/18",
+    "sourceUrl": "https://www.naukri.com/mobile-app-developer-react-native-jobs",
+    "applyUrl": "https://in.indeed.com/jobs?q=Mobile%20App%20Developer%20(React%20Native)%20Mobix%20Labs&l=Remote",
     "postedAt": "2026-08-30T00:00:00.000Z"
   },
   {
@@ -310,7 +393,11 @@
     "company": "Planora Consulting",
     "location": "Mysuru",
     "description": "Gather requirements and document process workflows.",
-    "skills": ["Communication", "Documentation", "Excel"],
+    "skills": [
+      "Communication",
+      "Documentation",
+      "Excel"
+    ],
     "experienceMin": 0,
     "experienceMax": 1,
     "salaryMin": 300000,
@@ -318,8 +405,8 @@
     "salaryCurrency": "INR",
     "employmentType": "full-time",
     "source": "seed",
-    "sourceUrl": "https://example.com/jobs/19",
-    "applyUrl": "https://example.com/apply/19",
+    "sourceUrl": "https://www.naukri.com/business-analyst-trainee-jobs",
+    "applyUrl": "https://in.indeed.com/jobs?q=Business%20Analyst%20Trainee%20Planora%20Consulting&l=Mysuru",
     "postedAt": "2026-08-28T00:00:00.000Z"
   },
   {
@@ -327,7 +414,11 @@
     "company": "SkyOps Cloud",
     "location": "Hyderabad",
     "description": "Provide first-level support for cloud customers and tickets.",
-    "skills": ["AWS", "Linux", "Troubleshooting"],
+    "skills": [
+      "AWS",
+      "Linux",
+      "Troubleshooting"
+    ],
     "experienceMin": 0,
     "experienceMax": 2,
     "salaryMin": 350000,
@@ -335,8 +426,8 @@
     "salaryCurrency": "INR",
     "employmentType": "full-time",
     "source": "seed",
-    "sourceUrl": "https://example.com/jobs/20",
-    "applyUrl": "https://example.com/apply/20",
+    "sourceUrl": "https://www.naukri.com/cloud-support-associate-jobs",
+    "applyUrl": "https://in.indeed.com/jobs?q=Cloud%20Support%20Associate%20SkyOps%20Cloud&l=Hyderabad",
     "postedAt": "2026-09-18T00:00:00.000Z"
   },
   {
@@ -344,7 +435,11 @@
     "company": "TechVista Solutions",
     "location": "Bengaluru",
     "description": "Same role used to demonstrate contentHash de-duplication later.",
-    "skills": ["React", "Node.js", "MongoDB"],
+    "skills": [
+      "React",
+      "Node.js",
+      "MongoDB"
+    ],
     "experienceMin": 0,
     "experienceMax": 2,
     "salaryMin": 400000,
@@ -352,8 +447,8 @@
     "salaryCurrency": "INR",
     "employmentType": "full-time",
     "source": "seed-alt",
-    "sourceUrl": "https://example.com/jobs/21-alt",
-    "applyUrl": "https://example.com/apply/21",
+    "sourceUrl": "https://www.naukri.com/full-stack-developer-duplicate-test-jobs",
+    "applyUrl": "https://in.indeed.com/jobs?q=Full%20Stack%20Developer%20(Duplicate%20Test)%20TechVista%20Solutions&l=Bengaluru",
     "postedAt": "2026-09-10T00:00:00.000Z"
   },
   {
@@ -361,7 +456,12 @@
     "company": "CampusCode Hub",
     "location": "Bengaluru",
     "description": "Hands-on internship covering HTML, CSS, JS, and React basics.",
-    "skills": ["HTML", "CSS", "JavaScript", "React"],
+    "skills": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "React"
+    ],
     "experienceMin": 0,
     "experienceMax": 0,
     "salaryMin": 8000,
@@ -369,8 +469,8 @@
     "salaryCurrency": "INR",
     "employmentType": "internship",
     "source": "seed",
-    "sourceUrl": "https://example.com/jobs/22",
-    "applyUrl": "https://example.com/apply/22",
+    "sourceUrl": "https://www.naukri.com/internship-web-development-jobs",
+    "applyUrl": "https://in.indeed.com/jobs?q=Internship%20-%20Web%20Development%20CampusCode%20Hub&l=Bengaluru",
     "postedAt": "2026-09-19T00:00:00.000Z"
   },
   {
@@ -378,7 +478,12 @@
     "company": "ScaleGrid Softwares",
     "location": "Remote",
     "description": "Lead backend architecture and mentor juniors on Node services.",
-    "skills": ["Node.js", "Microservices", "MongoDB", "AWS"],
+    "skills": [
+      "Node.js",
+      "Microservices",
+      "MongoDB",
+      "AWS"
+    ],
     "experienceMin": 4,
     "experienceMax": 8,
     "salaryMin": 1200000,
@@ -386,8 +491,8 @@
     "salaryCurrency": "INR",
     "employmentType": "full-time",
     "source": "seed",
-    "sourceUrl": "https://example.com/jobs/23",
-    "applyUrl": "https://example.com/apply/23",
+    "sourceUrl": "https://www.naukri.com/senior-node-js-engineer-jobs",
+    "applyUrl": "https://in.indeed.com/jobs?q=Senior%20Node.js%20Engineer%20ScaleGrid%20Softwares&l=Remote",
     "postedAt": "2026-09-18T00:00:00.000Z"
   },
   {
@@ -395,7 +500,11 @@
     "company": "Community Tools Org",
     "location": "Remote",
     "description": "Contribute scrapers and parsers for open job board datasets.",
-    "skills": ["Web Scraping", "JavaScript", "Git"],
+    "skills": [
+      "Web Scraping",
+      "JavaScript",
+      "Git"
+    ],
     "experienceMin": 1,
     "experienceMax": 3,
     "salaryMin": null,
@@ -403,8 +512,8 @@
     "salaryCurrency": "INR",
     "employmentType": "contract",
     "source": "seed",
-    "sourceUrl": "https://example.com/jobs/24",
-    "applyUrl": "https://example.com/apply/24",
+    "sourceUrl": "https://www.naukri.com/open-source-contributor-contract-jobs",
+    "applyUrl": "https://in.indeed.com/jobs?q=Open%20Source%20Contributor%20(Contract)%20Community%20Tools%20Org&l=Remote",
     "postedAt": "2026-09-17T00:00:00.000Z"
   },
   {
@@ -412,7 +521,11 @@
     "company": "HelpDesk Pro",
     "location": "Chennai",
     "description": "Resolve customer issues and escalate bugs to engineering.",
-    "skills": ["Communication", "SQL", "Troubleshooting"],
+    "skills": [
+      "Communication",
+      "SQL",
+      "Troubleshooting"
+    ],
     "experienceMin": 1,
     "experienceMax": 3,
     "salaryMin": 400000,
@@ -420,8 +533,8 @@
     "salaryCurrency": "INR",
     "employmentType": "full-time",
     "source": "seed",
-    "sourceUrl": "https://example.com/jobs/25",
-    "applyUrl": "https://example.com/apply/25",
+    "sourceUrl": "https://www.naukri.com/product-support-engineer-jobs",
+    "applyUrl": "https://in.indeed.com/jobs?q=Product%20Support%20Engineer%20HelpDesk%20Pro&l=Chennai",
     "postedAt": "2026-09-16T00:00:00.000Z"
   }
 ]

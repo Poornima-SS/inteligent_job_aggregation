@@ -88,17 +88,14 @@ export default function FilterBar({ value, onChange, onSubmit, onReset }) {
             value={filters.source}
             onChange={(e) => set("source", e.target.value)}
           >
-            <option value="">Any</option>
-            <option value="seed">seed</option>
-            <option value="naukri">naukri</option>
-            <option value="indeed">indeed</option>
-            <option value="linkedin">linkedin</option>
-            <option value="apna">apna</option>
-            <option value="private-company">private-company</option>
-            <option value="remotive">remotive</option>
-            <option value="remoteok">remoteok</option>
-            <option value="company-cheerio">company-cheerio</option>
-            <option value="company-puppeteer">company-puppeteer</option>
+            <option value="">Any portal</option>
+            <option value="naukri">Naukri</option>
+            <option value="indeed">Indeed</option>
+            <option value="linkedin">LinkedIn</option>
+            <option value="apna">Apna</option>
+            <option value="private-company">Company careers</option>
+            <option value="remotive">Remotive</option>
+            <option value="remoteok">RemoteOK</option>
           </select>
         </div>
         <div className="field">

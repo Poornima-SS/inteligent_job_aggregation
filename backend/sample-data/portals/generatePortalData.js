@@ -17,6 +17,7 @@ const cities = [
   "Delhi",
   "Remote",
 ];
+
 const skillsPool = [
   ["React", "JavaScript", "HTML", "CSS"],
   ["Node.js", "Express", "MongoDB", "REST"],
@@ -28,7 +29,51 @@ const skillsPool = [
   ["SQL", "Excel", "Power BI"],
 ];
 
-function makeJobs(prefix, companies, count, linkBase) {
+const COMPANY_CAREERS = {
+  "zoho corporation": "https://www.zoho.com/careers/",
+  freshworks: "https://www.freshworks.com/company/careers/",
+  razorpay: "https://razorpay.com/jobs/",
+  postman: "https://www.postman.com/company/careers/",
+  chargebee: "https://www.chargebee.com/careers/",
+  browserstack: "https://www.browserstack.com/careers",
+};
+
+function slug(text) {
+  return String(text || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+function portalSearchUrl(portal, title, company, location) {
+  const q = encodeURIComponent(`${title} ${company}`.trim());
+  const titleOnly = encodeURIComponent(title);
+  const loc = encodeURIComponent(location === "Remote" ? "India" : location);
+  const roleSlug = slug(title) || "software-engineer";
+  const citySlug = slug(location === "Remote" ? "india" : location);
+
+  switch (portal) {
+    case "naukri":
+      return `https://www.naukri.com/${roleSlug}-jobs-in-${citySlug}`;
+    case "indeed":
+      return `https://in.indeed.com/jobs?q=${titleOnly}&l=${loc}`;
+    case "linkedin":
+      return `https://www.linkedin.com/jobs/search/?keywords=${q}&location=${loc}`;
+    case "apna":
+      return `https://apna.co/jobs?q=${titleOnly}`;
+    case "private-company": {
+      const key = String(company).toLowerCase();
+      for (const [name, url] of Object.entries(COMPANY_CAREERS)) {
+        if (key.includes(name)) return url;
+      }
+      return `https://www.google.com/search?q=${encodeURIComponent(`${company} careers jobs`)}`;
+    }
+    default:
+      return `https://www.google.com/search?q=${q}+jobs`;
+  }
+}
+
+function makeJobs(portal, companies, count) {
   const roles = [
     "Software Engineer",
     "Frontend Developer",
@@ -74,8 +119,8 @@ function makeJobs(prefix, companies, count, linkBase) {
           : "full-time";
 
     return {
-      id: `${prefix}-${i + 1}`,
-      title: `${role}`,
+      id: `${portal}-${i + 1}`,
+      title: role,
       company,
       location,
       skills,
@@ -87,54 +132,30 @@ function makeJobs(prefix, companies, count, linkBase) {
       employmentType,
       description: `${role} at ${company} in ${location}. Work with ${skills.join(
         ", "
-      )}. Experience ${expMin}-${expMax} years preferred.`,
-      applyUrl: `${linkBase}/${prefix}-${i + 1}`,
+      )}. Experience ${expMin}-${expMax} years preferred. Source portal: ${portal}.`,
+      portal,
+      applyUrl: portalSearchUrl(portal, role, company, location),
     };
   });
 }
 
 write(
   "naukri",
-  makeJobs(
-    "naukri",
-    ["Infosys", "TCS", "Wipro", "Accenture", "Cognizant", "HCL", "Tech Mahindra", "LTIMindtree"],
-    25,
-    "https://www.naukri.com/job-listings"
-  )
+  makeJobs("naukri", ["Infosys", "TCS", "Wipro", "Accenture", "Cognizant", "HCL", "Tech Mahindra", "LTIMindtree"], 25)
 );
 write(
   "indeed",
-  makeJobs(
-    "indeed",
-    ["Amazon", "IBM", "Capgemini", "Oracle", "Dell", "HP", "Cisco", "SAP"],
-    22,
-    "https://in.indeed.com/viewjob"
-  )
+  makeJobs("indeed", ["Amazon", "IBM", "Capgemini", "Oracle", "Dell", "HP", "Cisco", "SAP"], 22)
 );
 write(
   "linkedin",
-  makeJobs(
-    "linkedin",
-    ["Microsoft", "Google", "Flipkart", "Swiggy", "PhonePe", "Adobe", "Uber", "Netflix"],
-    22,
-    "https://www.linkedin.com/jobs/view"
-  )
+  makeJobs("linkedin", ["Microsoft", "Google", "Flipkart", "Swiggy", "PhonePe", "Adobe", "Uber", "Netflix"], 22)
 );
 write(
   "apna",
-  makeJobs(
-    "apna",
-    ["Reliance Retail", "Byju's", "Local Soft Pvt Ltd", "Urban Company", "BigBasket", "Zepto", "Blinkit", "Nykaa"],
-    20,
-    "https://apna.co/job"
-  )
+  makeJobs("apna", ["Reliance Retail", "Byju's", "Local Soft Pvt Ltd", "Urban Company", "BigBasket", "Zepto", "Blinkit", "Nykaa"], 20)
 );
 write(
   "private-company",
-  makeJobs(
-    "private",
-    ["Zoho Corporation", "Freshworks", "Razorpay", "Postman", "Chargebee", "BrowserStack"],
-    20,
-    "https://careers.example.com/jobs"
-  )
+  makeJobs("private-company", ["Zoho Corporation", "Freshworks", "Razorpay", "Postman", "Chargebee", "BrowserStack"], 20)
 );

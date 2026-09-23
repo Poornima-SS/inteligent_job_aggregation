@@ -2,15 +2,25 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { jobsApi } from "../api/client";
 import { useState } from "react";
+import { getSourceLabel, resolveApplyUrl } from "../utils/jobLinks";
 
 function formatSalary(job) {
   if (job.salaryMin == null && job.salaryMax == null) return "Salary not listed";
   const cur = job.salaryCurrency || "INR";
-  if (job.salaryMin != null && job.salaryMax != null) {
-    return `${cur} ${job.salaryMin.toLocaleString()} – ${job.salaryMax.toLocaleString()}`;
+  let min = job.salaryMin;
+  let max = job.salaryMax;
+
+  // Repair old bad parses like 8–15 meant as lakhs
+  if (cur === "INR" && min != null && max != null && min < 1000 && max < 1000) {
+    min *= 100000;
+    max *= 100000;
   }
-  if (job.salaryMin != null) return `${cur} ${job.salaryMin.toLocaleString()}+`;
-  return `Up to ${cur} ${job.salaryMax.toLocaleString()}`;
+
+  if (min != null && max != null) {
+    return `${cur} ${min.toLocaleString()} – ${max.toLocaleString()}`;
+  }
+  if (min != null) return `${cur} ${Number(min).toLocaleString()}+`;
+  return `Up to ${cur} ${Number(max).toLocaleString()}`;
 }
 
 export default function JobCard({ job, index = 0, onSavedChange }) {
@@ -18,6 +28,8 @@ export default function JobCard({ job, index = 0, onSavedChange }) {
   const [saved, setSaved] = useState(!!job.isSaved);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const outbound = resolveApplyUrl(job);
+  const sourceLabel = getSourceLabel(job.source);
 
   const toggleSave = async () => {
     if (!isAuthenticated) {
@@ -47,6 +59,9 @@ export default function JobCard({ job, index = 0, onSavedChange }) {
     <article className="job-item" style={{ animationDelay: `${Math.min(index, 8) * 0.04}s` }}>
       <div className="job-item-top">
         <div>
+          <div className="job-source-row">
+            <span className="source-pill">{sourceLabel}</span>
+          </div>
           <h2>{job.title}</h2>
           <p className="job-meta">
             {job.company} · {job.location} · {job.employmentType}
@@ -62,11 +77,22 @@ export default function JobCard({ job, index = 0, onSavedChange }) {
         </button>
       </div>
       <p className="job-skills">{(job.skills || []).join(" · ")}</p>
-      <p className="job-meta">{formatSalary(job)} · source: {job.source}</p>
-      {error && <p className="alert alert-error" style={{ marginTop: "0.6rem" }}>{error}</p>}
-      <Link className="job-link" to={`/jobs/${job._id}`}>
-        View details →
-      </Link>
+      <p className="job-meta">
+        {formatSalary(job)} · via <span className="source-inline">{sourceLabel}</span>
+      </p>
+      {error && (
+        <p className="alert alert-error" style={{ marginTop: "0.6rem" }}>
+          {error}
+        </p>
+      )}
+      <div className="card-links">
+        <Link className="job-link" to={`/jobs/${job._id}`}>
+          View details →
+        </Link>
+        <a className="job-link" href={outbound.url} target="_blank" rel="noreferrer">
+          {outbound.kind === "direct" ? `Open on ${sourceLabel}` : `Search on ${sourceLabel}`} →
+        </a>
+      </div>
     </article>
   );
 }

@@ -16,8 +16,9 @@
     "salaryMax": 700000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "Software Engineer at Reliance Retail in Bengaluru. Work with React, JavaScript, HTML, CSS. Experience 0-2 years preferred.",
-    "applyUrl": "https://apna.co/job/apna-1"
+    "description": "Software Engineer at Reliance Retail in Bengaluru. Work with React, JavaScript, HTML, CSS. Experience 0-2 years preferred. Source portal: apna.",
+    "portal": "apna",
+    "applyUrl": "https://apna.co/jobs?q=Software%20Engineer"
   },
   {
     "id": "apna-2",
@@ -36,8 +37,9 @@
     "salaryMax": 800000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "Frontend Developer at Byju's in Hyderabad. Work with Node.js, Express, MongoDB, REST. Experience 2-4 years preferred.",
-    "applyUrl": "https://apna.co/job/apna-2"
+    "description": "Frontend Developer at Byju's in Hyderabad. Work with Node.js, Express, MongoDB, REST. Experience 2-4 years preferred. Source portal: apna.",
+    "portal": "apna",
+    "applyUrl": "https://apna.co/jobs?q=Frontend%20Developer"
   },
   {
     "id": "apna-3",
@@ -55,8 +57,9 @@
     "salaryMax": 900000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "Backend Developer at Local Soft Pvt Ltd in Chennai. Work with Java, Spring, SQL. Experience 3-5 years preferred.",
-    "applyUrl": "https://apna.co/job/apna-3"
+    "description": "Backend Developer at Local Soft Pvt Ltd in Chennai. Work with Java, Spring, SQL. Experience 3-5 years preferred. Source portal: apna.",
+    "portal": "apna",
+    "applyUrl": "https://apna.co/jobs?q=Backend%20Developer"
   },
   {
     "id": "apna-4",
@@ -74,8 +77,9 @@
     "salaryMax": 1000000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "Full Stack Developer at Urban Company in Pune. Work with Python, Django, PostgreSQL. Experience 4-6 years preferred.",
-    "applyUrl": "https://apna.co/job/apna-4"
+    "description": "Full Stack Developer at Urban Company in Pune. Work with Python, Django, PostgreSQL. Experience 4-6 years preferred. Source portal: apna.",
+    "portal": "apna",
+    "applyUrl": "https://apna.co/jobs?q=Full%20Stack%20Developer"
   },
   {
     "id": "apna-5",
@@ -93,8 +97,9 @@
     "salaryMax": 1100000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "QA Engineer at BigBasket in Mumbai. Work with Selenium, Testing, API Testing. Experience 1-3 years preferred.",
-    "applyUrl": "https://apna.co/job/apna-5"
+    "description": "QA Engineer at BigBasket in Mumbai. Work with Selenium, Testing, API Testing. Experience 1-3 years preferred. Source portal: apna.",
+    "portal": "apna",
+    "applyUrl": "https://apna.co/jobs?q=QA%20Engineer"
   },
   {
     "id": "apna-6",
@@ -112,8 +117,9 @@
     "salaryMax": 1200000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "Data Analyst at Zepto in Mysuru. Work with AWS, Docker, Linux. Experience 0-2 years preferred.",
-    "applyUrl": "https://apna.co/job/apna-6"
+    "description": "Data Analyst at Zepto in Mysuru. Work with AWS, Docker, Linux. Experience 0-2 years preferred. Source portal: apna.",
+    "portal": "apna",
+    "applyUrl": "https://apna.co/jobs?q=Data%20Analyst"
   },
   {
     "id": "apna-7",
@@ -131,8 +137,9 @@
     "salaryMax": 1300000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "DevOps Engineer at Blinkit in Delhi. Work with Figma, UI Design, Prototyping. Experience 3-5 years preferred.",
-    "applyUrl": "https://apna.co/job/apna-7"
+    "description": "DevOps Engineer at Blinkit in Delhi. Work with Figma, UI Design, Prototyping. Experience 3-5 years preferred. Source portal: apna.",
+    "portal": "apna",
+    "applyUrl": "https://apna.co/jobs?q=DevOps%20Engineer"
   },
   {
     "id": "apna-8",
@@ -150,8 +157,9 @@
     "salaryMax": 1400000,
     "salaryCurrency": "INR",
     "employmentType": "remote",
-    "description": "Java Developer at Nykaa in Remote. Work with SQL, Excel, Power BI. Experience 4-6 years preferred.",
-    "applyUrl": "https://apna.co/job/apna-8"
+    "description": "Java Developer at Nykaa in Remote. Work with SQL, Excel, Power BI. Experience 4-6 years preferred. Source portal: apna.",
+    "portal": "apna",
+    "applyUrl": "https://apna.co/jobs?q=Java%20Developer"
   },
   {
     "id": "apna-9",
@@ -170,8 +178,9 @@
     "salaryMax": 1500000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "React Developer at Reliance Retail in Bengaluru. Work with React, JavaScript, HTML, CSS. Experience 1-3 years preferred.",
-    "applyUrl": "https://apna.co/job/apna-9"
+    "description": "React Developer at Reliance Retail in Bengaluru. Work with React, JavaScript, HTML, CSS. Experience 1-3 years preferred. Source portal: apna.",
+    "portal": "apna",
+    "applyUrl": "https://apna.co/jobs?q=React%20Developer"
   },
   {
     "id": "apna-10",
@@ -190,8 +199,9 @@
     "salaryMax": 1600000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "Node.js Developer at Byju's in Hyderabad. Work with Node.js, Express, MongoDB, REST. Experience 2-4 years preferred.",
-    "applyUrl": "https://apna.co/job/apna-10"
+    "description": "Node.js Developer at Byju's in Hyderabad. Work with Node.js, Express, MongoDB, REST. Experience 2-4 years preferred. Source portal: apna.",
+    "portal": "apna",
+    "applyUrl": "https://apna.co/jobs?q=Node.js%20Developer"
   },
   {
     "id": "apna-11",
@@ -209,8 +219,9 @@
     "salaryMax": 700000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "Python Developer at Local Soft Pvt Ltd in Chennai. Work with Java, Spring, SQL. Experience 0-2 years preferred.",
-    "applyUrl": "https://apna.co/job/apna-11"
+    "description": "Python Developer at Local Soft Pvt Ltd in Chennai. Work with Java, Spring, SQL. Experience 0-2 years preferred. Source portal: apna.",
+    "portal": "apna",
+    "applyUrl": "https://apna.co/jobs?q=Python%20Developer"
   },
   {
     "id": "apna-12",
@@ -228,8 +239,9 @@
     "salaryMax": 800000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "Mobile App Developer at Urban Company in Pune. Work with Python, Django, PostgreSQL. Experience 4-6 years preferred.",
-    "applyUrl": "https://apna.co/job/apna-12"
+    "description": "Mobile App Developer at Urban Company in Pune. Work with Python, Django, PostgreSQL. Experience 4-6 years preferred. Source portal: apna.",
+    "portal": "apna",
+    "applyUrl": "https://apna.co/jobs?q=Mobile%20App%20Developer"
   },
   {
     "id": "apna-13",
@@ -247,8 +259,9 @@
     "salaryMax": 900000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "UI/UX Designer at BigBasket in Mumbai. Work with Selenium, Testing, API Testing. Experience 1-3 years preferred.",
-    "applyUrl": "https://apna.co/job/apna-13"
+    "description": "UI/UX Designer at BigBasket in Mumbai. Work with Selenium, Testing, API Testing. Experience 1-3 years preferred. Source portal: apna.",
+    "portal": "apna",
+    "applyUrl": "https://apna.co/jobs?q=UI%2FUX%20Designer"
   },
   {
     "id": "apna-14",
@@ -266,8 +279,9 @@
     "salaryMax": 1000000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "Business Analyst at Zepto in Mysuru. Work with AWS, Docker, Linux. Experience 2-4 years preferred.",
-    "applyUrl": "https://apna.co/job/apna-14"
+    "description": "Business Analyst at Zepto in Mysuru. Work with AWS, Docker, Linux. Experience 2-4 years preferred. Source portal: apna.",
+    "portal": "apna",
+    "applyUrl": "https://apna.co/jobs?q=Business%20Analyst"
   },
   {
     "id": "apna-15",
@@ -285,8 +299,9 @@
     "salaryMax": 1100000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "Cloud Engineer at Blinkit in Delhi. Work with Figma, UI Design, Prototyping. Experience 3-5 years preferred.",
-    "applyUrl": "https://apna.co/job/apna-15"
+    "description": "Cloud Engineer at Blinkit in Delhi. Work with Figma, UI Design, Prototyping. Experience 3-5 years preferred. Source portal: apna.",
+    "portal": "apna",
+    "applyUrl": "https://apna.co/jobs?q=Cloud%20Engineer"
   },
   {
     "id": "apna-16",
@@ -304,8 +319,9 @@
     "salaryMax": 1200000,
     "salaryCurrency": "INR",
     "employmentType": "remote",
-    "description": "Support Engineer at Nykaa in Remote. Work with SQL, Excel, Power BI. Experience 0-2 years preferred.",
-    "applyUrl": "https://apna.co/job/apna-16"
+    "description": "Support Engineer at Nykaa in Remote. Work with SQL, Excel, Power BI. Experience 0-2 years preferred. Source portal: apna.",
+    "portal": "apna",
+    "applyUrl": "https://apna.co/jobs?q=Support%20Engineer"
   },
   {
     "id": "apna-17",
@@ -324,8 +340,9 @@
     "salaryMax": 27000,
     "salaryCurrency": "INR",
     "employmentType": "internship",
-    "description": "Internship - Web Development at Reliance Retail in Bengaluru. Work with React, JavaScript, HTML, CSS. Experience 1-3 years preferred.",
-    "applyUrl": "https://apna.co/job/apna-17"
+    "description": "Internship - Web Development at Reliance Retail in Bengaluru. Work with React, JavaScript, HTML, CSS. Experience 1-3 years preferred. Source portal: apna.",
+    "portal": "apna",
+    "applyUrl": "https://apna.co/jobs?q=Internship%20-%20Web%20Development"
   },
   {
     "id": "apna-18",
@@ -344,8 +361,9 @@
     "salaryMax": 1400000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "ML Engineer at Byju's in Hyderabad. Work with Node.js, Express, MongoDB, REST. Experience 2-4 years preferred.",
-    "applyUrl": "https://apna.co/job/apna-18"
+    "description": "ML Engineer at Byju's in Hyderabad. Work with Node.js, Express, MongoDB, REST. Experience 2-4 years preferred. Source portal: apna.",
+    "portal": "apna",
+    "applyUrl": "https://apna.co/jobs?q=ML%20Engineer"
   },
   {
     "id": "apna-19",
@@ -363,8 +381,9 @@
     "salaryMax": 1500000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "Security Analyst at Local Soft Pvt Ltd in Chennai. Work with Java, Spring, SQL. Experience 3-5 years preferred.",
-    "applyUrl": "https://apna.co/job/apna-19"
+    "description": "Security Analyst at Local Soft Pvt Ltd in Chennai. Work with Java, Spring, SQL. Experience 3-5 years preferred. Source portal: apna.",
+    "portal": "apna",
+    "applyUrl": "https://apna.co/jobs?q=Security%20Analyst"
   },
   {
     "id": "apna-20",
@@ -382,7 +401,8 @@
     "salaryMax": 1600000,
     "salaryCurrency": "INR",
     "employmentType": "full-time",
-    "description": "Product Analyst at Urban Company in Pune. Work with Python, Django, PostgreSQL. Experience 4-6 years preferred.",
-    "applyUrl": "https://apna.co/job/apna-20"
+    "description": "Product Analyst at Urban Company in Pune. Work with Python, Django, PostgreSQL. Experience 4-6 years preferred. Source portal: apna.",
+    "portal": "apna",
+    "applyUrl": "https://apna.co/jobs?q=Product%20Analyst"
   }
 ]
