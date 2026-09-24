@@ -4,6 +4,8 @@ import { jobsApi } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import JobCard from "../components/JobCard";
 import Pagination from "../components/Pagination";
+import LoadingState from "../components/LoadingState";
+import EmptyState from "../components/EmptyState";
 
 export default function SavedJobs() {
   const { isAuthenticated, loading: authLoading } = useAuth();
@@ -33,7 +35,7 @@ export default function SavedJobs() {
   if (authLoading) {
     return (
       <div className="page">
-        <p className="muted">Checking account...</p>
+        <LoadingState label="Checking account..." />
       </div>
     );
   }
@@ -52,15 +54,16 @@ export default function SavedJobs() {
         </Link>
       </div>
 
-      {loading && <p className="muted">Loading saved jobs...</p>}
+      {loading && <LoadingState label="Loading saved jobs..." />}
       {error && <p className="alert alert-error">{error}</p>}
 
       {!loading && data && data.jobs.length === 0 && (
-        <div className="panel">
-          <p className="muted" style={{ margin: 0 }}>
-            No saved jobs yet. Open a listing and click <strong>Save</strong>.
-          </p>
-        </div>
+        <EmptyState
+          title="No saved jobs yet"
+          description="Open a listing and click Save to bookmark it here."
+          actionTo="/jobs"
+          actionLabel="Browse jobs"
+        />
       )}
 
       {data && data.jobs.length > 0 && (

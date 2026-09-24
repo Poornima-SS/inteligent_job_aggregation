@@ -6,6 +6,7 @@ import { alertsApi } from "../api/client";
 export default function Navbar() {
   const { user, logout, isAuthenticated } = useAuth();
   const [unread, setUnread] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -30,63 +31,75 @@ export default function Navbar() {
     };
   }, [isAuthenticated, user?._id]);
 
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [isAuthenticated]);
+
+  const linkClass = ({ isActive }) => `nav-link${isActive ? " active" : ""}`;
+
   return (
     <header className="nav">
       <div className="nav-inner">
-        <Link to="/" className="brand">
-          Intelligent <span>Job Aggregation</span>
+        <Link to="/" className="brand" onClick={() => setMenuOpen(false)}>
+          <img src="/logo.png" alt="Intelligent Job Aggregation" className="brand-logo" />
+          <span className="brand-text">
+            Intelligent <span>Job Aggregation</span>
+          </span>
         </Link>
-        <nav className="nav-links">
-          <NavLink to="/" className={({ isActive }) => `nav-link${isActive ? " active" : ""}`} end>
+
+        <button
+          type="button"
+          className="nav-toggle btn btn-ghost btn-sm"
+          aria-expanded={menuOpen}
+          aria-label="Toggle menu"
+          onClick={() => setMenuOpen((o) => !o)}
+        >
+          {menuOpen ? "Close" : "Menu"}
+        </button>
+
+        <nav className={`nav-links${menuOpen ? " open" : ""}`}>
+          <NavLink to="/" className={linkClass} end onClick={() => setMenuOpen(false)}>
             Home
           </NavLink>
-          <NavLink to="/jobs" className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}>
+          <NavLink to="/jobs" className={linkClass} onClick={() => setMenuOpen(false)}>
             Jobs
           </NavLink>
           {isAuthenticated ? (
             <>
-              <NavLink
-                to="/recommendations"
-                className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}
-              >
+              <NavLink to="/recommendations" className={linkClass} onClick={() => setMenuOpen(false)}>
                 For you
               </NavLink>
-              <NavLink
-                to="/alerts"
-                className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}
-              >
+              <NavLink to="/alerts" className={linkClass} onClick={() => setMenuOpen(false)}>
                 Alerts
                 {unread > 0 && <span className="nav-badge">{unread > 9 ? "9+" : unread}</span>}
               </NavLink>
-              <NavLink
-                to="/saved"
-                className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}
-              >
+              <NavLink to="/saved" className={linkClass} onClick={() => setMenuOpen(false)}>
                 Saved
               </NavLink>
-              <NavLink
-                to="/scrape"
-                className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}
-              >
+              <NavLink to="/scrape" className={linkClass} onClick={() => setMenuOpen(false)}>
                 Scrape
               </NavLink>
-              <NavLink
-                to="/profile"
-                className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}
-              >
+              <NavLink to="/profile" className={linkClass} onClick={() => setMenuOpen(false)}>
                 Profile
               </NavLink>
               <span className="nav-user">{user?.name}</span>
-              <button type="button" className="btn btn-ghost btn-sm" onClick={logout}>
+              <button
+                type="button"
+                className="btn btn-ghost btn-sm"
+                onClick={() => {
+                  setMenuOpen(false);
+                  logout();
+                }}
+              >
                 Logout
               </button>
             </>
           ) : (
             <>
-              <NavLink to="/login" className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}>
+              <NavLink to="/login" className={linkClass} onClick={() => setMenuOpen(false)}>
                 Login
               </NavLink>
-              <Link to="/register" className="btn btn-accent btn-sm">
+              <Link to="/register" className="btn btn-accent btn-sm" onClick={() => setMenuOpen(false)}>
                 Register
               </Link>
             </>

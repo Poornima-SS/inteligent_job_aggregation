@@ -30,7 +30,7 @@ app.get("/api/health", (req, res) => {
   res.json({
     status: "ok",
     service: "intelligent-job-aggregation",
-    phase: 6,
+    phase: 10,
     dbConnected: isDBConnected(),
     schedulerEnabled: schedule.enabled,
     cronExpression: schedule.expression,

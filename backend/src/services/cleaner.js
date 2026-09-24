@@ -26,7 +26,11 @@ function normalizeLocation(location = "Remote") {
   const cleaned = stripHtml(location) || "Remote";
   const key = normalizeText(cleaned);
   if (LOCATION_MAP[key]) return LOCATION_MAP[key];
-  if (key.includes("remote") || key === "anywhere") return "Remote";
+  if (key.includes("remote") || key === "anywhere" || key.includes("work from anywhere")) {
+    return "Remote";
+  }
+  if (key.includes("bangalore") || key.includes("bengaluru")) return "Bengaluru";
+  if (key.includes("mysore") || key.includes("mysuru")) return "Mysuru";
   return cleaned.replace(/\s+/g, " ").trim();
 }
 

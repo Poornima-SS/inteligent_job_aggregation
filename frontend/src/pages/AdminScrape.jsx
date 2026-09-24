@@ -247,7 +247,8 @@ export default function AdminScrape() {
           <strong>Portals:</strong> use <em>Run portals + companies</em> for Naukri, Indeed,
           LinkedIn, Apna (each job shows the portal name). <strong>Live APIs:</strong> Remotive +
           RemoteOK have direct apply links. Portal boards open a live search on that portal for the
-          same role/location.
+          same role/location. If scrape fails in a demo, run{" "}
+          <code>npm run demo:fallback</code> in the backend folder.
         </p>
         <div className="source-grid">
           {sources.map((source) => (

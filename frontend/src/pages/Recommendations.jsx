@@ -3,6 +3,9 @@ import { Link, Navigate } from "react-router-dom";
 import { jobsApi } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import JobCard from "../components/JobCard";
+import LoadingState from "../components/LoadingState";
+import EmptyState from "../components/EmptyState";
+import SkillTags from "../components/SkillTags";
 
 export default function Recommendations() {
   const { isAuthenticated, loading: authLoading, user } = useAuth();
@@ -29,7 +32,7 @@ export default function Recommendations() {
   if (authLoading) {
     return (
       <div className="page">
-        <p className="muted">Checking account...</p>
+        <LoadingState label="Checking account..." />
       </div>
     );
   }
@@ -51,8 +54,9 @@ export default function Recommendations() {
 
       {data?.profile && (
         <div className="panel" style={{ marginBottom: "1rem" }}>
-          <p className="muted" style={{ margin: 0 }}>
-            Matching with skills: <strong>{(data.profile.skills || []).join(", ") || "none"}</strong>
+          <p className="muted" style={{ margin: "0 0 0.65rem" }}>
+            Matching with skills:{" "}
+            <strong>{(data.profile.skills || []).join(", ") || "none"}</strong>
             {" · "}
             locations:{" "}
             <strong>{(data.profile.preferredLocations || []).join(", ") || "any"}</strong>
@@ -61,17 +65,19 @@ export default function Recommendations() {
             {" · "}
             experience: <strong>{data.profile.experienceYears || 0} yrs</strong>
           </p>
+          <SkillTags skills={data.profile.skills || []} />
         </div>
       )}
 
-      {loading && <p className="muted">Scoring jobs...</p>}
+      {loading && <LoadingState label="Scoring jobs..." />}
       {error && <p className="alert alert-error">{error}</p>}
-      {data?.message && !data.jobs?.length && (
-        <div className="panel">
-          <p className="muted" style={{ margin: 0 }}>
-            {data.message}. <Link to="/profile">Update profile</Link>
-          </p>
-        </div>
+      {data?.message && !data.jobs?.length && !loading && (
+        <EmptyState
+          title="No strong matches yet"
+          description={data.message}
+          actionTo="/profile"
+          actionLabel="Update profile"
+        />
       )}
 
       {data?.jobs?.length > 0 && (

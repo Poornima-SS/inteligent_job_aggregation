@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { jobsApi } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import FilterBar from "../components/FilterBar";
 import JobCard from "../components/JobCard";
 import Pagination from "../components/Pagination";
+import LoadingState from "../components/LoadingState";
+import EmptyState from "../components/EmptyState";
 
 const defaultFilters = {
   q: "",
@@ -19,7 +21,11 @@ const defaultFilters = {
 
 export default function Jobs() {
   const { isAuthenticated } = useAuth();
-  const [filters, setFilters] = useState(defaultFilters);
+  const [searchParams] = useSearchParams();
+  const [filters, setFilters] = useState(() => ({
+    ...defaultFilters,
+    q: searchParams.get("q") || "",
+  }));
   const [page, setPage] = useState(1);
   const [data, setData] = useState(null);
   const [stats, setStats] = useState(null);
@@ -51,6 +57,17 @@ export default function Jobs() {
     load(filters, page);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
+
+  useEffect(() => {
+    const q = searchParams.get("q") || "";
+    if (q && q !== filters.q) {
+      const next = { ...filters, q };
+      setFilters(next);
+      setPage(1);
+      load(next, 1);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -97,22 +114,18 @@ export default function Jobs() {
         )}
       </div>
 
-      <FilterBar
-        value={filters}
-        onChange={setFilters}
-        onSubmit={onSubmit}
-        onReset={onReset}
-      />
+      <FilterBar value={filters} onChange={setFilters} onSubmit={onSubmit} onReset={onReset} />
 
-      {loading && <p className="muted">Loading openings...</p>}
+      {loading && <LoadingState label="Loading openings..." />}
       {error && <p className="alert alert-error">{error}</p>}
 
       {!loading && data && data.jobs.length === 0 && (
-        <div className="panel">
-          <p className="muted" style={{ margin: 0 }}>
-            No jobs matched these filters. Try resetting or broadening your search.
-          </p>
-        </div>
+        <EmptyState
+          title="No jobs matched"
+          description="Try resetting filters or broadening your search keywords."
+          actionTo={isAuthenticated ? "/scrape" : "/login"}
+          actionLabel={isAuthenticated ? "Run a scrape" : "Login"}
+        />
       )}
 
       {data && data.jobs.length > 0 && (
@@ -125,11 +138,7 @@ export default function Jobs() {
               <JobCard key={job._id} job={job} index={index} />
             ))}
           </div>
-          <Pagination
-            page={data.page}
-            totalPages={data.totalPages}
-            onChange={(p) => setPage(p)}
-          />
+          <Pagination page={data.page} totalPages={data.totalPages} onChange={(p) => setPage(p)} />
         </>
       )}
     </div>

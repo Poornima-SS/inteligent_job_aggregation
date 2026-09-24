@@ -1,4 +1,5 @@
 const { toPublicUser } = require("../utils/user");
+const { extractSkillsFromResume } = require("../services/resumeParser");
 
 function parseList(value) {
   if (value === undefined) return undefined;
@@ -46,4 +47,20 @@ async function updateMe(req, res) {
   }
 }
 
-module.exports = { updateMe };
+async function extractResumeSkills(req, res) {
+  try {
+    const text = req.body?.resumeText ?? req.user.resumeText ?? "";
+    const skills = extractSkillsFromResume(text);
+    return res.json({
+      skills,
+      count: skills.length,
+      message: skills.length
+        ? `Extracted ${skills.length} skill(s) from resume text`
+        : "No known skills found — paste more of your resume or add skills manually",
+    });
+  } catch (err) {
+    return res.status(500).json({ message: "Failed to extract skills", error: err.message });
+  }
+}
+
+module.exports = { updateMe, extractResumeSkills };

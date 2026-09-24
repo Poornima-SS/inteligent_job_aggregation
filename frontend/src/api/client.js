@@ -59,6 +59,8 @@ export const authApi = {
 
 export const usersApi = {
   updateMe: (body) => api("/users/me", { method: "PUT", body: JSON.stringify(body) }),
+  extractSkills: (body = {}) =>
+    api("/users/me/extract-skills", { method: "POST", body: JSON.stringify(body) }),
 };
 
 export const jobsApi = {

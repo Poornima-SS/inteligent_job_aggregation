@@ -13,6 +13,13 @@ React + Node.js project for aggregating job listings, cleaning/deduplicating dat
 | 4 Scraping pipeline | Done |
 | 5 Scheduler + recommendations | Done |
 | 6 Alerts | Done |
+| 7 Frontend polish | Done |
+| 8 Testing & demo | Done |
+| 9 Report / PPT docs | Done |
+| 10 Final packaging | Done |
+
+**Project status: complete (Phases 0–10).**
+
 
 ## Setup
 
@@ -95,3 +102,65 @@ SMTP_FROM=...
 ```
 
 Without SMTP, alerts still work as in-app notifications.
+
+## Phase 7 — Frontend polish
+
+- Home: problem statement, how-it-works, live stats, search bar, CTAs
+- Shared UI: `LoadingState`, `EmptyState`, `SkillTags`, `SearchBar`, `Footer`, `NotFound`
+- Responsive navbar (mobile Menu toggle)
+- Profile: **Extract skills from resume** (`POST /api/users/me/extract-skills`)
+- Loading / empty states on Jobs, Saved, Recommendations
+- Vite proxy `/api` → `http://localhost:5000` (unchanged)
+
+### Resume skill extract
+
+Paste resume text on Profile → **Extract skills from resume** → review tags → **Save profile**.
+
+## Phase 8 — Testing & demo
+
+### Automated tests (Node built-in test runner)
+
+```powershell
+cd backend
+npm test
+```
+
+Covers: cleaner (HTML/location/salary/experience), dedupe/hash, ranker, resume skill extract.
+
+### Viva fallback (if live scrape fails)
+
+```powershell
+cd backend
+npm run demo:fallback
+```
+
+Loads `sample-data/jobs.json` so Jobs UI still works offline. Use `--replace-all` only if you want a clean demo DB.
+
+### Checklist
+
+See [DEMO_CHECKLIST.md](./DEMO_CHECKLIST.md) for the 5-minute viva script.
+
+## Phase 9 — Report / PPT alignment
+
+Documentation for your formal report and presentation (not new app features):
+
+| File | Purpose |
+|---|---|
+| [REPORT.md](./REPORT.md) | Problem, objectives, SRS tech stack, architecture, methodology, APIs, limitations, future work, screenshot guide, conclusion |
+| [PPT_NOTES.md](./PPT_NOTES.md) | Slide talking points + viva Q&A |
+| [DEMO_CHECKLIST.md](./DEMO_CHECKLIST.md) | Live demo script |
+
+**Update your synopsis slide** if it still says Flask → use **Node.js / Express + React + MongoDB**.
+
+## Phase 10 — Final packaging
+
+| File / command | Purpose |
+|---|---|
+| [ARCHITECTURE.md](./ARCHITECTURE.md) | Mermaid architecture + methodology diagrams for PPT/report |
+| [SUBMISSION.md](./SUBMISSION.md) | College submission / viva handoff checklist |
+| `npm run verify:final` | Docs + folders + unit tests (+ optional health check) |
+
+```powershell
+cd backend
+npm run verify:final
+```

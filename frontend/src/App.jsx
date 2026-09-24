@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -11,6 +12,7 @@ import SavedJobs from "./pages/SavedJobs";
 import AdminScrape from "./pages/AdminScrape";
 import Recommendations from "./pages/Recommendations";
 import Alerts from "./pages/Alerts";
+import NotFound from "./pages/NotFound";
 
 export default function App() {
   return (
@@ -30,8 +32,10 @@ export default function App() {
               <Route path="/recommendations" element={<Recommendations />} />
               <Route path="/alerts" element={<Alerts />} />
               <Route path="/scrape" element={<AdminScrape />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
+          <Footer />
         </div>
       </BrowserRouter>
     </AuthProvider>
