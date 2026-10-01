@@ -1,5 +1,5 @@
 const { ScrapeLog } = require("../models");
-const { cleanJob } = require("./cleaner");
+const { cleanJob, listingProblem } = require("./cleaner");
 const { upsertJobs } = require("./dedupe");
 const { processAlerts } = require("./notifier");
 const { scrapeRemotive } = require("../scrapers/remotiveScraper");
@@ -105,14 +105,19 @@ async function runSource(source, options = {}) {
   try {
     const rawJobs = await runner(options);
     const cleaned = rawJobs.map(cleanJob).filter((j) => j.title && j.company);
-    const result = await upsertJobs(cleaned);
+    const rejected = options.keepSamples ? [] : cleaned.filter((job) => listingProblem(job));
+    const reliable = options.keepSamples ? cleaned : cleaned.filter((job) => !listingProblem(job));
+    const result = await upsertJobs(reliable);
+    const skipped = (result.skippedDuplicates || 0) + rejected.length;
 
     log.finishedAt = new Date();
     log.jobsFound = rawJobs.length;
     log.jobsSaved = result.saved;
     log.status = "success";
-    log.error = result.skippedDuplicates
-      ? `Skipped ${result.skippedDuplicates} duplicates/invalid rows`
+    log.error = skipped
+      ? `Skipped ${skipped} inaccurate or duplicate rows${
+          rejected.length ? ` (${rejected.length} were sample or search-page listings)` : ""
+        }`
       : "";
     await log.save();
 

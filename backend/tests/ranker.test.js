@@ -1,6 +1,6 @@
 const { describe, it } = require("node:test");
 const assert = require("node:assert/strict");
-const { extractSkillsFromResume } = require("../src/services/resumeParser");
+const { extractSkillsFromResume, parseResume } = require("../src/services/resumeParser");
 const { scoreJob, skillOverlapScore } = require("../src/services/ranker");
 
 describe("resumeParser", () => {
@@ -16,6 +16,45 @@ describe("resumeParser", () => {
 
   it("returns empty for blank text", () => {
     assert.deepEqual(extractSkillsFromResume(""), []);
+  });
+
+  it("fills name, skills, experience, location, and role from resume text", () => {
+    const profile = parseResume(`Poornima S S
+MCA | Bengaluru
+Frontend Developer
+3 years of experience
+Skills: React, Node.js, MongoDB, JavaScript`);
+    assert.equal(profile.name, "Poornima S S");
+    assert.ok(profile.skills.includes("React"));
+    assert.equal(profile.experienceYears, 3);
+    assert.ok(profile.preferredLocations.includes("Bengaluru"));
+    assert.ok(profile.preferredRoles.includes("Frontend Developer"));
+  });
+
+  it("reads a name stuck beside contact details and ignores college year span", () => {
+    const profile = parseResume(
+      `PRAJU K K praju@mail.com 9876543210 Bengaluru
+Education 2018 - 2026
+Internship project
+Full Stack Developer
+Skills: React, Node.js`,
+      "praju-K-K_resume (2).pdf"
+    );
+    assert.equal(profile.name, "Praju K K");
+    assert.equal(profile.experienceYears, 0);
+    assert.ok(profile.preferredRoles.includes("Full Stack Developer"));
+    assert.equal(profile.preferredRoles.includes("Intern"), false);
+  });
+
+  it("fills the email from the resume and drops Git from the name", () => {
+    const profile = parseResume(
+      `Praju K K Git
+      prajukk@gmail.com | Bengaluru
+      Full Stack Developer`,
+      "praju-K-K_resume (2).pdf"
+    );
+    assert.equal(profile.email, "prajukk@gmail.com");
+    assert.equal(profile.name, "Praju K K");
   });
 });
 

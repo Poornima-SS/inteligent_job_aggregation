@@ -37,11 +37,8 @@ async function main() {
   // Keep only recent scrape logs for clarity
   await ScrapeLog.deleteMany({ source: { $in: DEMO_SOURCES } });
 
-  console.log("Importing real jobs from Remotive + RemoteOK + portals...");
-  const outcome = await runScrapers(
-    ["remotive", "remoteok", "naukri", "indeed", "linkedin", "apna", "private-company"],
-    { limit: 40 }
-  );
+  console.log("Importing live jobs from Remotive and RemoteOK...");
+  const outcome = await runScrapers(["remotive", "remoteok"], { limit: 40 });
 
   for (const r of outcome.results) {
     console.log(`${r.source}: ${r.status} found=${r.jobsFound} saved=${r.jobsSaved}${r.error ? " — " + r.error : ""}`);

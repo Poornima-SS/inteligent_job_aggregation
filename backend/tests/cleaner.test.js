@@ -43,27 +43,43 @@ describe("cleaner", () => {
     assert.equal(b.salaryMax, 600000);
   });
 
-  it("cleanJob returns normalized listing", () => {
+  it("keeps skills that are real tags or written in the posting", () => {
     const job = cleanJob({
       title: "  <b>Frontend Developer</b> ",
       company: "Acme",
       location: "Bangalore",
-      description: "<p>Build UI with React</p>",
-      skills: "React, Node.js, React",
+      description: "<p>Build UI with React and PostgreSQL</p>",
+      skills: "React, Node.js, exec",
       experienceMin: 1,
       experienceMax: 3,
       salaryText: "10-14 LPA",
       employmentType: "full time",
-      source: "naukri",
-      sourceUrl: "https://www.naukri.com/frontend-developer-jobs-in-bengaluru",
-      applyUrl: "https://www.naukri.com/frontend-developer-jobs-in-bengaluru",
+      source: "remoteok",
+      sourceUrl: "https://remoteok.com/remote-jobs/frontend-1",
+      applyUrl: "https://remoteok.com/remote-jobs/frontend-1",
     });
     assert.equal(job.title, "Frontend Developer");
     assert.equal(job.location, "Bengaluru");
-    assert.deepEqual(job.skills, ["React", "Node.js"]);
+    assert.deepEqual(job.skills, ["React", "PostgreSQL", "Node.js"]);
     assert.equal(job.salaryCurrency, "INR");
     assert.equal(job.salaryMin, 1000000);
     assert.equal(job.employmentType, "full-time");
     assert.equal(job.isActive, true);
+  });
+
+  it("rejects generated portal samples and search-only links", () => {
+    const { listingProblem } = require("../src/services/cleaner");
+    const sample = listingProblem({
+      company: "Infosys",
+      description: "Software Engineer at Infosys. Source portal: naukri.",
+      applyUrl: "https://www.naukri.com/software-engineer-jobs-in-bengaluru",
+    });
+    assert.equal(sample, "generated sample text");
+    const search = listingProblem({
+      company: "HP",
+      description: "A live looking summary",
+      applyUrl: "https://in.indeed.com/jobs?q=Backend%20Developer&l=Chennai",
+    });
+    assert.equal(search, "portal search link, not a job");
   });
 });

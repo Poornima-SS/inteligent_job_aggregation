@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { authApi } from "../api/client";
 
 export default function Register() {
   const { register } = useAuth();
@@ -9,15 +10,52 @@ export default function Register() {
     name: "",
     email: "",
     password: "",
-    skills: "React, Node.js, MongoDB",
+    skills: "",
     experienceYears: 0,
-    preferredLocations: "Bengaluru, Remote",
-    preferredRoles: "Developer",
+    preferredLocations: "",
+    preferredRoles: "",
+    resumeText: "",
+    resumeFileName: "",
   });
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
 
   const onChange = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+
+  const onUpload = async (event) => {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+    if (!file) return;
+    setBusy(true);
+    setError("");
+    setMessage("");
+    try {
+      const data = await authApi.parseResume(file);
+      setForm((current) => ({
+        ...current,
+        name: data.name || current.name,
+        email: data.email || current.email,
+        password: "",
+        skills: data.skills?.length ? data.skills.join(", ") : current.skills,
+        experienceYears:
+          data.experienceYears == null ? current.experienceYears : data.experienceYears,
+        preferredLocations: data.preferredLocations?.length
+          ? data.preferredLocations.join(", ")
+          : current.preferredLocations,
+        preferredRoles: data.preferredRoles?.length
+          ? data.preferredRoles.join(", ")
+          : current.preferredRoles,
+        resumeText: data.resumeText || current.resumeText,
+        resumeFileName: data.resumeFileName || file.name,
+      }));
+      setMessage(data.message || "Resume fields filled");
+    } catch (err) {
+      setError(err.message || "Could not read that resume");
+    } finally {
+      setBusy(false);
+    }
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -40,10 +78,27 @@ export default function Register() {
     <div className="auth-layout wide">
       <h1 className="page-title">Create account</h1>
       <p className="page-sub">
-        Tell us your skills once — later phases will rank jobs against this profile.
+        Upload your resume to fill name, skills, experience, locations, and roles. They are saved to
+        MongoDB when you register.
       </p>
-      <form className="panel form-grid" onSubmit={onSubmit}>
+      <form className="panel form-grid" autoComplete="off" onSubmit={onSubmit}>
+        {message && <p className="alert alert-ok">{message}</p>}
         {error && <p className="alert alert-error">{error}</p>}
+        <div className="field">
+          <label htmlFor="resumeFile">Upload resume (PDF, DOCX, or TXT)</label>
+          <input
+            id="resumeFile"
+            type="file"
+            accept=".pdf,.docx,.txt,application/pdf,text/plain"
+            onChange={onUpload}
+            disabled={busy}
+          />
+          {form.resumeFileName && (
+            <p className="footer-note">
+              Selected: <strong>{form.resumeFileName}</strong>
+            </p>
+          )}
+        </div>
         <div className="field">
           <label htmlFor="name">Name</label>
           <input id="name" name="name" value={form.name} onChange={onChange} required />
@@ -65,10 +120,14 @@ export default function Register() {
             id="password"
             type="password"
             name="password"
+            autoComplete="new-password"
             value={form.password}
             onChange={onChange}
+            onFocus={(e) => e.currentTarget.removeAttribute("readonly")}
+            readOnly
             required
             minLength={6}
+            placeholder="Create a password"
           />
         </div>
         <div className="field">

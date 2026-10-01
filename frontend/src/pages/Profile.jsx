@@ -1,16 +1,26 @@
-import { useEffect, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { usersApi } from "../api/client";
 import SkillTags from "../components/SkillTags";
 import LoadingState from "../components/LoadingState";
 
 export default function Profile() {
-  const { user, loading, updateProfile, isAuthenticated } = useAuth();
+  const { user, loading, updateProfile, refreshUser, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+  const redirectTimer = useRef(null);
   const [form, setForm] = useState(null);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [savedPopup, setSavedPopup] = useState(false);
+
+  useEffect(() => () => clearTimeout(redirectTimer.current), []);
+
+  const goToJobs = () => {
+    clearTimeout(redirectTimer.current);
+    navigate("/jobs");
+  };
 
   useEffect(() => {
     if (user) {
@@ -47,7 +57,8 @@ export default function Profile() {
         ...form,
         experienceYears: Number(form.experienceYears) || 0,
       });
-      setMessage("Profile saved — used for recommendations and alerts");
+      setSavedPopup(true);
+      redirectTimer.current = setTimeout(() => navigate("/jobs"), 1600);
     } catch (err) {
       setError(err.message || "Update failed");
     } finally {
@@ -55,23 +66,52 @@ export default function Profile() {
     }
   };
 
+  const applyResume = async (data) => {
+    const saved = data.user;
+    setForm((current) => ({
+      ...current,
+      name: saved?.name || data.name || current.name,
+      skills: (saved?.skills || data.skills || []).length
+        ? (saved?.skills || data.skills).join(", ")
+        : current.skills,
+      experienceYears:
+        saved?.experienceYears ?? data.experienceYears ?? current.experienceYears,
+      preferredLocations: (saved?.preferredLocations || data.preferredLocations || []).length
+        ? (saved?.preferredLocations || data.preferredLocations).join(", ")
+        : current.preferredLocations,
+      preferredRoles: (saved?.preferredRoles || data.preferredRoles || []).length
+        ? (saved?.preferredRoles || data.preferredRoles).join(", ")
+        : current.preferredRoles,
+      resumeText: saved?.resumeText || data.resumeText || current.resumeText,
+    }));
+    if (saved) await refreshUser();
+    setMessage(data.message || "Resume saved to MongoDB");
+  };
+
   const extractSkills = async () => {
     setBusy(true);
     setError("");
     setMessage("");
     try {
-      const data = await usersApi.extractSkills({ resumeText: form.resumeText });
-      if (data.skills?.length) {
-        const existing = form.skills
-          .split(",")
-          .map((s) => s.trim())
-          .filter(Boolean);
-        const merged = [...new Set([...existing, ...data.skills])];
-        setForm((f) => ({ ...f, skills: merged.join(", ") }));
-      }
-      setMessage(data.message || "Skills extracted");
+      await applyResume(await usersApi.extractSkills({ resumeText: form.resumeText }));
     } catch (err) {
       setError(err.message || "Extract failed");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const onUpload = async (event) => {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+    if (!file) return;
+    setBusy(true);
+    setError("");
+    setMessage("");
+    try {
+      await applyResume(await usersApi.uploadResume(file));
+    } catch (err) {
+      setError(err.message || "Could not read that resume");
     } finally {
       setBusy(false);
     }
@@ -84,6 +124,17 @@ export default function Profile() {
 
   return (
     <div className="page" style={{ maxWidth: 640 }}>
+      {savedPopup && (
+        <div className="save-popup" role="dialog" aria-modal="true" aria-labelledby="save-popup-title">
+          <div className="save-popup-card">
+            <h2 id="save-popup-title">Profile saved</h2>
+            <p>Your profile is saved. Opening the job search page.</p>
+            <button className="btn btn-accent" type="button" onClick={goToJobs}>
+              Go to job search
+            </button>
+          </div>
+        </div>
+      )}
       <h1 className="page-title">Your profile</h1>
       <p className="page-sub">
         Signed in as <strong>{user.email}</strong>. Skills and preferences power recommendations and
@@ -92,6 +143,27 @@ export default function Profile() {
       <form className="panel form-grid" onSubmit={onSubmit}>
         {message && <p className="alert alert-ok">{message}</p>}
         {error && <p className="alert alert-error">{error}</p>}
+        <div className="field">
+          <label htmlFor="resumeFile">Upload resume (PDF, DOCX, or TXT)</label>
+          <input
+            id="resumeFile"
+            type="file"
+            accept=".pdf,.docx,.txt,application/pdf,text/plain"
+            onChange={onUpload}
+            disabled={busy}
+          />
+          <p className="footer-note">
+            Uploading saves name, skills, experience, locations, roles, and resume text to MongoDB.
+          </p>
+          {user.resumeFileName && (
+            <p className="footer-note">
+              Last file: <strong>{user.resumeFileName}</strong>
+              {user.resumeUploadedAt
+                ? ` · ${new Date(user.resumeUploadedAt).toLocaleString()}`
+                : ""}
+            </p>
+          )}
+        </div>
         <div className="field">
           <label htmlFor="name">Name</label>
           <input id="name" name="name" value={form.name} onChange={onChange} required />
@@ -138,7 +210,7 @@ export default function Profile() {
             value={form.resumeText}
             onChange={onChange}
             rows={6}
-            placeholder="Paste resume text, then extract skills"
+            placeholder="Or paste resume text, then fill fields"
           />
         </div>
         <div className="filter-actions" style={{ marginTop: 0 }}>
@@ -146,7 +218,7 @@ export default function Profile() {
             {busy ? "Saving..." : "Save profile"}
           </button>
           <button className="btn btn-ghost" type="button" disabled={busy} onClick={extractSkills}>
-            Extract skills from resume
+            Fill from pasted text
           </button>
         </div>
         <p className="footer-note">

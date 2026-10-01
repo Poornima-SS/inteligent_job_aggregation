@@ -41,6 +41,32 @@ export async function api(path, options = {}) {
   return data;
 }
 
+async function uploadResumeFile(path, file) {
+  const form = new FormData();
+  form.append("resume", file);
+  const token = getToken();
+  const headers = {};
+  if (token) headers.Authorization = `Bearer ${token}`;
+  const res = await fetch(`${API_BASE}${path}`, {
+    method: "POST",
+    headers,
+    body: form,
+  });
+  const text = await res.text();
+  let data = null;
+  if (text) {
+    try {
+      data = JSON.parse(text);
+    } catch {
+      data = { message: text };
+    }
+  }
+  if (!res.ok) {
+    throw new Error((data && data.message) || `Upload failed (${res.status})`);
+  }
+  return data;
+}
+
 export function toQuery(params = {}) {
   const search = new URLSearchParams();
   Object.entries(params).forEach(([key, value]) => {
@@ -55,12 +81,14 @@ export const authApi = {
   register: (body) => api("/auth/register", { method: "POST", body: JSON.stringify(body) }),
   login: (body) => api("/auth/login", { method: "POST", body: JSON.stringify(body) }),
   me: () => api("/auth/me"),
+  parseResume: (file) => uploadResumeFile("/auth/parse-resume", file),
 };
 
 export const usersApi = {
   updateMe: (body) => api("/users/me", { method: "PUT", body: JSON.stringify(body) }),
   extractSkills: (body = {}) =>
     api("/users/me/extract-skills", { method: "POST", body: JSON.stringify(body) }),
+  uploadResume: (file) => uploadResumeFile("/users/me/upload-resume", file),
 };
 
 export const jobsApi = {

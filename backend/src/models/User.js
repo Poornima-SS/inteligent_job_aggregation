@@ -16,6 +16,8 @@ const userSchema = new mongoose.Schema(
     preferredLocations: [{ type: String, trim: true }],
     preferredRoles: [{ type: String, trim: true }],
     resumeText: { type: String, default: "" },
+    resumeFileName: { type: String, default: "" },
+    resumeUploadedAt: { type: Date, default: null },
     savedJobs: [{ type: mongoose.Schema.Types.ObjectId, ref: "Job" }],
   },
   { timestamps: true }

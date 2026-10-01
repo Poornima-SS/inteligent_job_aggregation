@@ -19,7 +19,7 @@ async function main() {
   console.log(`Cleared ${deleted.deletedCount} old portal jobs`);
 
   console.log("Scraping portals:", PORTALS.join(", "));
-  const outcome = await runScrapers(PORTALS, { limit: 50 });
+  const outcome = await runScrapers(PORTALS, { limit: 50, keepSamples: true });
 
   for (const r of outcome.results) {
     console.log(

@@ -6,6 +6,7 @@ const empty = {
   source: "",
   experienceMax: "",
   salaryMin: "",
+  days: "",
   sort: "newest",
 };
 
@@ -83,19 +84,31 @@ export default function FilterBar({ value, onChange, onSubmit, onReset }) {
         </div>
         <div className="field">
           <label htmlFor="source">Source</label>
-          <select
+          <input
             id="source"
+            list="source-options"
             value={filters.source}
             onChange={(e) => set("source", e.target.value)}
-          >
-            <option value="">Any portal</option>
-            <option value="naukri">Naukri</option>
-            <option value="indeed">Indeed</option>
-            <option value="linkedin">LinkedIn</option>
-            <option value="apna">Apna</option>
-            <option value="private-company">Company careers</option>
-            <option value="remotive">Remotive</option>
-            <option value="remoteok">RemoteOK</option>
+            placeholder="LinkedIn, Naukri, RemoteOK..."
+          />
+          <datalist id="source-options">
+            <option value="LinkedIn" />
+            <option value="Naukri" />
+            <option value="Indeed" />
+            <option value="Apna" />
+            <option value="Remotive" />
+            <option value="RemoteOK" />
+            <option value="Company careers" />
+          </datalist>
+        </div>
+        <div className="field">
+          <label htmlFor="days">Days</label>
+          <select id="days" value={filters.days || ""} onChange={(e) => set("days", e.target.value)}>
+            <option value="">Any time</option>
+            <option value="0">Today</option>
+            <option value="3">Last 3 days</option>
+            <option value="7">Last 7 days</option>
+            <option value="30">Last 30 days</option>
           </select>
         </div>
         <div className="field">
@@ -106,6 +119,7 @@ export default function FilterBar({ value, onChange, onSubmit, onReset }) {
             <option value="salary_high">Salary high → low</option>
             <option value="salary_low">Salary low → high</option>
             <option value="title">Title A–Z</option>
+            <option value="company">Company A–Z</option>
           </select>
         </div>
       </div>

@@ -4,6 +4,21 @@ import { jobsApi } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import { getSourceLabel, resolveApplyUrl } from "../utils/jobLinks";
 
+function plainText(value = "") {
+  return String(value)
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 export default function JobDetail() {
   const { id } = useParams();
   const { isAuthenticated, refreshUser } = useAuth();
@@ -101,7 +116,7 @@ export default function JobDetail() {
             : ""}
         </p>
         <p style={{ margin: "0 0 1.25rem", lineHeight: 1.65, color: "var(--ink-soft)" }}>
-          {job.description || "No description provided."}
+          {plainText(job.description) || "No description provided."}
         </p>
 
         <div className="hero-actions">
@@ -113,19 +128,18 @@ export default function JobDetail() {
           >
             {busy ? "Please wait..." : job.isSaved ? "Unsave job" : "Save job"}
           </button>
-          <a
-            className="btn btn-primary"
-            href={outbound.url}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {outbound.label}
-          </a>
+          {outbound.url && (
+            <a className="btn btn-primary" href={outbound.url} target="_blank" rel="noreferrer">
+              {outbound.label}
+            </a>
+          )}
         </div>
 
-        <p className="muted" style={{ marginTop: "0.85rem", wordBreak: "break-all" }}>
-          Opens: {outbound.url}
-        </p>
+        {outbound.url && (
+          <p className="muted" style={{ marginTop: "0.85rem", wordBreak: "break-all" }}>
+            Opens: {outbound.url}
+          </p>
+        )}
         {outbound.note && <p className="alert alert-ok" style={{ marginTop: "0.75rem" }}>{outbound.note}</p>}
 
         {message && (

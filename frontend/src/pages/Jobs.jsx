@@ -16,6 +16,7 @@ const defaultFilters = {
   source: "",
   experienceMax: "",
   salaryMin: "",
+  days: "",
   sort: "newest",
 };
 
@@ -35,13 +36,18 @@ export default function Jobs() {
   const load = async (nextFilters = filters, nextPage = page) => {
     setLoading(true);
     setError("");
+    const params = { ...nextFilters, page: nextPage, limit: 8 };
+    const listJobs = async () => {
+      try {
+        return await jobsApi.list(params);
+      } catch {
+        await new Promise((resolve) => setTimeout(resolve, 800));
+        return jobsApi.list(params);
+      }
+    };
     try {
       const [result, statsData] = await Promise.all([
-        jobsApi.list({
-          ...nextFilters,
-          page: nextPage,
-          limit: 8,
-        }),
+        listJobs(),
         jobsApi.stats().catch(() => null),
       ]);
       setData(result);
@@ -54,20 +60,27 @@ export default function Jobs() {
   };
 
   useEffect(() => {
-    load(filters, page);
+    const timer = setTimeout(() => {
+      load(filters, page);
+    }, 250);
+    return () => clearTimeout(timer);
+    // Reload whenever one filter field or the page changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
+  }, [filters, page]);
 
   useEffect(() => {
     const q = searchParams.get("q") || "";
     if (q && q !== filters.q) {
-      const next = { ...filters, q };
-      setFilters(next);
+      setFilters((current) => ({ ...current, q }));
       setPage(1);
-      load(next, 1);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
+
+  const onFiltersChange = (next) => {
+    setFilters(next);
+    setPage(1);
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -78,69 +91,78 @@ export default function Jobs() {
   const onReset = () => {
     setFilters(defaultFilters);
     setPage(1);
-    load(defaultFilters, 1);
   };
 
   return (
-    <div className="page">
-      <div className="page-head">
-        <div>
-          <h1 className="page-title">Jobs</h1>
-          <p className="page-sub">
-            Filter by skills, location, experience, salary, and type.
-            {stats?.lastUpdated && (
-              <>
-                {" "}
-                Last scrape update: <strong>{new Date(stats.lastUpdated).toLocaleString()}</strong>.
-              </>
+    <div className="page jobs-page">
+      <div className="jobs-layout">
+        <aside className="jobs-filters">
+          <div className="page-head">
+            <div>
+              <h1 className="page-title">Jobs</h1>
+              <p className="page-sub">
+                Filter by skills, location, experience, salary, and type.
+                {stats?.lastUpdated && (
+                  <>
+                    {" "}
+                    Last scrape update:{" "}
+                    <strong>{new Date(stats.lastUpdated).toLocaleString()}</strong>.
+                  </>
+                )}
+                {!isAuthenticated && (
+                  <>
+                    {" "}
+                    <Link to="/login">Login</Link> to save jobs.
+                  </>
+                )}
+              </p>
+            </div>
+            {isAuthenticated && (
+              <div className="filter-actions" style={{ marginTop: 0 }}>
+                <Link to="/recommendations" className="btn btn-accent btn-sm">
+                  Recommendations
+                </Link>
+                <Link to="/saved" className="btn btn-ghost btn-sm">
+                  Saved jobs
+                </Link>
+              </div>
             )}
-            {!isAuthenticated && (
-              <>
-                {" "}
-                <Link to="/login">Login</Link> to save jobs.
-              </>
-            )}
-          </p>
-        </div>
-        {isAuthenticated && (
-          <div className="filter-actions" style={{ marginTop: 0 }}>
-            <Link to="/recommendations" className="btn btn-accent btn-sm">
-              Recommendations
-            </Link>
-            <Link to="/saved" className="btn btn-ghost btn-sm">
-              Saved jobs
-            </Link>
           </div>
-        )}
+
+          <FilterBar value={filters} onChange={onFiltersChange} onSubmit={onSubmit} onReset={onReset} />
+
+          {data && data.jobs.length > 0 && (
+            <p className="muted jobs-count">
+              {data.total} result{data.total === 1 ? "" : "s"}
+            </p>
+          )}
+        </aside>
+
+        <section className="jobs-results">
+          {loading && <LoadingState label="Loading openings..." />}
+          {error && <p className="alert alert-error">{error}</p>}
+
+          {!loading && data && data.jobs.length === 0 && (
+            <EmptyState
+              title="No jobs matched"
+              description="Try resetting filters or broadening your search keywords."
+              actionTo={isAuthenticated ? "/scrape" : "/login"}
+              actionLabel={isAuthenticated ? "Run a scrape" : "Login"}
+            />
+          )}
+
+          {data && data.jobs.length > 0 && (
+            <>
+              <div className="job-list">
+                {data.jobs.map((job, index) => (
+                  <JobCard key={job._id} job={job} index={index} />
+                ))}
+              </div>
+              <Pagination page={data.page} totalPages={data.totalPages} onChange={(p) => setPage(p)} />
+            </>
+          )}
+        </section>
       </div>
-
-      <FilterBar value={filters} onChange={setFilters} onSubmit={onSubmit} onReset={onReset} />
-
-      {loading && <LoadingState label="Loading openings..." />}
-      {error && <p className="alert alert-error">{error}</p>}
-
-      {!loading && data && data.jobs.length === 0 && (
-        <EmptyState
-          title="No jobs matched"
-          description="Try resetting filters or broadening your search keywords."
-          actionTo={isAuthenticated ? "/scrape" : "/login"}
-          actionLabel={isAuthenticated ? "Run a scrape" : "Login"}
-        />
-      )}
-
-      {data && data.jobs.length > 0 && (
-        <>
-          <p className="muted">
-            {data.total} result{data.total === 1 ? "" : "s"}
-          </p>
-          <div className="job-list">
-            {data.jobs.map((job, index) => (
-              <JobCard key={job._id} job={job} index={index} />
-            ))}
-          </div>
-          <Pagination page={data.page} totalPages={data.totalPages} onChange={(p) => setPage(p)} />
-        </>
-      )}
     </div>
   );
 }

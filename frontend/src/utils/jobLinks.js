@@ -46,6 +46,7 @@ export function isPlaceholderUrl(url = "") {
   if (/linkedin\.com\/jobs\/view\/(demo-|linkedin-)/.test(value)) return true;
   if (/apna\.co\/job\/(demo|apna-)/.test(value)) return true;
   if (/indeed\.com\/viewjob(\/(indeed-|demo)|[?&]jk=demo)/.test(value)) return true;
+  if (/google\.[^/]+\/search/i.test(value)) return true;
   return false;
 }
 
@@ -54,22 +55,10 @@ function companyCareersUrl(company = "") {
   for (const [name, url] of Object.entries(COMPANY_CAREERS)) {
     if (key.includes(name)) return url;
   }
-  return `https://www.google.com/search?q=${encodeURIComponent(`${company} careers jobs`)}`;
-}
-
-function cleanSearchQuery(job) {
-  // Drop demo words that make Indeed return zero results
-  const title = String(job.title || "")
-    .replace(/\(.*?duplicate.*?\)/gi, "")
-    .replace(/\bdemo\b/gi, "")
-    .replace(/\btest\b/gi, "")
-    .trim();
-  const company = String(job.company || "").trim();
-  return `${title} ${company}`.trim();
+  return "";
 }
 
 function searchUrlForSource(job) {
-  const q = encodeURIComponent(cleanSearchQuery(job) || "software developer");
   const titleOnly = encodeURIComponent(
     String(job.title || "software developer")
       .replace(/\(.*?duplicate.*?\)/gi, "")
@@ -103,7 +92,7 @@ function searchUrlForSource(job) {
     case "company-puppeteer":
       return companyCareersUrl(job.company);
     default:
-      return `https://www.google.com/search?q=${q}+jobs`;
+      return "";
   }
 }
 
@@ -112,19 +101,8 @@ function searchUrlForSource(job) {
  */
 export function resolveApplyUrl(job = {}) {
   const source = String(job.source || "").toLowerCase();
-
-  // Always prefer verified live careers page for company sources
-  if (["private-company", "company-cheerio", "company-puppeteer"].includes(source)) {
-    const careers = companyCareersUrl(job.company);
-    return {
-      url: careers,
-      kind: "direct",
-      label: `Open ${job.company || "company"} careers`,
-      note: null,
-    };
-  }
-
   const candidates = [job.applyUrl, job.sourceUrl].filter(Boolean);
+
   for (const url of candidates) {
     if (!isPlaceholderUrl(url)) {
       return {
@@ -136,10 +114,27 @@ export function resolveApplyUrl(job = {}) {
     }
   }
 
-  return {
-    url: searchUrlForSource(job),
-    kind: "search",
-    label: `Find on ${getSourceLabel(job.source)}`,
-    note: "Opens a live jobs page for this role/company on the source platform.",
-  };
+  if (["private-company", "company-cheerio", "company-puppeteer"].includes(source)) {
+    const careers = companyCareersUrl(job.company);
+    if (careers) {
+      return {
+        url: careers,
+        kind: "direct",
+        label: `Open ${job.company || "company"} careers`,
+        note: null,
+      };
+    }
+  }
+
+  const search = searchUrlForSource(job);
+  if (search && !isPlaceholderUrl(search)) {
+    return {
+      url: search,
+      kind: "search",
+      label: `Find on ${getSourceLabel(job.source)}`,
+      note: "Opens a live jobs page for this role on the source platform.",
+    };
+  }
+
+  return { url: "", kind: "none", label: "", note: null };
 }

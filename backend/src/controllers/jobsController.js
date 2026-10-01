@@ -2,9 +2,69 @@ const { Job } = require("../models");
 const { isDBConnected } = require("../config/db");
 const { scoreJob } = require("../services/ranker");
 const { getLatestScrapeLog } = require("../jobs/cron");
+const { normalizeLocation, canonicalSkill } = require("../services/cleaner");
 
 function escapeRegex(value) {
   return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function sourceQuery(value) {
+  const raw = String(value || "").trim().toLowerCase();
+  if (raw.length < 3) return null;
+
+  const aliases = [
+    ["linkdin", "linkedin"],
+    ["linked in", "linkedin"],
+    ["linkedin", "linkedin"],
+    ["naukari", "naukri"],
+    ["novkri", "naukri"],
+    ["naukri", "naukri"],
+    ["indeed", "indeed"],
+    ["apna", "apna"],
+    ["remotive", "remotive"],
+    ["remote ok", "remoteok"],
+    ["remoteok", "remoteok"],
+    ["company careers", "private-company"],
+    ["private company", "private-company"],
+    ["private-company", "private-company"],
+  ];
+  const alias = aliases.find(([name]) => raw === name || name.includes(raw) || raw.includes(name));
+  if (alias) return alias[1];
+  return new RegExp(escapeRegex(raw), "i");
+}
+
+function locationQuery(value) {
+  const raw = String(value || "").trim();
+  if (!raw) return null;
+  const names = new Set([raw, normalizeLocation(raw)]);
+  const key = raw.toLowerCase();
+  if (/mysore|mysuru/.test(key)) {
+    names.add("Mysuru");
+    names.add("Mysore");
+  }
+  if (/bangalore|bengaluru/.test(key)) {
+    names.add("Bengaluru");
+    names.add("Bangalore");
+  }
+  return new RegExp([...names].map((name) => escapeRegex(name)).join("|"), "i");
+}
+
+function skillQuery(value) {
+  if (value === undefined || value === null || String(value).trim() === "") return null;
+  const skills = String(value)
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean);
+  if (!skills.length) return null;
+  return {
+    $all: skills.map((item) => {
+      const name = canonicalSkill(item);
+      const pattern = name
+        ? escapeRegex(name)
+        : escapeRegex(item).replace(/ /g, "\\s*");
+      return new RegExp(`^${pattern}$`, "i");
+    }),
+  };
 }
 
 function buildJobFilter(query) {
@@ -13,25 +73,20 @@ function buildJobFilter(query) {
   if (query.q) {
     filter.$text = { $search: String(query.q).trim() };
   }
-  if (query.location) {
-    filter.location = new RegExp(escapeRegex(query.location.trim()), "i");
+  const location = locationQuery(query.location);
+  if (location) {
+    filter.location = location;
   }
-  if (query.source) {
-    filter.source = String(query.source).trim();
+  const source = sourceQuery(query.source);
+  if (source) {
+    filter.source = source;
   }
   if (query.employmentType) {
     filter.employmentType = String(query.employmentType).trim();
   }
-  if (query.skills) {
-    const skills = String(query.skills)
-      .split(",")
-      .map((s) => s.trim())
-      .filter(Boolean);
-    if (skills.length) {
-      filter.skills = {
-        $in: skills.map((s) => new RegExp(`^${escapeRegex(s)}$`, "i")),
-      };
-    }
+  const skills = skillQuery(query.skills);
+  if (skills) {
+    filter.skills = skills;
   }
 
   const experienceMax = query.experienceMax !== undefined ? Number(query.experienceMax) : null;
@@ -64,7 +119,25 @@ function buildJobFilter(query) {
     });
   }
 
+  const scrapedSince = scrapedSinceDate(query.days);
+  if (scrapedSince) {
+    filter.scrapedAt = { $gte: scrapedSince };
+  }
+
   return filter;
+}
+
+function scrapedSinceDate(days) {
+  if (days === undefined || days === null || String(days).trim() === "") return null;
+  const raw = String(days).trim().toLowerCase();
+  if (raw === "today" || raw === "0") {
+    const start = new Date();
+    start.setHours(0, 0, 0, 0);
+    return start;
+  }
+  const count = Number(raw);
+  if (!Number.isFinite(count) || count <= 0) return null;
+  return new Date(Date.now() - count * 24 * 60 * 60 * 1000);
 }
 
 function buildSort(query) {
@@ -78,9 +151,11 @@ function buildSort(query) {
       return { salaryMin: 1, postedAt: -1 };
     case "title":
       return { title: 1 };
+    case "company":
+      return { company: 1, title: 1 };
     case "newest":
     default:
-      return { postedAt: -1, createdAt: -1 };
+      return { scrapedAt: -1, postedAt: -1, createdAt: -1 };
   }
 }
 
@@ -101,13 +176,17 @@ async function listJobs(req, res) {
     const skip = (page - 1) * limit;
     const filter = buildJobFilter(req.query);
     const sort = buildSort(req.query);
+    const findJobs = Job.find(filter).sort(sort);
+    if (sort.company || sort.title) {
+      findJobs.collation({ locale: "en", strength: 2 });
+    }
 
     const savedSet = new Set(
       (req.user?.savedJobs || []).map((id) => String(id))
     );
 
     const [jobs, total] = await Promise.all([
-      Job.find(filter).sort(sort).skip(skip).limit(limit),
+      findJobs.skip(skip).limit(limit),
       Job.countDocuments(filter),
     ]);
 
@@ -126,6 +205,7 @@ async function listJobs(req, res) {
         experienceMax: req.query.experienceMax || "",
         salaryMin: req.query.salaryMin || "",
         salaryMax: req.query.salaryMax || "",
+        days: req.query.days || "",
         sort: req.query.sort || "newest",
       },
       jobs: jobs.map((job) => withSavedFlag(job, savedSet)),

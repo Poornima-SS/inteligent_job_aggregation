@@ -2,7 +2,7 @@ const cron = require("node-cron");
 const { ScrapeLog } = require("../models");
 const { runScrapers } = require("../services/scrapeRunner");
 
-const DEFAULT_SOURCES = ["naukri", "indeed", "linkedin", "apna", "private-company"];
+const DEFAULT_SOURCES = ["remotive", "remoteok"];
 
 let task = null;
 let lastRun = null;

@@ -3,6 +3,8 @@ const { User } = require("../models");
 const { isDBConnected } = require("../config/db");
 const { signToken } = require("../middleware/auth");
 const { toPublicUser } = require("../utils/user");
+const { parseResume } = require("../services/resumeParser");
+const { textFromUpload } = require("./usersController");
 
 function parseList(value) {
   if (Array.isArray(value)) {
@@ -23,8 +25,17 @@ async function register(req, res) {
       return res.status(503).json({ message: "Database not connected" });
     }
 
-    const { name, email, password, skills, experienceYears, preferredLocations, preferredRoles } =
-      req.body;
+    const {
+      name,
+      email,
+      password,
+      skills,
+      experienceYears,
+      preferredLocations,
+      preferredRoles,
+      resumeText,
+      resumeFileName,
+    } = req.body;
 
     if (!name || !email || !password) {
       return res.status(400).json({ message: "Name, email, and password are required" });
@@ -47,6 +58,9 @@ async function register(req, res) {
       experienceYears: Number(experienceYears) || 0,
       preferredLocations: parseList(preferredLocations),
       preferredRoles: parseList(preferredRoles),
+      resumeText: String(resumeText || "").slice(0, 20000),
+      resumeFileName: String(resumeFileName || "").slice(0, 255),
+      resumeUploadedAt: resumeText ? new Date() : null,
     });
 
     const token = signToken(user._id);
@@ -96,4 +110,31 @@ async function me(req, res) {
   res.json({ user: toPublicUser(req.user) });
 }
 
-module.exports = { register, login, me };
+async function parseResumeUpload(req, res) {
+  try {
+    const text = await textFromUpload(req.file);
+    if (!String(text).trim()) {
+      return res.status(400).json({ message: "No readable text found in that file" });
+    }
+    const profile = parseResume(text, req.file.originalname || "");
+    const filled = [];
+    if (profile.email) filled.push("email");
+    if (profile.name) filled.push("name");
+    if (profile.skills?.length) filled.push("skills");
+    if (profile.experienceYears != null) filled.push("experience");
+    if (profile.preferredLocations?.length) filled.push("locations");
+    if (profile.preferredRoles?.length) filled.push("roles");
+    return res.json({
+      ...profile,
+      resumeFileName: req.file.originalname || "",
+      message: filled.length
+        ? `Filled ${filled.join(", ")} from your resume. They are saved when you register.`
+        : "Could not detect fields. Fill them manually.",
+    });
+  } catch (err) {
+    const status = err.status || 500;
+    return res.status(status).json({ message: err.message || "Failed to read resume" });
+  }
+}
+
+module.exports = { register, login, me, parseResumeUpload };

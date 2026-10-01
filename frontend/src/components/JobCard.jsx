@@ -4,6 +4,23 @@ import { jobsApi } from "../api/client";
 import { useState } from "react";
 import { getSourceLabel, resolveApplyUrl } from "../utils/jobLinks";
 
+function formatScraped(value) {
+  if (!value) return "";
+  const scraped = new Date(value);
+  if (Number.isNaN(scraped.getTime())) return "";
+  const when = scraped.toLocaleString(undefined, {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  });
+  const start = new Date();
+  start.setHours(0, 0, 0, 0);
+  if (scraped >= start) return `Scraped today · ${when}`;
+  return `Scraped ${when}`;
+}
+
 function formatSalary(job) {
   if (job.salaryMin == null && job.salaryMax == null) return "Salary not listed";
   const cur = job.salaryCurrency || "INR";
@@ -30,6 +47,7 @@ export default function JobCard({ job, index = 0, onSavedChange }) {
   const [error, setError] = useState("");
   const outbound = resolveApplyUrl(job);
   const sourceLabel = getSourceLabel(job.source);
+  const scrapedLabel = formatScraped(job.scrapedAt);
 
   const toggleSave = async () => {
     if (!isAuthenticated) {
@@ -79,6 +97,7 @@ export default function JobCard({ job, index = 0, onSavedChange }) {
       <p className="job-skills">{(job.skills || []).join(" · ")}</p>
       <p className="job-meta">
         {formatSalary(job)} · via <span className="source-inline">{sourceLabel}</span>
+        {scrapedLabel ? ` · ${scrapedLabel}` : ""}
       </p>
       {error && (
         <p className="alert alert-error" style={{ marginTop: "0.6rem" }}>
@@ -89,9 +108,11 @@ export default function JobCard({ job, index = 0, onSavedChange }) {
         <Link className="job-link" to={`/jobs/${job._id}`}>
           View details →
         </Link>
-        <a className="job-link" href={outbound.url} target="_blank" rel="noreferrer">
-          {outbound.kind === "direct" ? `Open on ${sourceLabel}` : `Search on ${sourceLabel}`} →
-        </a>
+        {outbound.url && (
+          <a className="job-link" href={outbound.url} target="_blank" rel="noreferrer">
+            {outbound.kind === "direct" ? `Open on ${sourceLabel}` : `Search on ${sourceLabel}`} →
+          </a>
+        )}
       </div>
     </article>
   );

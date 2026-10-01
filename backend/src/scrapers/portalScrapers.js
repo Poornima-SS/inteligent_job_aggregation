@@ -50,8 +50,8 @@ function livePortalUrl(source, title, company, location) {
   }
 }
 
-function rowApplyFallback(company) {
-  return `https://www.google.com/search?q=${encodeURIComponent(`${company || ""} careers jobs`)}`;
+function rowApplyFallback() {
+  return "";
 }
 
 function isBrokenPortalUrl(url = "") {
