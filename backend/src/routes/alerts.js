@@ -7,6 +7,8 @@ const {
   deleteAlert,
   previewAlert,
   runAlertsNow,
+  sendEmailNow,
+  mailStatus,
   listNotifications,
   unreadCount,
   markRead,
@@ -18,9 +20,11 @@ const router = express.Router();
 router.use(authRequired);
 
 router.get("/", listAlerts);
+router.get("/mail-status", mailStatus);
 router.post("/", createAlert);
 router.post("/preview", previewAlert);
 router.post("/run-now", runAlertsNow);
+router.post("/send-email", sendEmailNow);
 
 router.get("/notifications", listNotifications);
 router.get("/notifications/unread-count", unreadCount);

@@ -17,7 +17,7 @@ const alertSchema = new mongoose.Schema(
     minMatchScore: { type: Number, default: 40, min: 0, max: 100 },
     enabled: { type: Boolean, default: true },
     lastNotifiedAt: { type: Date, default: null },
-    notifyEmail: { type: Boolean, default: false },
+    notifyEmail: { type: Boolean, default: true },
   },
   { timestamps: true }
 );

@@ -42,7 +42,10 @@ export default function Home() {
     <>
       <section className="hero">
         <div className="hero-inner">
-          <h1 className="hero-brand">Intelligent Job Aggregation</h1>
+          <h1 className="hero-brand">
+            Intelligent <span className="hero-job"><span className="hero-j">J</span>ob</span>{" "}
+            Aggregation
+          </h1>
           <p className="hero-line">
             One place to collect, clean, and search openings from multiple sources.
           </p>
@@ -69,6 +72,7 @@ export default function Home() {
             <p className="footer-note" style={{ color: "rgba(255,255,255,0.7)", marginTop: "1.5rem" }}>
               API {health.status === "ok" ? "online" : "offline"}
               {health.dbConnected ? " · database connected" : ""}
+              {health.geminiConfigured ? " · Gemini on" : ""}
               {health.phase ? ` · phase ${health.phase}` : ""}
               {user ? ` · hi ${user.name?.split(" ")[0]}` : ""}
             </p>

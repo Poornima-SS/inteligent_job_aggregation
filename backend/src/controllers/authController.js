@@ -3,7 +3,7 @@ const { User } = require("../models");
 const { isDBConnected } = require("../config/db");
 const { signToken } = require("../middleware/auth");
 const { toPublicUser } = require("../utils/user");
-const { parseResume } = require("../services/resumeParser");
+const { parseResumeSmart } = require("../services/geminiJobs");
 const { textFromUpload } = require("./usersController");
 
 function parseList(value) {
@@ -116,7 +116,7 @@ async function parseResumeUpload(req, res) {
     if (!String(text).trim()) {
       return res.status(400).json({ message: "No readable text found in that file" });
     }
-    const profile = parseResume(text, req.file.originalname || "");
+    const profile = await parseResumeSmart(text, req.file.originalname || "");
     const filled = [];
     if (profile.email) filled.push("email");
     if (profile.name) filled.push("name");
@@ -124,11 +124,12 @@ async function parseResumeUpload(req, res) {
     if (profile.experienceYears != null) filled.push("experience");
     if (profile.preferredLocations?.length) filled.push("locations");
     if (profile.preferredRoles?.length) filled.push("roles");
+    const aiNote = profile.aiUsed ? " (Gemini)" : "";
     return res.json({
       ...profile,
       resumeFileName: req.file.originalname || "",
       message: filled.length
-        ? `Filled ${filled.join(", ")} from your resume. They are saved when you register.`
+        ? `Filled ${filled.join(", ")} from your resume${aiNote}. They are saved when you register.`
         : "Could not detect fields. Fill them manually.",
     });
   } catch (err) {

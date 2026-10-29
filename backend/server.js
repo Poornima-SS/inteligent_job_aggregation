@@ -4,6 +4,8 @@ const express = require("express");
 const cors = require("cors");
 const { connectDB, isDBConnected } = require("./src/config/db");
 const { startScheduler, getStatus } = require("./src/jobs/cron");
+const { isGeminiConfigured, getModel } = require("./src/services/gemini");
+const { getMailStatus } = require("./src/services/mail");
 const jobsRoutes = require("./src/routes/jobs");
 const authRoutes = require("./src/routes/auth");
 const usersRoutes = require("./src/routes/users");
@@ -34,6 +36,11 @@ app.get("/api/health", (req, res) => {
     dbConnected: isDBConnected(),
     schedulerEnabled: schedule.enabled,
     cronExpression: schedule.expression,
+    geminiConfigured: isGeminiConfigured(),
+    geminiModel: isGeminiConfigured() ? getModel() : null,
+    emailConfigured: getMailStatus().configured,
+    emailProvider: getMailStatus().provider,
+    emailDelivery: getMailStatus().delivery,
     timestamp: new Date().toISOString(),
   });
 });
@@ -60,6 +67,16 @@ async function start() {
     console.log(`Server running at http://localhost:${PORT}`);
     console.log(`CORS allowed origin: ${CLIENT_URL}`);
     console.log(`MongoDB: ${isDBConnected() ? "connected" : "not connected"}`);
+    const mail = getMailStatus();
+    if (mail.configured && mail.delivery === "inbox") {
+      console.log(`[mail] Real inbox delivery via ${mail.provider}`);
+    } else if (mail.delivery === "preview") {
+      console.warn("[mail] Ethereal preview only — emails will NOT reach phone Gmail");
+    } else {
+      console.warn(
+        "[mail] Not configured — set RESEND_API_KEY in .env for automatic Gmail to phone"
+      );
+    }
   });
 }
 

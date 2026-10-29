@@ -116,6 +116,8 @@ export const alertsApi = {
   remove: (id) => api(`/alerts/${id}`, { method: "DELETE" }),
   preview: (body) => api("/alerts/preview", { method: "POST", body: JSON.stringify(body) }),
   runNow: (body = {}) => api("/alerts/run-now", { method: "POST", body: JSON.stringify(body) }),
+  sendEmail: () => api("/alerts/send-email", { method: "POST", body: "{}" }),
+  mailStatus: () => api("/alerts/mail-status"),
   notifications: (params = {}) => api(`/alerts/notifications${toQuery(params)}`),
   unreadCount: () => api("/alerts/notifications/unread-count"),
   markRead: (id) => api(`/alerts/notifications/${id}/read`, { method: "POST", body: "{}" }),

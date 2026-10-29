@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { jobsApi } from "../api/client";
 import { useAuth } from "../context/AuthContext";
@@ -6,12 +6,15 @@ import JobCard from "../components/JobCard";
 import LoadingState from "../components/LoadingState";
 import EmptyState from "../components/EmptyState";
 import SkillTags from "../components/SkillTags";
+import MatchPopup from "../components/MatchPopup";
 
 export default function Recommendations() {
   const { isAuthenticated, loading: authLoading, user } = useAuth();
   const [data, setData] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [matchPopup, setMatchPopup] = useState(null);
+  const shownPopup = useRef(false);
 
   useEffect(() => {
     if (!isAuthenticated) return;
@@ -19,7 +22,23 @@ export default function Recommendations() {
       setLoading(true);
       setError("");
       try {
-        setData(await jobsApi.recommendations({ limit: 20, minScore: 25 }));
+        const result = await jobsApi.recommendations({ limit: 20, minScore: 25 });
+        setData(result);
+        if (result?.jobs?.length > 0 && !shownPopup.current) {
+          shownPopup.current = true;
+          const top = result.jobs[0];
+          setMatchPopup({
+            title: "Jobs matched your profile",
+            message: [
+              `Found ${result.total || result.jobs.length} recommendation${
+                (result.total || result.jobs.length) === 1 ? "" : "s"
+              }. Top match: ${top.title} at ${top.company} (${top.matchScore}%).`,
+              top.matchReason || null,
+            ]
+              .filter(Boolean)
+              .join(" "),
+          });
+        }
       } catch (err) {
         setError(err.message || "Failed to load recommendations");
       } finally {
@@ -40,11 +59,20 @@ export default function Recommendations() {
 
   return (
     <div className="page">
+      <MatchPopup
+        open={!!matchPopup}
+        title={matchPopup?.title}
+        message={matchPopup?.message}
+        primaryLabel="View recommendations"
+        onPrimary={() => setMatchPopup(null)}
+        onClose={() => setMatchPopup(null)}
+      />
       <div className="page-head">
         <div>
           <h1 className="page-title">Recommendations</h1>
           <p className="page-sub">
-            Ranked by your skills, preferred locations/roles, experience, and job freshness.
+            Ranked by your skills, preferred locations/roles, experience, and job freshness
+            {data?.geminiEnabled ? " · Gemini match insights on" : ""}.
           </p>
         </div>
         <Link to="/profile" className="btn btn-ghost btn-sm">
@@ -88,6 +116,9 @@ export default function Recommendations() {
               <div key={job._id} className="recommend-wrap">
                 <div className="match-badge">Match {job.matchScore}%</div>
                 <JobCard job={job} index={index} />
+                {job.matchReason && (
+                  <p className="job-meta recommend-ai">{job.matchReason}</p>
+                )}
                 {job.matchBreakdown && (
                   <p className="job-meta recommend-breakdown">
                     Skills {job.matchBreakdown.skills}% · Location {job.matchBreakdown.location}% ·

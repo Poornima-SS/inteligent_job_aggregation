@@ -3,6 +3,8 @@ const { isDBConnected } = require("../config/db");
 const { scoreJob } = require("../services/ranker");
 const { getLatestScrapeLog } = require("../jobs/cron");
 const { normalizeLocation, canonicalSkill } = require("../services/cleaner");
+const { attachMatchReasons } = require("../services/geminiJobs");
+const { isGeminiConfigured } = require("../services/gemini");
 
 function escapeRegex(value) {
   return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -140,6 +142,31 @@ function scrapedSinceDate(days) {
   return new Date(Date.now() - count * 24 * 60 * 60 * 1000);
 }
 
+/** Lower number = shown first when sorting by newest / today's scrape. */
+const SOURCE_PRIORITY = {
+  linkedin: 1,
+  naukri: 2,
+  apna: 3,
+  indeed: 4,
+  "private-company": 5,
+  "company-cheerio": 6,
+  "company-puppeteer": 6,
+  remotive: 8,
+  remoteok: 10,
+};
+
+function sourcePriorityExpr() {
+  return {
+    $switch: {
+      branches: Object.entries(SOURCE_PRIORITY).map(([source, rank]) => ({
+        case: { $eq: [{ $toLower: "$source" }, source] },
+        then: rank,
+      })),
+      default: 7,
+    },
+  };
+}
+
 function buildSort(query) {
   const sortKey = String(query.sort || "newest").toLowerCase();
   switch (sortKey) {
@@ -155,7 +182,7 @@ function buildSort(query) {
       return { company: 1, title: 1 };
     case "newest":
     default:
-      return { scrapedAt: -1, postedAt: -1, createdAt: -1 };
+      return { sourceRank: 1, scrapedAt: -1, postedAt: -1, createdAt: -1 };
   }
 }
 
@@ -175,20 +202,42 @@ async function listJobs(req, res) {
     const limit = Math.min(Math.max(parseInt(req.query.limit, 10) || 10, 1), 100);
     const skip = (page - 1) * limit;
     const filter = buildJobFilter(req.query);
+    const sortKey = String(req.query.sort || "newest").toLowerCase();
     const sort = buildSort(req.query);
-    const findJobs = Job.find(filter).sort(sort);
-    if (sort.company || sort.title) {
-      findJobs.collation({ locale: "en", strength: 2 });
-    }
+    const useSourcePriority = sortKey === "newest" || !req.query.sort;
 
     const savedSet = new Set(
       (req.user?.savedJobs || []).map((id) => String(id))
     );
 
-    const [jobs, total] = await Promise.all([
-      findJobs.skip(skip).limit(limit),
-      Job.countDocuments(filter),
-    ]);
+    let jobs;
+    let total;
+    if (useSourcePriority) {
+      const pipeline = [
+        { $match: filter },
+        { $addFields: { sourceRank: sourcePriorityExpr() } },
+        { $sort: sort },
+        {
+          $facet: {
+            total: [{ $count: "n" }],
+            rows: [{ $skip: skip }, { $limit: limit }],
+          },
+        },
+      ];
+      const [agg] = await Job.aggregate(pipeline);
+      total = agg?.total?.[0]?.n || 0;
+      jobs = (agg?.rows || []).map((job) => withSavedFlag(job, savedSet));
+    } else {
+      const findJobs = Job.find(filter).sort(sort);
+      if (sort.company || sort.title) {
+        findJobs.collation({ locale: "en", strength: 2 });
+      }
+      [jobs, total] = await Promise.all([
+        findJobs.skip(skip).limit(limit),
+        Job.countDocuments(filter),
+      ]);
+      jobs = jobs.map((job) => withSavedFlag(job, savedSet));
+    }
 
     res.json({
       page,
@@ -208,7 +257,7 @@ async function listJobs(req, res) {
         days: req.query.days || "",
         sort: req.query.sort || "newest",
       },
-      jobs: jobs.map((job) => withSavedFlag(job, savedSet)),
+      jobs,
     });
   } catch (err) {
     res.status(500).json({ message: "Failed to fetch jobs", error: err.message });
@@ -313,6 +362,8 @@ async function getRecommendations(req, res) {
       .sort((a, b) => b.matchScore - a.matchScore || new Date(b.postedAt) - new Date(a.postedAt))
       .slice(0, limit);
 
+    const withReasons = await attachMatchReasons(user, ranked, 5);
+
     res.json({
       profile: {
         skills: user.skills || [],
@@ -320,8 +371,9 @@ async function getRecommendations(req, res) {
         preferredRoles: user.preferredRoles || [],
         experienceYears: user.experienceYears || 0,
       },
-      total: ranked.length,
-      jobs: ranked,
+      geminiEnabled: isGeminiConfigured(),
+      total: withReasons.length,
+      jobs: withReasons,
     });
   } catch (err) {
     res.status(500).json({ message: "Failed to build recommendations", error: err.message });

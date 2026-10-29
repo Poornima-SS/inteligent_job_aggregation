@@ -1,5 +1,5 @@
 const { toPublicUser } = require("../utils/user");
-const { parseResume } = require("../services/resumeParser");
+const { parseResumeSmart } = require("../services/geminiJobs");
 
 function resumePayload(profile) {
   const filled = [];
@@ -8,12 +8,13 @@ function resumePayload(profile) {
   if (profile.experienceYears != null) filled.push("experience");
   if (profile.preferredLocations?.length) filled.push("locations");
   if (profile.preferredRoles?.length) filled.push("roles");
+  const aiNote = profile.aiUsed ? " via Gemini" : "";
 
   return {
     ...profile,
     count: profile.skills?.length || 0,
     message: filled.length
-      ? `Saved ${filled.join(", ")} to MongoDB.`
+      ? `Saved ${filled.join(", ")} to MongoDB${aiNote}.`
       : "Could not detect name or skills. Add them manually.",
   };
 }
@@ -111,7 +112,7 @@ async function extractResumeSkills(req, res) {
     if (!String(text).trim()) {
       return res.status(400).json({ message: "Paste resume text first" });
     }
-    const profile = parseResume(text);
+    const profile = await parseResumeSmart(text);
     const user = await saveResumeToUser(req.user, profile);
     return res.json({ ...resumePayload(profile), user: toPublicUser(user) });
   } catch (err) {
@@ -125,7 +126,7 @@ async function uploadResume(req, res) {
     if (!String(text).trim()) {
       return res.status(400).json({ message: "No readable text found in that file" });
     }
-    const profile = parseResume(text, req.file.originalname || "");
+    const profile = await parseResumeSmart(text, req.file.originalname || "");
     const user = await saveResumeToUser(req.user, profile, req.file.originalname || "");
     return res.json({ ...resumePayload(profile), user: toPublicUser(user) });
   } catch (err) {

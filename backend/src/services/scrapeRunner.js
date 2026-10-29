@@ -105,8 +105,10 @@ async function runSource(source, options = {}) {
   try {
     const rawJobs = await runner(options);
     const cleaned = rawJobs.map(cleanJob).filter((j) => j.title && j.company);
-    const rejected = options.keepSamples ? [] : cleaned.filter((job) => listingProblem(job));
-    const reliable = options.keepSamples ? cleaned : cleaned.filter((job) => !listingProblem(job));
+    const portalSources = new Set(["naukri", "indeed", "linkedin", "apna", "private-company"]);
+    const keepSamples = options.keepSamples || portalSources.has(source);
+    const rejected = keepSamples ? [] : cleaned.filter((job) => listingProblem(job));
+    const reliable = keepSamples ? cleaned : cleaned.filter((job) => !listingProblem(job));
     const result = await upsertJobs(reliable);
     const skipped = (result.skippedDuplicates || 0) + rejected.length;
 

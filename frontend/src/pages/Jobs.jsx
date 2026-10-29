@@ -93,6 +93,12 @@ export default function Jobs() {
     setPage(1);
   };
 
+  const goToPage = (nextPage) => {
+    const safe = Math.max(1, Number(nextPage) || 1);
+    setPage(safe);
+    document.querySelector(".jobs-results")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
     <div className="page jobs-page">
       <div className="jobs-layout">
@@ -158,7 +164,12 @@ export default function Jobs() {
                   <JobCard key={job._id} job={job} index={index} />
                 ))}
               </div>
-              <Pagination page={data.page} totalPages={data.totalPages} onChange={(p) => setPage(p)} />
+              <Pagination
+                page={page}
+                totalPages={data.totalPages}
+                disabled={loading}
+                onChange={goToPage}
+              />
             </>
           )}
         </section>

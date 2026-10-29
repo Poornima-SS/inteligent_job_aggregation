@@ -1,6 +1,12 @@
 const { Alert, Notification } = require("../models");
 const { isDBConnected } = require("../config/db");
-const { processAlerts, previewAlertMatches, parseSkills } = require("../services/notifier");
+const {
+  processAlerts,
+  previewAlertMatches,
+  emailUserDigest,
+  parseSkills,
+} = require("../services/notifier");
+const { getMailStatus } = require("../services/mail");
 
 function bodyToAlertFields(body = {}) {
   return {
@@ -12,7 +18,7 @@ function bodyToAlertFields(body = {}) {
     source: String(body.source || "").trim(),
     minMatchScore: Math.min(100, Math.max(0, Number(body.minMatchScore) || 40)),
     enabled: body.enabled === undefined ? true : Boolean(body.enabled),
-    notifyEmail: Boolean(body.notifyEmail),
+    notifyEmail: body.notifyEmail === undefined ? true : Boolean(body.notifyEmail),
   };
 }
 
@@ -27,7 +33,43 @@ async function createAlert(req, res) {
     if (!isDBConnected()) return res.status(503).json({ message: "Database not connected" });
     const fields = bodyToAlertFields(req.body || {});
     const alert = await Alert.create({ ...fields, userId: req.user._id });
-    return res.status(201).json({ alert, message: "Alert created" });
+
+    // Automatically match + email (no manual button needed)
+    let emailResult = null;
+    try {
+      const since = new Date(Date.now() - 72 * 60 * 60 * 1000);
+      emailResult = await processAlerts({
+        since,
+        force: true,
+        userId: req.user._id,
+      });
+    } catch (err) {
+      console.warn("[alerts] auto notify after create failed:", err.message);
+      emailResult = { emailError: err.message };
+    }
+
+    const mail = getMailStatus();
+    const emailed = (emailResult?.emailsSent || 0) > 0;
+    let message = "Alert created";
+    if (emailed && mail.delivery === "inbox") {
+      message = `Alert created — match email sent to ${req.user.email}`;
+    } else if (!mail.configured || mail.delivery === "preview") {
+      message =
+        "Alert created (in-app). To receive Gmail on your phone, set RESEND_API_KEY in backend/.env";
+    } else if (emailResult?.emailError) {
+      message = `Alert created, but email failed: ${emailResult.emailError}`;
+    } else if ((emailResult?.matches || 0) > 0) {
+      message = "Alert created — matches found (check email / notifications)";
+    }
+
+    return res.status(201).json({
+      alert,
+      message,
+      notify: emailResult,
+      emailConfigured: mail.configured,
+      emailProvider: mail.provider,
+      emailDelivery: mail.delivery,
+    });
   } catch (err) {
     console.error("[alerts] create failed:", err);
     return res.status(500).json({ message: err.message || "Failed to create alert" });
@@ -72,17 +114,54 @@ async function runAlertsNow(req, res) {
   const hours = Math.min(168, Math.max(1, Number(req.body?.hours) || 48));
   const since = new Date(Date.now() - hours * 60 * 60 * 1000);
 
-  // Only evaluate this user's alerts by temporarily scoping in processAlerts
-  // via a lightweight inline path: process all, then filter counts for user.
   const before = await Notification.countDocuments({ userId: req.user._id });
-  const outcome = await processAlerts({ since });
+  const outcome = await processAlerts({ since, force: true });
   const after = await Notification.countDocuments({ userId: req.user._id });
 
+  // If matching already happened earlier (duplicates), still email this user's digest
+  let emailExtra = null;
+  if (!outcome.emailsSent && req.user.email) {
+    emailExtra = await emailUserDigest(req.user, { limit: 15 });
+  }
+
+  const mail = getMailStatus();
   return res.json({
     status: "ok",
     ...outcome,
     yourNewNotifications: Math.max(0, after - before),
+    emailTo: req.user.email,
+    emailsSent: outcome.emailsSent || (emailExtra?.sent ? 1 : 0),
+    emailPreviewUrl: outcome.emailPreviewUrl || emailExtra?.previewUrl,
+    emailDelivery: outcome.emailDelivery || mail.delivery || emailExtra?.emailDelivery,
+    emailProvider: outcome.emailProvider || mail.provider || emailExtra?.provider,
+    emailError:
+      outcome.emailError ||
+      (emailExtra && !emailExtra.sent ? emailExtra.reason : undefined),
+    emailNote: emailExtra?.note || undefined,
   });
+}
+
+async function sendEmailNow(req, res) {
+  if (!isDBConnected()) return res.status(503).json({ message: "Database not connected" });
+  const result = await emailUserDigest(req.user, { limit: 15 });
+  if (!result.sent) {
+    return res.status(400).json({
+      message: result.reason || "Could not send email",
+      ...result,
+      emailTo: req.user.email,
+    });
+  }
+  return res.json({
+    message:
+      result.provider === "ethereal"
+        ? "Preview email sent — open the preview link (not real Gmail yet)"
+        : `Email sent to ${req.user.email}`,
+    ...result,
+  });
+}
+
+async function mailStatus(req, res) {
+  return res.json({ ...getMailStatus(), emailTo: req.user?.email || null });
 }
 
 async function listNotifications(req, res) {
@@ -139,6 +218,8 @@ module.exports = {
   deleteAlert,
   previewAlert,
   runAlertsNow,
+  sendEmailNow,
+  mailStatus,
   listNotifications,
   unreadCount,
   markRead,

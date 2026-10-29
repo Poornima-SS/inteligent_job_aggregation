@@ -3,6 +3,7 @@ import { Link, Navigate } from "react-router-dom";
 import { alertsApi } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import { getSourceLabel } from "../utils/jobLinks";
+import MatchPopup from "../components/MatchPopup";
 
 const emptyForm = {
   alertName: "My job alert",
@@ -13,7 +14,7 @@ const emptyForm = {
   source: "",
   minMatchScore: 40,
   enabled: true,
-  notifyEmail: false,
+  notifyEmail: true,
 };
 
 function toPayload(form) {
@@ -42,15 +43,20 @@ export default function Alerts() {
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
   const [action, setAction] = useState("");
+  const [matchPopup, setMatchPopup] = useState(null);
+  const [mailInfo, setMailInfo] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState("");
 
   const refresh = useCallback(async () => {
-    const [alertData, noteData] = await Promise.all([
+    const [alertData, noteData, mail] = await Promise.all([
       alertsApi.list(),
       alertsApi.notifications({ limit: 40 }),
+      alertsApi.mailStatus().catch(() => null),
     ]);
     setAlerts(alertData.alerts || []);
     setNotifications(noteData.notifications || []);
     setUnreadCount(noteData.unreadCount || 0);
+    if (mail) setMailInfo(mail);
   }, []);
 
   useEffect(() => {
@@ -94,8 +100,16 @@ export default function Alerts() {
         await alertsApi.update(editingId, payload);
         setMessage("Alert updated successfully");
       } else {
-        await alertsApi.create(payload);
-        setMessage("Alert created successfully");
+        const created = await alertsApi.create(payload);
+        setMessage(created.message || "Alert created — matches email automatically when mail is configured");
+        if (created.emailDelivery === "inbox" && (created.notify?.emailsSent || 0) > 0) {
+          setMailInfo({
+            configured: true,
+            provider: created.emailProvider,
+            delivery: "inbox",
+            emailTo: user?.email,
+          });
+        }
       }
       resetForm();
       setPreview(null);
@@ -120,11 +134,25 @@ export default function Alerts() {
     try {
       const data = await alertsApi.preview(toPayload(form));
       setPreview(data);
-      setMessage(
-        data.total
-          ? `Found ${data.total} matching job(s)`
-          : "No jobs match these filters right now — try clearing location or lowering the match score"
-      );
+      if (data.total > 0) {
+        setMatchPopup({
+          title: "Jobs matched your alert",
+          message: `Found ${data.total} job${data.total === 1 ? "" : "s"} that match your skills, location, and score.`,
+          primaryLabel: "See matches",
+          onPrimary: () => {
+            setMatchPopup(null);
+            document.getElementById("alert-preview")?.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          },
+        });
+        setMessage(`Found ${data.total} matching job(s)`);
+      } else {
+        setMessage(
+          "No jobs match these filters right now — try clearing location or lowering the match score"
+        );
+      }
       requestAnimationFrame(() => {
         document.getElementById("alert-preview")?.scrollIntoView({ behavior: "smooth", block: "start" });
       });
@@ -192,16 +220,54 @@ export default function Alerts() {
     }
   };
 
+  const describeMailResult = (outcome) => {
+    const mailed = outcome.emailsSent || 0;
+    if (outcome.emailPreviewUrl) setPreviewUrl(outcome.emailPreviewUrl);
+    if (mailed > 0 && outcome.emailDelivery === "preview") {
+      return `Email preview ready (Ethereal — not Gmail yet). Open the preview link below. Add RESEND_API_KEY in backend/.env for real inbox delivery to ${user?.email || "your email"}.`;
+    }
+    if (mailed > 0) {
+      return `Email digest sent to ${user?.email || "your inbox"} via ${outcome.emailProvider || "mail"}.`;
+    }
+    if (outcome.emailError) {
+      return `Email failed (${outcome.emailProvider || "mail"}): ${outcome.emailError}`;
+    }
+    return "No email sent.";
+  };
+
   const checkNow = async () => {
     setBusy(true);
     setAction("check");
     setError("");
     setMessage("");
+    setPreviewUrl("");
     try {
       const outcome = await alertsApi.runNow({ hours: 72 });
-      setMessage(
-        `Checked alerts — ${outcome.yourNewNotifications || 0} new notification(s) for you`
-      );
+      const notes = outcome.yourNewNotifications || 0;
+      let next = `Checked alerts — ${notes} new notification(s) for you. ${describeMailResult(outcome)}`;
+      setMessage(next);
+      if (outcome.emailProvider) {
+        setMailInfo({
+          configured: outcome.emailConfigured,
+          provider: outcome.emailProvider,
+          delivery: outcome.emailDelivery,
+          emailTo: outcome.emailTo || user?.email,
+        });
+      }
+      if (notes > 0) {
+        setMatchPopup({
+          title: "New recommendation matches",
+          message: next,
+          primaryLabel: "View notifications",
+          onPrimary: () => {
+            setMatchPopup(null);
+            document.getElementById("alert-notifications")?.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          },
+        });
+      }
       await refresh();
     } catch (err) {
       setError(err.message || "Check failed");
@@ -242,7 +308,32 @@ export default function Alerts() {
         </div>
       </div>
 
+      {mailInfo?.delivery === "inbox" ? (
+        <p className="muted" style={{ marginTop: "-0.35rem" }}>
+          Automatic Gmail alerts on · check <strong>poornimass999@gmail.com</strong> on your phone
+          (Resend free inbox) · via {mailInfo.provider}
+        </p>
+      ) : (
+        <p className="alert alert-error" style={{ marginTop: "-0.15rem" }}>
+          Paste a fresh Resend API key into <code>backend/.env</code> as{" "}
+          <code>RESEND_API_KEY=re_...</code> (Create key at{" "}
+          <a href="https://resend.com/api-keys" target="_blank" rel="noreferrer">
+            resend.com/api-keys
+          </a>
+          ), keep <code>RESEND_ACCOUNT_EMAIL=poornimass999@gmail.com</code>, restart backend. Free
+          Resend delivers only to that Gmail.
+        </p>
+      )}
+
       {message && <p className="alert alert-ok">{message}</p>}
+      {previewUrl && (
+        <p className="alert alert-ok">
+          Open email preview:{" "}
+          <a href={previewUrl} target="_blank" rel="noreferrer">
+            {previewUrl}
+          </a>
+        </p>
+      )}
       {error && <p className="alert alert-error">{error}</p>}
 
       <div className="panel form-grid" style={{ marginBottom: "1.25rem" }}>
@@ -341,7 +432,7 @@ export default function Alerts() {
             checked={form.notifyEmail}
             onChange={onChange}
           />
-          Also email me (needs SMTP in backend .env)
+          Email me at {user?.email || "my account email"} when jobs match
         </label>
 
         <div className="filter-actions" style={{ marginTop: "0.25rem" }}>
@@ -416,6 +507,11 @@ export default function Alerts() {
                   {!!alert.skills?.length && (
                     <p className="job-skills">{alert.skills.join(" · ")}</p>
                   )}
+                  <p className="footer-note" style={{ marginTop: "0.45rem" }}>
+                    {alert.notifyEmail
+                      ? `Email alerts on · ${user?.email || "account email"}`
+                      : "In-app only (email off)"}
+                  </p>
                 </div>
               </div>
               <div className="card-links">
@@ -434,7 +530,16 @@ export default function Alerts() {
         </div>
       </section>
 
-      <section>
+      <MatchPopup
+        open={!!matchPopup}
+        title={matchPopup?.title}
+        message={matchPopup?.message}
+        primaryLabel={matchPopup?.primaryLabel}
+        onPrimary={matchPopup?.onPrimary}
+        onClose={() => setMatchPopup(null)}
+      />
+
+      <section id="alert-notifications">
         <h2 className="section-title">
           Notifications {unreadCount > 0 ? `(${unreadCount} unread)` : ""}
         </h2>
